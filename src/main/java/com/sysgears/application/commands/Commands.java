@@ -1,5 +1,6 @@
 package com.sysgears.application.commands;
 
+import com.sysgears.application.commands.util.Command;
 import com.sysgears.application.commands.util.Type;
 import com.sysgears.application.converter.Converter;
 
