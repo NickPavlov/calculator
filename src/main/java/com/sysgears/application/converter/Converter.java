@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The Converter class provides methods for formatting the strings, the numbers.
+ * The <code>Converter</code> class provides methods for formatting the strings, the numbers.
  * Some methods in this class uses regular expressions to parse strings.
  */
 public class Converter {

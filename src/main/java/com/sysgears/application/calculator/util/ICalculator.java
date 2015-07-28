@@ -1,16 +1,15 @@
 package com.sysgears.application.calculator.util;
 
 /**
- * ICalculator interface is the type of using calculator.
+ * The <code>ICalculator</code> interface defines the behavior of a calculator object.
  */
 public interface ICalculator {
 
     /**
-     * Must be implemented.
+     * Should return the result of an operation given in <code>expression</code>.
      *
-     * @param expression string
-     *
-     * @return string
+     * @param expression expression to calculate
+     * @return result of an operation
      */
     public String calculate(final String expression);
 }

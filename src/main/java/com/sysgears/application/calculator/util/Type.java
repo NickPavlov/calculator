@@ -1,7 +1,7 @@
 package com.sysgears.application.calculator.util;
 
 /**
- * The Type class provides a set of operation's types.
+ * The <code>Type</code> class provides a set of operation types.
  */
 public enum Type {
 
@@ -31,19 +31,17 @@ public enum Type {
     public final static String OPERAND = "([\\d]+([\\.][\\d]+)?)";
 
     /**
-     * Must be overridden.
+     * Should return a regex pattern to parse a single operation.
      *
      * @param operator string
-     *
      * @return string
      */
     public abstract String getSearchPattern(final String operator);
 
     /**
-     * Must be overridden.
+     * Should return a regex pattern to split a single operation by operator.
      *
      * @param operator string
-     *
      * @return string
      */
     public abstract String getSplitPattern(final String operator);
