@@ -79,7 +79,8 @@ public class Service {
                 ui.sendMessage("= " + value + "\n");
                 break;
             case EXIT:
-                ui.sendMessage("Goodbye!");
+                ui.sendMessage("\nGoodbye!\n");
+                ui.sendMessage(PrettyText.createSeparator("", TERMINAL_WIDTH) + "\n");
                 break;
             case HISTORY:
                 ui.sendMessage(PrettyText.createSeparator("History", TERMINAL_WIDTH) + "\n");
