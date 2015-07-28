@@ -1,4 +1,4 @@
-package com.sysgears.application.calculator.util;
+package com.sysgears.application.calculator.brackets;
 
 /**
  * Replacement class contains regex patterns for substring search and methods for their modification.

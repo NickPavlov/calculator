@@ -1,5 +1,7 @@
 package com.sysgears.application.calculator;
 
+import com.sysgears.application.calculator.brackets.Brackets;
+import com.sysgears.application.calculator.operations.Operations;
 import com.sysgears.application.calculator.util.*;
 import com.sysgears.application.converter.Converter;
 
@@ -8,7 +10,7 @@ import java.util.regex.Matcher;
 /**
  * The <code>Calculator</code> class provides methods to calculate mathematical expression in string.
  * Operations that are calculated in the Calculator are described in
- * <code>com.sysgears.application.calculator.util.Operations</code>.
+ * <code>com.sysgears.application.calculator.operations.Operations</code>.
  */
 public class Calculator implements ICalculator {
 
@@ -56,7 +58,7 @@ public class Calculator implements ICalculator {
 
     /**
      * Performs all the mathematical operations of the
-     * <code>com.sysgears.application.calculator.util.Operations</code>.
+     * <code>com.sysgears.application.calculator.operations.Operations</code>.
      *
      * @param expression mathematical expression
      * @return string with performed operations
@@ -88,21 +90,23 @@ public class Calculator implements ICalculator {
      * @return string with performed operations of the specific type
      */
     private String perform(final Operations operation, final String expression) {
+
         final Matcher matcher = Converter.findSubstring(expression, operation.getSearchParameter());
-        String result;
+        String result = expression;
 
         if (matcher.find()) {
             String[] operands = matcher.group().split(operation.getSplitType());
-            double value = (!operands[0].equals(""))
-                    ? operation.evaluate(Double.parseDouble(operands[0]), Double.parseDouble(operands[1]))
-                    : operation.evaluate(0, Double.parseDouble(operands[1]));
+            double value;
+
+            if (!operands[0].isEmpty()) {
+                value = operation.evaluate(Double.parseDouble(operands[0]), Double.parseDouble(operands[1]));
+            } else {
+                value = operation.evaluate(0, Double.parseDouble(operands[1]));
+            }
 
             result = perform(operation, expression.substring(0, matcher.start())
-                    //+ enableSign(Converter.round(value, accuracy))
-                    + Converter.round(value, accuracy)
+                    + enableSign(Converter.round(value, accuracy))
                     + expression.substring(matcher.end(), expression.length()));
-        } else {
-            result = expression;
         }
 
         return result;
@@ -118,9 +122,20 @@ public class Calculator implements ICalculator {
     private String findBrackets(final Brackets replacement, final String arg) {
         final Matcher matcher = Converter.findSubstring(arg, replacement.getRegex());
 
+        String result = arg;
+        if (matcher.find()) {
+            result = findBrackets(replacement, arg.substring(0, matcher.start())
+                    + matcher.group(0).substring(1, matcher.group(0).length() - 1)
+                    + arg.substring(matcher.end(), arg.length()));
+        }
+
+        return result;
+
+        /*
         return (matcher.find()) ? findBrackets(replacement, arg.substring(0, matcher.start())
                 + matcher.group(0).substring(1, matcher.group(0).length() - 1)
                 + arg.substring(matcher.end(), arg.length())) : arg;
+        */
     }
 
     /**

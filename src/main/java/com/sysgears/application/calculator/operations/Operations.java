@@ -1,4 +1,4 @@
-package com.sysgears.application.calculator.util;
+package com.sysgears.application.calculator.operations;
 
 /**
  * The <code>Operations</code> class provides a basic set of operators required to operate the calculator.
@@ -44,6 +44,12 @@ public enum Operations {
     ADD(2, "+", Type.BINARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return firstOperand + secondOperand;
+        }
+    },
+
+    POW(0, "^", Type.BINARY) {
+        public double evaluate(final double firstOperand, final double secondOperand) {
+            return Math.pow(firstOperand, secondOperand);
         }
     };
 
