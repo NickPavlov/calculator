@@ -1,92 +1,56 @@
 package com.sysgears.application.commands;
 
-import com.sysgears.application.converter.Converter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Contains a list of the types of permissible commands.
- * All system commands should be marked by <code>Command.SYSTEM_COMMAND</code> in a description.
+ * The <code>Command</code> class provides functionality to work with commands.
  */
-public enum Command {
-    HISTORY("history", "Display the history of all calculations."),
-    HISTORY_UNIQUE("history unique", "Display all unique calculations."),
-    HELP("help", "Display a list of all available commands."),
-    EXIT("exit", "Exit the program."),
-    EVALUATE(".?\\d+.?", Command.SYSTEM_COMMAND),
-    UNKNOWN_COMMAND("", Command.SYSTEM_COMMAND);
+public class Command {
 
     /**
-     * Marker which indicates a system command.
+     * Command name.
      */
-    public static final String SYSTEM_COMMAND = "{system}";
+    private final String name;
 
     /**
-     * The command name.
-     */
-    private final String commandName;
-
-    /**
-     * The command description.
+     * Command description.
      */
     private final String description;
 
     /**
-     * Regex filter to search for commands in a string.
+     * Creates the <code>Command</code> object specified by name and description.
+     *
+     * @param name        command name
+     * @param description command description
      */
-    private final String regex;
-
-    /**
-     * @param commandName a command name
-     * @param description description of a command
-     */
-    private Command(final String commandName, final String description) {
-        this.commandName = commandName;
+    public Command(final String name, final String description) {
+        this.name = name;
         this.description = description;
-        this.regex = (description.equals(SYSTEM_COMMAND)) ? commandName : Converter.buildRegex(commandName);
     }
 
     /**
-     * Parses an input expression and returns a command type from the <code>Command</code> class.
+     * Returns a command name.
      *
-     * @param expression an input expression
-     * @return command
+     * @return command name
      */
-    public static Command parse(final String expression) {
-        Command result = Command.UNKNOWN_COMMAND;
-        for (Command command : Command.values()) {
-            if (Converter.findString(expression, command.getRegex(), true)) {
-                result = command;
-                break;
-            }
-        }
-
-        return result;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Returns a list of all commands with a description.
+     * Returns a command description.
      *
-     * @return list of commands
+     * @return command description
      */
-    public static List<String> getCommandsList() {
-        List<String> result = new ArrayList<String>();
-        for (Command command : Command.values()) {
-            if (!command.description.equals(SYSTEM_COMMAND)) {
-                result.add(command.commandName + " - " + command.description);
-            }
-        }
-
-        return result;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Returns a regex filter for a command.
+     * Returns a string representation of a command.
      *
-     * @return regular expression
+     * @return string
      */
-    public String getRegex() {
-        return this.regex;
+    @Override
+    public String toString() {
+        return name + " : " + description;
     }
 }

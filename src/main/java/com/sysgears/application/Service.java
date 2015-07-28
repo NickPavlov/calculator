@@ -1,7 +1,8 @@
 package com.sysgears.application;
 
 import com.sysgears.application.calculator.util.ICalculator;
-import com.sysgears.application.commands.Command;
+import com.sysgears.application.commands.Commands;
+import com.sysgears.application.converter.Converter;
 import com.sysgears.application.converter.PrettyText;
 import com.sysgears.application.history.History;
 import com.sysgears.application.userinteface.UserInterface;
@@ -47,12 +48,12 @@ public class Service {
      */
     public void start() {
         String message;
-        Command command = null;
+        Commands command = null;
         try {
-            while (command != Command.EXIT) {
+            while (command != Commands.EXIT) {
                 ui.sendMessage(PrettyText.createSeparator("", TERMINAL_WIDTH) + "\n");
                 message = ui.read();
-                command = Command.parse(message);
+                command = Commands.parse(message);
                 execute(command, message);
             }
         } catch (IOException e) {
@@ -68,13 +69,13 @@ public class Service {
      * @param message string
      * @throws IOException when Input/Output error
      */
-    private void execute(final Command command, final String message) throws IOException {
+    private void execute(final Commands command, final String message) throws IOException {
         final String beforeSign = "(*) ";
         final String afterSign = "\n";
         switch (command) {
             case EVALUATE:
                 String value = calculator.calculate(message);
-                history.addRecord(message + "=" + value);
+                history.addRecord(Converter.removeSpaces(message) + "=" + value);
                 ui.sendMessage("= " + value + "\n");
                 break;
             case EXIT:
@@ -91,7 +92,7 @@ public class Service {
             case HELP:
             case UNKNOWN_COMMAND:
                 ui.sendMessage(PrettyText.createSeparator("Help", TERMINAL_WIDTH) + "\n");
-                ui.sendMessage(PrettyText.createString(Command.getCommandsList(), beforeSign, afterSign));
+                ui.sendMessage(PrettyText.createString(Commands.getCommandsList(), beforeSign, afterSign));
                 break;
         }
     }

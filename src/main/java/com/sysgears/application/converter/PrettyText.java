@@ -8,6 +8,21 @@ import java.util.Collection;
 public class PrettyText {
 
     /**
+     * Return string with a specified count of spaces.
+     *
+     * @param count number of spaces
+     * @return string with spaces
+     */
+    public static String generateSpaces(final int count) {
+        StringBuilder spaces = new StringBuilder();
+        for (int i = 0; i < count; ++i) {
+            spaces.append(" ");
+        }
+
+        return spaces.toString();
+    }
+
+    /**
      * Returns command line separator with title.
      *
      * @param title string
