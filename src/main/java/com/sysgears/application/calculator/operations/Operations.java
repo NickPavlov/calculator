@@ -25,6 +25,7 @@ public enum Operations {
 
     COS("cos", Priority.TOP, Type.UNARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
+
             return Math.cos(secondOperand * Math.PI / 180);
         }
     },
@@ -62,7 +63,7 @@ public enum Operations {
     /**
      * Operator character.
      */
-    private final String operatorChar;
+    private final String operator;
 
     /**
      * Operation priority.
@@ -80,32 +81,15 @@ public enum Operations {
     private final String splitType;
 
     /**
-     *
      * @param operator operator string expression
      * @param priority operation priority
-     * @param type operation type
+     * @param type     operation type
      */
     private Operations(final String operator, final Priority priority, final Type type) {
-        this.operatorChar = operator;
+        this.operator = operator;
         this.priority = priority.getIndex();
         this.searchFilter = type.getSearchPattern(operator);
         this.splitType = type.getSplitPattern(operator);
-    }
-
-    /**
-     * Returns max priority of the operation.
-     *
-     * @return int
-     */
-    public static int getLowestPriority() {
-        int lowestPriority = 0;
-        for (Operations o : Operations.values()) {
-            if (o.getPriority() > lowestPriority) {
-                lowestPriority = o.getPriority();
-            }
-        }
-
-        return lowestPriority;
     }
 
     /**
@@ -122,8 +106,8 @@ public enum Operations {
      *
      * @return string
      */
-    public String getOperatorChar() {
-        return operatorChar;
+    public String getOperator() {
+        return operator;
     }
 
     /**
@@ -148,9 +132,8 @@ public enum Operations {
      * Should return the result of the operation.
      * Method is abstract and need to be overridden.
      *
-     * @param firstOperand The first operand
+     * @param firstOperand  The first operand
      * @param secondOperand The second operand
-     *
      * @return string
      */
     public abstract double evaluate(final double firstOperand, final double secondOperand);

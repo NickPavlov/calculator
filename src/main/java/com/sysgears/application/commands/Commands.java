@@ -1,5 +1,6 @@
 package com.sysgears.application.commands;
 
+import com.sysgears.application.commands.util.Type;
 import com.sysgears.application.converter.Converter;
 
 import java.util.ArrayList;
@@ -7,28 +8,27 @@ import java.util.List;
 
 /**
  * Contains a list of the types of permissible commands.
- * All system commands should be marked by <code>Commands.SYSTEM_COMMAND</code> in a description.
  */
 public enum Commands {
-    HISTORY("history", "Display the history of all calculations."),
-    HISTORY_UNIQUE("history unique", "Display all unique calculations."),
-    HELP("help", "Display a list of all available commands."),
-    EXIT("exit", "Exit the program."),
-    EVALUATE(".?\\d+.?", Commands.SYSTEM_COMMAND),
-    UNKNOWN_COMMAND("", Commands.SYSTEM_COMMAND);
+    HISTORY("history", "Display the history of all calculations.", Type.USER),
+    HISTORY_UNIQUE("history unique", "Display all unique calculations.", Type.USER),
+    HELP("help", "Display a list of all available commands.", Type.USER),
+    EXIT("exit", "Exit the program.", Type.USER),
+    EVALUATE(".?\\d+.?", "", Type.SYSTEM),
+    UNKNOWN_COMMAND("", "", Type.SYSTEM);
 
     /**
-     * Marker which indicates a system command.
+     * Command name.
      */
-    public static final String SYSTEM_COMMAND = "{system}";
+    private final String name;
 
     /**
-     * The command name.
+     * Command type.
      */
-    private final String commandName;
+    private final Type type;
 
     /**
-     * The command description.
+     * Command description.
      */
     private final String description;
 
@@ -38,13 +38,15 @@ public enum Commands {
     private final String regex;
 
     /**
-     * @param commandName a command name
+     * @param name a command name
+     * @param type command type
      * @param description description of a command
      */
-    private Commands(final String commandName, final String description) {
-        this.commandName = commandName;
+    private Commands(final String name, final String description, final Type type) {
+        this.name = name;
+        this.type = type;
         this.description = description;
-        this.regex = (description.equals(SYSTEM_COMMAND)) ? commandName : Converter.buildRegex(commandName);
+        this.regex = (type == Type.USER) ? Converter.buildRegex(name) : name;
     }
 
     /**
@@ -73,8 +75,8 @@ public enum Commands {
     public static List<Command> getCommandsList() {
         List<Command> result = new ArrayList<Command>();
         for (Commands command : Commands.values()) {
-            if (!command.description.equals(SYSTEM_COMMAND)) {
-                result.add(new Command(command.commandName, command.description));
+            if (command.type == Type.USER) {
+                result.add(new Command(command.name, command.description));
             }
         }
 

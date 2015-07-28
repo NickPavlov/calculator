@@ -5,12 +5,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
- * The History class keeps the history of the entered expressions.
+ * The <code>History</code> class keeps the history of the entered expressions.
  */
 public class History {
 
     /**
-     * The expressions that have been calculated.
+     * The expressions.
      */
     private final List<String> history = new ArrayList<String>();
 
@@ -24,7 +24,7 @@ public class History {
     }
 
     /**
-     * Returns the history of a calculated expressions.
+     * Returns the history.
      *
      * @return history
      */
@@ -33,7 +33,7 @@ public class History {
     }
 
     /**
-     * Returns the unique history of a calculated expressions.
+     * Returns the unique history.
      *
      * @return unique history
      */

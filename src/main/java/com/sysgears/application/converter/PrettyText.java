@@ -8,6 +8,15 @@ import java.util.Collection;
 public class PrettyText {
 
     /**
+     *
+     * @param expression
+     * @return
+     */
+    public static String removeFirstPlus(final String expression) {
+        return "";
+    }
+
+    /**
      * Return string with a specified count of spaces.
      *
      * @param count number of spaces
