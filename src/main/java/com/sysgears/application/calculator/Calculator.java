@@ -98,7 +98,8 @@ public class Calculator implements ICalculator {
                     : operation.evaluate(0, Double.parseDouble(operands[1]));
 
             result = perform(operation, expression.substring(0, matcher.start())
-                    + enableSign(Converter.round(value, accuracy))
+                    //+ enableSign(Converter.round(value, accuracy))
+                    + Converter.round(value, accuracy)
                     + expression.substring(matcher.end(), expression.length()));
         } else {
             result = expression;
