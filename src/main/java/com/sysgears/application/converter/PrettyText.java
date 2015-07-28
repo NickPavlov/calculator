@@ -8,9 +8,10 @@ import java.util.Collection;
 public class PrettyText {
 
     /**
+     * Removes a first sign in case it's "+", in other cases returns original expression.
      *
-     * @param expression
-     * @return
+     * @param expression string
+     * @return string
      */
     public static String removeFirstPlus(final String expression) {
         return "";
