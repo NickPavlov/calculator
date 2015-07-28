@@ -74,14 +74,14 @@ public class Service {
                 ui.sendMessage("Goodbye!");
                 break;
             case HISTORY:
-                ui.sendMessage(new PrettyPrintingList(history.getHistory()).createString("\n"));
+                ui.sendMessage(PrettyPrintingList.createString(history.getHistory(), "\n"));
                 break;
             case HISTORY_UNIQUE:
-                ui.sendMessage(new PrettyPrintingList(history.getUniqueHistory()).createString("\n"));
+                ui.sendMessage(PrettyPrintingList.createString(history.getUniqueHistory(), "\n"));
                 break;
             case HELP:
             case UNKNOWN_COMMAND:
-                ui.sendMessage(new PrettyPrintingList(Command.getCommandsList()).createString("\n"));
+                ui.sendMessage(PrettyPrintingList.createString(Command.getCommandsList(), "\n"));
                 break;
         }
     }

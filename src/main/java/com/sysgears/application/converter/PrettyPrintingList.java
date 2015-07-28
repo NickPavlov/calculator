@@ -8,26 +8,13 @@ import java.util.List;
 public class PrettyPrintingList {
 
     /**
-     * List which need to be printed.
-     */
-    private final List list;
-
-    /**
-     * Creates the <code>PrettyPrintingList</code> object.
-     *
-     * @param list list to print
-     */
-    public PrettyPrintingList(final List list) {
-        this.list = list;
-    }
-
-    /**
      * Creates a string, based on the elements of the list.
      *
+     * @param list list to print
      * @param separator a string which separates the elements of the list
      * @return string
      */
-    public String createString(final String separator) {
+    public static String createString(final List list, final String separator) {
         String result = "";
         for (Object value : list) {
             result += value + separator;
