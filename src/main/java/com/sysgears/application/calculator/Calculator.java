@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 /**
  * The <code>Calculator</code> class provides methods to calculate mathematical expression in string.
  * Operations that are calculated in the Calculator are described in
- * <code>com.sysgears.application.calculator.util.Operation</code>.
+ * <code>com.sysgears.application.calculator.util.Operations</code>.
  */
 public class Calculator implements ICalculator {
 
@@ -29,7 +29,7 @@ public class Calculator implements ICalculator {
      */
     public Calculator(final String accuracy) {
         this.accuracy = accuracy;
-        this.maxPriority = Operation.getMaxPriorityValue();
+        this.maxPriority = Operations.getMaxPriorityValue();
     }
 
     /**
@@ -46,28 +46,28 @@ public class Calculator implements ICalculator {
      * @return string with value
      * @throws IllegalArgumentException when input argument is not correct
      */
-    public String calculate(final String expression) throws IllegalArgumentException {
-        if (expression.isEmpty()) {
-            throw new IllegalArgumentException();
+    public String calculate(final String expression) {
+        if (expression == null) {
+            throw new IllegalArgumentException("Expression can't be null.");
         }
 
         return performAll(Converter.removeSpaces(expression));
     }
 
     /**
-     * Performs all the mathematical operations of
-     * com.sysgears.application.calculator.util.Operation.
+     * Performs all the mathematical operations of the
+     * <code>com.sysgears.application.calculator.util.Operations</code>.
      *
      * @param expression mathematical expression
      * @return string with performed operations
      */
-    public String performAll(final String expression) {
+    private String performAll(final String expression) {
         String result = expression;
         for (Brackets brackets : Brackets.values()) {
             result = findBrackets(brackets, result);
         }
         for (int priority = 0; priority <= maxPriority; ++priority) {
-            for (Operation operation : Operation.values()) {
+            for (Operations operation : Operations.values()) {
                 if (operation.getPriority() == priority) {
                     result = perform(operation, result);
                 }
@@ -87,7 +87,7 @@ public class Calculator implements ICalculator {
      * @param expression string with mathematical expression
      * @return string with performed operations of the specific type
      */
-    private String perform(final Operation operation, final String expression) {
+    private String perform(final Operations operation, final String expression) {
         final Matcher matcher = Converter.findSubstring(expression, operation.getSearchParameter());
         String result;
 

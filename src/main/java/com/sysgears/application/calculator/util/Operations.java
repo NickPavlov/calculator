@@ -1,9 +1,9 @@
 package com.sysgears.application.calculator.util;
 
 /**
- * The <code>Operation</code> class provides a basic set of operators required to operate the calculator.
+ * The <code>Operations</code> class provides a basic set of operators required to operate the calculator.
  */
-public enum Operation {
+public enum Operations {
 
     SIN(0, "sin", Type.UNARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
@@ -53,7 +53,7 @@ public enum Operation {
     private final String operatorChar;
 
     /**
-     * Operation priority.
+     * Operations priority.
      */
     private final int priority;
 
@@ -71,7 +71,7 @@ public enum Operation {
      * @param priority     operation priority
      * @param operatorChar operator character
      */
-    private Operation(final int priority, final String operatorChar, final Type type) {
+    private Operations(final int priority, final String operatorChar, final Type type) {
         this.priority = priority;
         this.operatorChar = operatorChar;
         this.searchFilter = type.getSearchPattern(operatorChar);
@@ -85,7 +85,7 @@ public enum Operation {
      */
     public static int getMaxPriorityValue() {
         int maxPriorityValue = 0;
-        for (Operation o : Operation.values()) {
+        for (Operations o : Operations.values()) {
             if (o.getPriority() > maxPriorityValue) {
                 maxPriorityValue = o.getPriority();
             }

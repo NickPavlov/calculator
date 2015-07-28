@@ -2,7 +2,7 @@ package com.sysgears.application;
 
 import com.sysgears.application.calculator.util.ICalculator;
 import com.sysgears.application.commands.Command;
-import com.sysgears.application.converter.PrettyPrintingList;
+import com.sysgears.application.converter.PrettyText;
 import com.sysgears.application.history.History;
 import com.sysgears.application.userinteface.UserInterface;
 
@@ -12,6 +12,11 @@ import java.io.IOException;
  * The Service class performs management of the main parts of the application.
  */
 public class Service {
+
+    /**
+     * Terminal width.
+     */
+    public static final int TERMINAL_WIDTH = 80;
 
     /**
      * Calculator, used to calculate mathematical expressions.
@@ -45,7 +50,7 @@ public class Service {
         Command command = null;
         try {
             while (command != Command.EXIT) {
-                ui.sendMessage("> ");
+                ui.sendMessage(PrettyText.createSeparator("", TERMINAL_WIDTH) + "\n");
                 message = ui.read();
                 command = Command.parse(message);
                 execute(command, message);
@@ -64,6 +69,8 @@ public class Service {
      * @throws IOException when Input/Output error
      */
     private void execute(final Command command, final String message) throws IOException {
+        final String beforeSign = "(*) ";
+        final String afterSign = "\n";
         switch (command) {
             case EVALUATE:
                 String value = calculator.calculate(message);
@@ -74,14 +81,17 @@ public class Service {
                 ui.sendMessage("Goodbye!");
                 break;
             case HISTORY:
-                ui.sendMessage(PrettyPrintingList.createString(history.getHistory(), "\n"));
+                ui.sendMessage(PrettyText.createSeparator("History", TERMINAL_WIDTH) + "\n");
+                ui.sendMessage(PrettyText.createString(history.getHistory(), beforeSign, afterSign));
                 break;
             case HISTORY_UNIQUE:
-                ui.sendMessage(PrettyPrintingList.createString(history.getUniqueHistory(), "\n"));
+                ui.sendMessage(PrettyText.createSeparator("Unique history", TERMINAL_WIDTH) + "\n");
+                ui.sendMessage(PrettyText.createString(history.getUniqueHistory(), beforeSign, afterSign));
                 break;
             case HELP:
             case UNKNOWN_COMMAND:
-                ui.sendMessage(PrettyPrintingList.createString(Command.getCommandsList(), "\n"));
+                ui.sendMessage(PrettyText.createSeparator("Help", TERMINAL_WIDTH) + "\n");
+                ui.sendMessage(PrettyText.createString(Command.getCommandsList(), beforeSign, afterSign));
                 break;
         }
     }
