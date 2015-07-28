@@ -70,7 +70,7 @@ public enum Command {
      *
      * @return list of commands
      */
-    public static List<String> getHelpMessage() {
+    public static List<String> getCommandsList() {
         List<String> result = new ArrayList<String>();
         for (Command command : Command.values()) {
             if (!command.description.equals(SYSTEM_COMMAND)) {

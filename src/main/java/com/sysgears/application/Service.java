@@ -51,7 +51,7 @@ public class Service {
                 execute(command, message);
             }
         } catch (IOException e) {
-            System.err.println("Connection is not available");
+            System.err.println("Connection is not available.");
             e.printStackTrace();
         }
     }
@@ -61,7 +61,6 @@ public class Service {
      *
      * @param command command type
      * @param message string
-     *
      * @throws IOException when Input/Output error
      */
     private void execute(final Command command, final String message) throws IOException {
@@ -74,17 +73,15 @@ public class Service {
             case EXIT:
                 ui.sendMessage("Goodbye!");
                 break;
-            case HELP:
-                ui.sendMessage(new PrettyPrintingList(Command.getHelpMessage()).createString("\n"));
-                break;
             case HISTORY:
                 ui.sendMessage(new PrettyPrintingList(history.getHistory()).createString("\n"));
                 break;
             case HISTORY_UNIQUE:
-                ui.sendMessage(new PrettyPrintingList(history.getHistory()).createString("\n"));
+                ui.sendMessage(new PrettyPrintingList(history.getUniqueHistory()).createString("\n"));
                 break;
+            case HELP:
             case UNKNOWN_COMMAND:
-                ui.sendMessage(Command.getHelpMessage().toString());
+                ui.sendMessage(new PrettyPrintingList(Command.getCommandsList()).createString("\n"));
                 break;
         }
     }
