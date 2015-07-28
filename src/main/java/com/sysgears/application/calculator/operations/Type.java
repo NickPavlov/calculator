@@ -1,5 +1,7 @@
 package com.sysgears.application.calculator.operations;
 
+import java.util.regex.Pattern;
+
 /**
  * The <code>Type</code> class provides a set of operation types.
  */
@@ -7,11 +9,11 @@ public enum Type {
 
     BINARY {
         public String getSearchPattern(final String operator) {
-            return "[\\+\\-]?" + OPERAND + "\\" + operator + "[\\+\\-]?" + OPERAND;
+            return "[\\+\\-]?" + OPERAND + Pattern.quote(operator) + "[\\+\\-]?" + OPERAND;
         }
 
         public String getSplitPattern(final String operator) {
-            return "(?<=\\d)\\" + operator;
+            return "(?<=\\d)" + Pattern.quote(operator);
         }
     },
 
@@ -22,19 +24,6 @@ public enum Type {
 
         public String getSplitPattern(final String operator) {
             return operator;
-        }
-    },
-
-
-    /* Exceptional conditions */
-
-    POWER {
-        public String getSearchPattern(final String operator) {
-            return OPERAND + "\\" + operator + "[\\+\\-]?" + OPERAND;
-        }
-
-        public String getSplitPattern(final String operator) {
-            return "(?<=\\d)\\" + operator;
         }
     };
 

@@ -1,8 +1,8 @@
 package com.sysgears.application;
 
 import com.sysgears.application.calculator.Calculator;
-import com.sysgears.application.userinteface.UserInterface;
 import com.sysgears.application.history.History;
+import com.sysgears.application.userinteface.UserInterface;
 
 /**
  * The <code>Main</code> class creates the necessary objects for application work and passes control to the service.
@@ -20,7 +20,6 @@ public class Main {
             final UserInterface ui = new UserInterface(System.in, System.out);
             final History history = new History();
             final Service service = new Service(calculator, ui, history);
-
             service.start();
         } catch (Throwable e) {
             e.printStackTrace();

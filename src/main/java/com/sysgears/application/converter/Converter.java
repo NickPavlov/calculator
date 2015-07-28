@@ -1,7 +1,6 @@
 package com.sysgears.application.converter;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,10 +58,9 @@ public class Converter {
      * @return boolean
      */
     public static boolean findString(final String arg, final String regex, final boolean caseInsensitive) {
-        String tmp = (caseInsensitive) ? "(?i)" : "(?-i)";
-        Matcher matcher = Pattern.compile(tmp + regex).matcher(arg);
+        String tmp = caseInsensitive ? "(?i)" : "(?-i)";
 
-        return matcher.find();
+        return Pattern.compile(tmp + regex).matcher(arg).find();
     }
 
     /**
@@ -72,9 +70,7 @@ public class Converter {
      * @return string
      */
     public static String round(final double number, final String formatType) {
-        NumberFormat formatter = new DecimalFormat(formatType);
-
-        return formatter.format(number);
+        return new DecimalFormat(formatType).format(number);
     }
 
     /**

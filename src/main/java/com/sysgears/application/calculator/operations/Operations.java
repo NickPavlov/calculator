@@ -5,51 +5,57 @@ package com.sysgears.application.calculator.operations;
  */
 public enum Operations {
 
-    SIN(0, "sin", Type.UNARY) {
+    MODULO("mod", Priority.TOP, Type.BINARY) {
+        public double evaluate(final double firstOperand, final double secondOperand) {
+            return firstOperand % secondOperand;
+        }
+    },
+
+    POWER("^", Priority.TOP, Type.BINARY) {
+        public double evaluate(final double firstOperand, final double secondOperand) {
+            return Math.pow(firstOperand, secondOperand);
+        }
+    },
+
+    SIN("sin", Priority.TOP, Type.UNARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return Math.sin(secondOperand * Math.PI / 180);
         }
     },
 
-    COS(0, "cos", Type.UNARY) {
+    COS("cos", Priority.TOP, Type.UNARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return Math.cos(secondOperand * Math.PI / 180);
         }
     },
 
-    ABS(0, "abs", Type.UNARY) {
+    ABS("abs", Priority.TOP, Type.UNARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return Math.abs(secondOperand);
         }
     },
 
-    DIVISION(1, "/", Type.BINARY) {
+    DIVISION("/", Priority.MEDIUM, Type.BINARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return firstOperand / secondOperand;
         }
     },
 
-    MULTIPLY(1, "*", Type.BINARY) {
+    MULTIPLY("*", Priority.MEDIUM, Type.BINARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return firstOperand * secondOperand;
         }
     },
 
-    SUBTRACT(2, "-", Type.BINARY) {
+    SUBTRACT("-", Priority.LOW, Type.BINARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return firstOperand - secondOperand;
         }
     },
 
-    ADD(2, "+", Type.BINARY) {
+    ADD("+", Priority.LOW, Type.BINARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return firstOperand + secondOperand;
-        }
-    },
-
-    POW(0, "^", Type.BINARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
-            return Math.pow(firstOperand, secondOperand);
         }
     };
 
@@ -59,7 +65,7 @@ public enum Operations {
     private final String operatorChar;
 
     /**
-     * Operations priority.
+     * Operation priority.
      */
     private final int priority;
 
@@ -74,14 +80,16 @@ public enum Operations {
     private final String splitType;
 
     /**
-     * @param priority     operation priority
-     * @param operatorChar operator character
+     *
+     * @param operator operator string expression
+     * @param priority operation priority
+     * @param type operation type
      */
-    private Operations(final int priority, final String operatorChar, final Type type) {
-        this.priority = priority;
-        this.operatorChar = operatorChar;
-        this.searchFilter = type.getSearchPattern(operatorChar);
-        this.splitType = type.getSplitPattern(operatorChar);
+    private Operations(final String operator, final Priority priority, final Type type) {
+        this.operatorChar = operator;
+        this.priority = priority.getIndex();
+        this.searchFilter = type.getSearchPattern(operator);
+        this.splitType = type.getSplitPattern(operator);
     }
 
     /**
@@ -89,15 +97,15 @@ public enum Operations {
      *
      * @return int
      */
-    public static int getMaxPriorityValue() {
-        int maxPriorityValue = 0;
+    public static int getLowestPriority() {
+        int lowestPriority = 0;
         for (Operations o : Operations.values()) {
-            if (o.getPriority() > maxPriorityValue) {
-                maxPriorityValue = o.getPriority();
+            if (o.getPriority() > lowestPriority) {
+                lowestPriority = o.getPriority();
             }
         }
 
-        return maxPriorityValue;
+        return lowestPriority;
     }
 
     /**
