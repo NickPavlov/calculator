@@ -1,6 +1,6 @@
 package com.sysgears.application;
 
-import com.sysgears.application.calculator.util.ICalculator;
+import com.sysgears.application.parser.util.IParser;
 import com.sysgears.application.commands.Commands;
 import com.sysgears.application.converter.Converter;
 import com.sysgears.application.converter.PrettyText;
@@ -17,12 +17,12 @@ public class Service {
     /**
      * Terminal width.
      */
-    public static final int TERMINAL_WIDTH = 80;
+    //public static final int DEFAULT_TERMINAL_WIDTH = 80;
 
     /**
-     * Calculator, used to calculate mathematical expressions.
+     * Parser, used to parse mathematical expressions.
      */
-    private final ICalculator calculator;
+    private final IParser parser;
 
     /**
      * User interface, used to interact with the user.
@@ -37,8 +37,8 @@ public class Service {
     /**
      * Constructs The Service object. Directly implements the management of the application.
      */
-    public Service(final ICalculator calculator, final UserInterface ui, final History history) {
-        this.calculator = calculator;
+    public Service(final IParser parser, final UserInterface ui, final History history) {
+        this.parser = parser;
         this.ui = ui;
         this.history = history;
     }
@@ -51,8 +51,8 @@ public class Service {
         Commands command = null;
         try {
             while (command != Commands.EXIT) {
-                ui.sendMessage(PrettyText.createSeparator("", TERMINAL_WIDTH) + "\n");
-                message = ui.read();
+                ui.sendMessage(">");
+                message = Converter.removeSpaces(ui.read());
                 command = Commands.parse(message);
                 execute(command, message);
             }
@@ -74,26 +74,28 @@ public class Service {
         final String afterSign = "\n";
         switch (command) {
             case EVALUATE:
-                String value = calculator.calculate(message);
+                String value = parser.parse(message);
                 history.addRecord(Converter.removeSpaces(message) + "=" + value);
-                ui.sendMessage("= " + value + "\n");
+                ui.sendMessage("= " + value + "\n\n");
                 break;
             case EXIT:
                 ui.sendMessage("\nGoodbye!\n");
-                ui.sendMessage(PrettyText.createSeparator("", TERMINAL_WIDTH) + "\n");
+                //ui.sendMessage(PrettyText.createSeparator("", DEFAULT_TERMINAL_WIDTH) + "\n");
                 break;
             case HISTORY:
-                ui.sendMessage(PrettyText.createSeparator("History", TERMINAL_WIDTH) + "\n");
-                ui.sendMessage(PrettyText.createString(history.getHistory(), beforeSign, afterSign));
+                //ui.sendMessage(PrettyText.createSeparator("History", DEFAULT_TERMINAL_WIDTH) + "\n");
+                ui.sendMessage("\n" + PrettyText.createString(history.getHistory(), beforeSign, afterSign) + "\n");
                 break;
             case HISTORY_UNIQUE:
-                ui.sendMessage(PrettyText.createSeparator("Unique history", TERMINAL_WIDTH) + "\n");
-                ui.sendMessage(PrettyText.createString(history.getUniqueHistory(), beforeSign, afterSign));
+                //ui.sendMessage(PrettyText.createSeparator("Unique history", DEFAULT_TERMINAL_WIDTH) + "\n");
+                ui.sendMessage("\n" + PrettyText.createString(history.getUniqueHistory(), beforeSign, afterSign)
+                        + "\n");
                 break;
             case HELP:
             case UNKNOWN_COMMAND:
-                ui.sendMessage(PrettyText.createSeparator("Help", TERMINAL_WIDTH) + "\n");
-                ui.sendMessage(PrettyText.createString(Commands.getCommandsList(), beforeSign, afterSign));
+                //ui.sendMessage(PrettyText.createSeparator("Help", DEFAULT_TERMINAL_WIDTH) + "\n");
+                ui.sendMessage("\n" + PrettyText.createString(Commands.getCommandsList(), beforeSign, afterSign)
+                        + "\n");
                 break;
         }
     }

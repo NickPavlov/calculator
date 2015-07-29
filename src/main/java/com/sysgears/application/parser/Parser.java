@@ -1,19 +1,19 @@
-package com.sysgears.application.calculator;
+package com.sysgears.application.parser;
 
-import com.sysgears.application.calculator.brackets.Brackets;
-import com.sysgears.application.calculator.operations.Operations;
-import com.sysgears.application.calculator.operations.Priority;
-import com.sysgears.application.calculator.util.ICalculator;
+import com.sysgears.application.parser.brackets.Brackets;
+import com.sysgears.application.parser.operations.Operations;
+import com.sysgears.application.parser.operations.Priority;
+import com.sysgears.application.parser.util.IParser;
 import com.sysgears.application.converter.Converter;
 
 import java.util.regex.Matcher;
 
 /**
- * The <code>Calculator</code> class provides methods to calculate mathematical expression in string.
- * Operations that are calculated in the Calculator are described in
- * <code>com.sysgears.application.calculator.operations.Operations</code>.
+ * The <code>Parser</code> class provides methods to parse mathematical expression in string.
+ * Operations that are calculated in the Parser are described in
+ * <code>com.sysgears.application.parser.operations.Operations</code>.
  */
-public class Calculator implements ICalculator {
+public class Parser implements IParser {
 
     /**
      * Accuracy of calculation.
@@ -26,30 +26,30 @@ public class Calculator implements ICalculator {
     private final int lowestPriorityIndex;
 
     /**
-     * Constructs Calculator object with user's calculation accuracy.
+     * Constructs Parser object with user's calculation accuracy.
      *
      * @param accuracy accuracy of calculation
      */
-    public Calculator(final String accuracy) {
+    public Parser(final String accuracy) {
         this.accuracy = accuracy;
         this.lowestPriorityIndex = Priority.getLowestPriority();
     }
 
     /**
-     * Constructs Calculator object with default calculation accuracy: 9 decimal places.
+     * Constructs Parser object with default calculation accuracy: 9 decimal places.
      */
-    public Calculator() {
+    public Parser() {
         this("#.#########");
     }
 
     /**
-     * Calculates mathematical expression in the string.
+     * Parses mathematical expression in the string.
      *
      * @param expression string, mathematical expression
      * @return string with value
      * @throws IllegalArgumentException when input argument is not correct
      */
-    public String calculate(final String expression) {
+    public String parse(final String expression) {
         if (expression == null) {
             throw new IllegalArgumentException("Expression can't be null.");
         }
@@ -59,7 +59,7 @@ public class Calculator implements ICalculator {
 
     /**
      * Performs all the mathematical operations of the
-     * <code>com.sysgears.application.calculator.operations.Operations</code>.
+     * <code>com.sysgears.application.parser.operations.Operations</code>.
      *
      * @param expression mathematical expression
      * @return string with performed operations
