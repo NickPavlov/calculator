@@ -70,9 +70,9 @@ public enum Operations {
     private final int priority;
 
     /**
-     * Search filter for a particular operator in a string and its operands.
+     * Operation regular expression.
      */
-    private final String searchFilter;
+    private final String regex;
 
     /**
      * Split pattern.
@@ -87,7 +87,7 @@ public enum Operations {
     private Operations(final String operator, final Priority priority, final Type type) {
         this.operator = operator;
         this.priority = priority.getIndex();
-        this.searchFilter = type.getSearchPattern(operator);
+        this.regex = type.getRegex(operator);
         this.splitPattern = type.getSplitPattern(operator);
     }
 
@@ -114,8 +114,8 @@ public enum Operations {
      *
      * @return string
      */
-    public String getSearchParameter() {
-        return searchFilter;
+    public String getRegex() {
+        return regex;
     }
 
     /**

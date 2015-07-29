@@ -41,12 +41,12 @@ public enum Operands {
     /**
      * Regex pattern for mathematical sign.
      */
-    private static final String SIGN = "[\\+-]?";
+    public static final String SIGN = "[\\+-]?";
 
     /**
      * Regex pattern for real number.
      */
-    private static final String REAL_NUMBER = "\\d+(\\.\\d+)?";
+    public static final String REAL_NUMBER = "\\d+(\\.\\d+)?";
 
     /**
      * Generates part of the operand with brackets.

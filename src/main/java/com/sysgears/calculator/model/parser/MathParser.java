@@ -1,11 +1,15 @@
 package com.sysgears.calculator.model.parser;
 
+import com.sysgears.calculator.model.converter.Converter;
 import com.sysgears.calculator.model.parser.brackets.Brackets;
+import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
-import com.sysgears.calculator.model.converter.Converter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The <code>MathParser</code> class provides methods to parse mathematical expression in string.
@@ -66,10 +70,11 @@ public class MathParser implements IMathParser {
     private String performAll(final String expression) {
         String result = expression;
         //System.out.println(result);
+        /*
         for (Brackets brackets : Brackets.values()) {
             result = findBrackets(brackets, result);
         }
-
+        */
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
                 if (operation.getPriority() == priority) {
@@ -93,19 +98,39 @@ public class MathParser implements IMathParser {
      * @return string with performed operations of the specific type
      */
     private String perform(final Operations operation, final String expression) {
-        final Matcher matcher = Converter.findSubstring(expression, operation.getSearchParameter());
+        final Matcher matcher = Converter.findSubstring(expression, operation.getRegex());
         String result = expression;
         if (matcher.find()) {
-            String[] operands = matcher.group().split(operation.getSplitPattern());
-            double value;
+            //String[] operands = matcher.group().split(operation.getSplitPattern());
+
+            Matcher matcherExpression = Pattern.compile(Operands.SIGN + Operands.REAL_NUMBER).matcher(matcher.group());
+            List<String> listOfOperands = new ArrayList<String>();
+            while (matcherExpression.find()) {
+                listOfOperands.add(matcherExpression.group());
+            }
+
+            double value = 0;
+
+            switch (listOfOperands.size()) {
+                case 1:
+                    value = operation.evaluate(0, Double.parseDouble(listOfOperands.get(0)));
+                    break;
+                case 2:
+                    value = operation.evaluate(Double.parseDouble(listOfOperands.get(0)),
+                            Double.parseDouble(listOfOperands.get(1)));
+                    break;
+            }
+
+            /*
             if (!operands[0].isEmpty()) {
                 value = operation.evaluate(Double.parseDouble(operands[0]), Double.parseDouble(operands[1]));
             } else {
                 value = operation.evaluate(0, Double.parseDouble(operands[1]));
             }
-
+            */
             result = perform(operation, expression.substring(0, matcher.start())
-                    + addPlus(Converter.round(value, accuracy))
+                    + addBrackets(Converter.round(value, accuracy))
+                    //+ addPlus(Converter.round(value, accuracy))
                     + expression.substring(matcher.end(), expression.length()));
         }
 
@@ -133,12 +158,21 @@ public class MathParser implements IMathParser {
     }
 
     /**
-     * Returns number with enabled sign.
+     *
      *
      * @param arg a string of the number
      * @return a string of the number with enabled sign
      */
     private String addPlus(final String arg) {
         return (arg.charAt(0) != '+' & arg.charAt(0) != '-') ? '+' + arg : arg;
+    }
+
+    /**
+     * Returns expression in brackets
+     * @param expression
+     * @return
+     */
+    private String addBrackets(final String expression) {
+        return "+(" + expression + ")";
     }
 }

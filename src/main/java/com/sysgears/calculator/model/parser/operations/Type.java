@@ -1,5 +1,7 @@
 package com.sysgears.calculator.model.parser.operations;
 
+import com.sysgears.calculator.model.parser.operands.Operands;
+
 import java.util.regex.Pattern;
 
 /**
@@ -8,8 +10,9 @@ import java.util.regex.Pattern;
 public enum Type {
 
     BINARY {
-        public String getSearchPattern(final String operator) {
-            return OPERAND + Pattern.quote(operator) + OPERAND;
+        public String getRegex(final String operator) {
+            return Operands.FIRST.getPattern(false) + Pattern.quote(operator) + Operands.SECOND.getPattern(true);
+            //return OPERAND + Pattern.quote(operator) + OPERAND;
         }
 
         public String getSplitPattern(final String operator) {
@@ -18,8 +21,9 @@ public enum Type {
     },
 
     UNARY {
-        public String getSearchPattern(final String operator) {
-            return operator + OPERAND;
+        public String getRegex(final String operator) {
+            return operator + Operands.SECOND.getPattern(true);
+            //return operator + OPERAND;
         }
 
         public String getSplitPattern(final String operator) {
@@ -38,7 +42,7 @@ public enum Type {
      * @param operator string
      * @return string
      */
-    public abstract String getSearchPattern(final String operator);
+    public abstract String getRegex(final String operator);
 
     /**
      * Should return a regex pattern to split a single operation by operator.
