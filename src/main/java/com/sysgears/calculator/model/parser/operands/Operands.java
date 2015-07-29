@@ -17,8 +17,8 @@ public enum Operands {
             }
             closingBrackets.append("]");
 
-            return "(" +generateWithBrackets(SIGN, REAL_NUMBER)
-                    + REAL_NUMBER + "(?!" + closingBrackets.toString() + "))";
+            return "(" + generateWithBrackets(SIGN, REAL_NUMBER)
+                    + (enableSign ? SIGN : "") + REAL_NUMBER + "(?!" + closingBrackets.toString() + "))";
         }
     },
 
@@ -34,7 +34,7 @@ public enum Operands {
             closingBrackets.append("]");
 
             return "(" + generateWithBrackets(SIGN, REAL_NUMBER)
-                    + "(?!" + closingBrackets.toString() + ")" + SIGN + REAL_NUMBER + ")";
+                    + "(?!" + closingBrackets.toString() + ")" + (enableSign ? SIGN : "") + REAL_NUMBER + ")";
         }
     };
 
