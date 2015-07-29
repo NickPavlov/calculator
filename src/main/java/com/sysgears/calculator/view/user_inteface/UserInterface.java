@@ -1,4 +1,4 @@
-package com.sysgears.calculator.view.userinteface;
+package com.sysgears.calculator.view.user_inteface;
 
 import java.io.*;
 

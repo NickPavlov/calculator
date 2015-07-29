@@ -76,7 +76,6 @@ public class MathParser implements IMathParser {
                 if (operation.getPriority() == priority) {
                     result = perform(operation, result);
                     //System.out.println(result);
-
                 }
             }
         }

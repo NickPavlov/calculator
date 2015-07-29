@@ -11,12 +11,6 @@ public enum Operations {
         }
     },
 
-    POWER("^", Priority.TOP, Type.BINARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
-            return Math.pow(firstOperand, secondOperand);
-        }
-    },
-
     SIN("sin", Priority.TOP, Type.UNARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return Math.sin(secondOperand * Math.PI / 180);
@@ -32,6 +26,12 @@ public enum Operations {
     ABS("abs", Priority.TOP, Type.UNARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return Math.abs(secondOperand);
+        }
+    },
+
+    POWER("^", Priority.MEDIUM, Type.BINARY) {
+        public double evaluate(final double firstOperand, final double secondOperand) {
+            return Math.pow(firstOperand, secondOperand);
         }
     },
 
