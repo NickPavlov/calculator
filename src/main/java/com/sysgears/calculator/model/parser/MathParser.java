@@ -1,17 +1,17 @@
-package com.sysgears.application.parser;
+package com.sysgears.calculator.model.parser;
 
-import com.sysgears.application.parser.brackets.Brackets;
-import com.sysgears.application.parser.operations.Operations;
-import com.sysgears.application.parser.operations.Priority;
-import com.sysgears.application.parser.util.IMathParser;
-import com.sysgears.application.converter.Converter;
+import com.sysgears.calculator.model.parser.brackets.Brackets;
+import com.sysgears.calculator.model.parser.operations.Operations;
+import com.sysgears.calculator.model.parser.operations.Priority;
+import com.sysgears.calculator.model.parser.util.IMathParser;
+import com.sysgears.calculator.model.converter.Converter;
 
 import java.util.regex.Matcher;
 
 /**
  * The <code>MathParser</code> class provides methods to parse mathematical expression in string.
  * Operations that are calculated in the MathParser are described in
- * <code>com.sysgears.application.parser.operations.Operations</code>.
+ * <code>com.sysgears.calculator.model.parser.operations.Operations</code>.
  */
 public class MathParser implements IMathParser {
 
@@ -59,7 +59,7 @@ public class MathParser implements IMathParser {
 
     /**
      * Performs all the mathematical operations of the
-     * <code>com.sysgears.application.parser.operations.Operations</code>.
+     * <code>com.sysgears.calculator.model.parser.operations.Operations</code>.
      *
      * @param expression mathematical expression
      * @return string with performed operations

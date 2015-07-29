@@ -1,4 +1,4 @@
-package com.sysgears.application.converter;
+package com.sysgears.calculator.model.converter;
 
 import java.util.Collection;
 

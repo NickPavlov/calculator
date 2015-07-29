@@ -1,4 +1,4 @@
-package com.sysgears.application.userinteface;
+package com.sysgears.calculator.view.userinteface;
 
 import java.io.IOException;
 import java.io.InputStream;

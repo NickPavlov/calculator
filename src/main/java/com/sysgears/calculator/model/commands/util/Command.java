@@ -1,4 +1,4 @@
-package com.sysgears.application.commands.util;
+package com.sysgears.calculator.model.commands.util;
 
 /**
  * The <code>Command</code> class provides functionality to work with commands.

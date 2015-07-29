@@ -1,4 +1,4 @@
-package com.sysgears.application.parser.operations;
+package com.sysgears.calculator.model.parser.operations;
 
 /**
  * The <code>Priority</code> class provides functionality to work with a priorities.

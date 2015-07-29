@@ -1,4 +1,4 @@
-package com.sysgears.application.history;
+package com.sysgears.calculator.model.history;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

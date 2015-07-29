@@ -1,8 +1,8 @@
-package com.sysgears.application.commands;
+package com.sysgears.calculator.model.commands;
 
-import com.sysgears.application.commands.util.Command;
-import com.sysgears.application.commands.util.Type;
-import com.sysgears.application.converter.Converter;
+import com.sysgears.calculator.model.commands.util.Command;
+import com.sysgears.calculator.model.commands.util.Type;
+import com.sysgears.calculator.model.converter.Converter;
 
 import java.util.ArrayList;
 import java.util.List;

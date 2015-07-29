@@ -1,4 +1,4 @@
-package com.sysgears.application.parser.operations;
+package com.sysgears.calculator.model.parser.operations;
 
 import java.util.regex.Pattern;
 

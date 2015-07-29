@@ -1,4 +1,4 @@
-package com.sysgears.application.parser.brackets;
+package com.sysgears.calculator.model.parser.brackets;
 
 /**
  * Replacement class contains regex patterns for substring search and methods for their modification.

@@ -1,16 +1,16 @@
-package com.sysgears.application;
+package com.sysgears.calculator;
 
-import com.sysgears.application.parser.MathParser;
-import com.sysgears.application.history.History;
-import com.sysgears.application.userinteface.UserInterface;
+import com.sysgears.calculator.model.parser.MathParser;
+import com.sysgears.calculator.model.history.History;
+import com.sysgears.calculator.view.userinteface.UserInterface;
 
 /**
- * The <code>Main</code> class creates the necessary objects for application work and passes control to the service.
+ * The <code>Main</code> class creates the necessary objects for calculator work and passes control to the service.
  */
 public class Main {
 
     /**
-     * Launches service to manage application.
+     * Launches service to manage calculator.
      *
      * @param args command line arguments
      */

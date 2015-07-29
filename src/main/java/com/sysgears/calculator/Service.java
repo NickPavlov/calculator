@@ -1,16 +1,16 @@
-package com.sysgears.application;
+package com.sysgears.calculator;
 
-import com.sysgears.application.parser.util.IMathParser;
-import com.sysgears.application.commands.Commands;
-import com.sysgears.application.converter.Converter;
-import com.sysgears.application.converter.PrettyText;
-import com.sysgears.application.history.History;
-import com.sysgears.application.userinteface.UserInterface;
+import com.sysgears.calculator.model.commands.Commands;
+import com.sysgears.calculator.model.converter.Converter;
+import com.sysgears.calculator.model.converter.PrettyText;
+import com.sysgears.calculator.model.history.History;
+import com.sysgears.calculator.model.parser.util.IMathParser;
+import com.sysgears.calculator.view.userinteface.UserInterface;
 
 import java.io.IOException;
 
 /**
- * The Service class performs management of the main parts of the application.
+ * The Service class performs management of the main parts of the calculator.
  */
 public class Service {
 
@@ -35,7 +35,7 @@ public class Service {
     private final History history;
 
     /**
-     * Constructs The Service object. Directly implements the management of the application.
+     * Constructs The Service object. Directly implements the management of the calculator.
      *
      * @param mathParser mathematical parser
      * @param ui user interface

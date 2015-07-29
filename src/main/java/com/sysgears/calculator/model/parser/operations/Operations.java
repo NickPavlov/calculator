@@ -1,4 +1,4 @@
-package com.sysgears.application.parser.operations;
+package com.sysgears.calculator.model.parser.operations;
 
 /**
  * The <code>Operations</code> class provides a basic set of operators required to operate the parser.
