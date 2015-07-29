@@ -35,6 +35,8 @@ public enum Brackets {
      * @param closingBracket closing bracket
      */
     private Brackets(final String openingBracket, final String closingBracket) {
+        this.openingBracket = openingBracket;
+        this.closingBracket = closingBracket;
         this.regex = "\\" + openingBracket + OPERAND + "\\" + closingBracket;
     }
 
