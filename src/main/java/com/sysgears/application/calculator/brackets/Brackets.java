@@ -33,7 +33,7 @@ public enum Brackets {
      *
      * @return regular expression
      */
-    public String getRegex() {
+    public String getPattern() {
         return regex;
     }
 }

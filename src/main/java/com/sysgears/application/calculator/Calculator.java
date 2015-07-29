@@ -66,13 +66,17 @@ public class Calculator implements ICalculator {
      */
     private String performAll(final String expression) {
         String result = expression;
+        //System.out.println(result);
         for (Brackets brackets : Brackets.values()) {
             result = findBrackets(brackets, result);
         }
+
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
                 if (operation.getPriority() == priority) {
                     result = perform(operation, result);
+                    //System.out.println(result);
+
                 }
             }
         }
@@ -94,7 +98,7 @@ public class Calculator implements ICalculator {
         final Matcher matcher = Converter.findSubstring(expression, operation.getSearchParameter());
         String result = expression;
         if (matcher.find()) {
-            String[] operands = matcher.group().split(operation.getSplitType());
+            String[] operands = matcher.group().split(operation.getSplitPattern());
             double value;
             if (!operands[0].isEmpty()) {
                 value = operation.evaluate(Double.parseDouble(operands[0]), Double.parseDouble(operands[1]));
@@ -103,7 +107,7 @@ public class Calculator implements ICalculator {
             }
 
             result = perform(operation, expression.substring(0, matcher.start())
-                    + addSign(Converter.round(value, accuracy))
+                    + addPlus(Converter.round(value, accuracy))
                     + expression.substring(matcher.end(), expression.length()));
         }
 
@@ -118,7 +122,7 @@ public class Calculator implements ICalculator {
      * @return modified string, otherwise - the original string
      */
     private String findBrackets(final Brackets replacement, final String arg) {
-        final Matcher matcher = Converter.findSubstring(arg, replacement.getRegex());
+        final Matcher matcher = Converter.findSubstring(arg, replacement.getPattern());
 
         String result = arg;
         if (matcher.find()) {
@@ -136,7 +140,7 @@ public class Calculator implements ICalculator {
      * @param arg a string of the number
      * @return a string of the number with enabled sign
      */
-    private String addSign(final String arg) {
+    private String addPlus(final String arg) {
         return (arg.charAt(0) != '+' & arg.charAt(0) != '-') ? '+' + arg : arg;
     }
 }

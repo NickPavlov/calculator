@@ -1,7 +1,6 @@
 package com.sysgears.application.converter;
 
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +16,7 @@ public class Converter {
      * @param list list of strings
      * @return maximum length
      */
+    /*
     public static int findMaxLength(final List<String> list) {
         int maxLength = 0;
         for (String string : list) {
@@ -27,6 +27,7 @@ public class Converter {
 
         return maxLength;
     }
+    */
 
     /**
      * Remove all spaces from the string.

@@ -7,28 +7,6 @@ import java.util.regex.Pattern;
  */
 public enum Type {
 
-    /*
-    BINARY_WITH_SIGN {
-        public String getSearchPattern(final String operator) {
-            return "[\\+\\-]?" + OPERAND + Pattern.quote(operator) + "[\\+\\-]?" + OPERAND;
-        }
-
-        public String getSplitPattern(final String operator) {
-            return "(?<=\\d)" + Pattern.quote(operator);
-        }
-    },
-
-    BINARY_WITHOUT_SIGN {
-        public String getSearchPattern(final String operator) {
-            return "[\\+\\-]?" + OPERAND + Pattern.quote(operator) + "[\\+\\-]?" + OPERAND;
-        }
-
-        public String getSplitPattern(final String operator) {
-            return "(?<=\\d)" + Pattern.quote(operator);
-        }
-    },
-    */
-
     BINARY {
         public String getSearchPattern(final String operator) {
             return "[\\+\\-]?" + OPERAND + Pattern.quote(operator) + "[\\+\\-]?" + OPERAND;
@@ -53,6 +31,7 @@ public enum Type {
      * Operand pattern.
      */
     public final static String OPERAND = "([\\d]+([\\.][\\d]+)?)";
+    //public final static String OPERAND = "(?(?<=\\()([\\+\\-]?\\d+(?=\\)))|\\d+(?!\\)))";
 
     /**
      * Should return a regex pattern to parse a single operation.

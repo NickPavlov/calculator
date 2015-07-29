@@ -25,7 +25,6 @@ public enum Operations {
 
     COS("cos", Priority.TOP, Type.UNARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
-
             return Math.cos(secondOperand * Math.PI / 180);
         }
     },
@@ -78,7 +77,7 @@ public enum Operations {
     /**
      * Split pattern.
      */
-    private final String splitType;
+    private final String splitPattern;
 
     /**
      * @param operator operator string expression
@@ -89,7 +88,7 @@ public enum Operations {
         this.operator = operator;
         this.priority = priority.getIndex();
         this.searchFilter = type.getSearchPattern(operator);
-        this.splitType = type.getSplitPattern(operator);
+        this.splitPattern = type.getSplitPattern(operator);
     }
 
     /**
@@ -124,8 +123,8 @@ public enum Operations {
      *
      * @return string
      */
-    public String getSplitType() {
-        return splitType;
+    public String getSplitPattern() {
+        return splitPattern;
     }
 
     /**
