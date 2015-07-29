@@ -3,17 +3,17 @@ package com.sysgears.application.parser;
 import com.sysgears.application.parser.brackets.Brackets;
 import com.sysgears.application.parser.operations.Operations;
 import com.sysgears.application.parser.operations.Priority;
-import com.sysgears.application.parser.util.IParser;
+import com.sysgears.application.parser.util.IMathParser;
 import com.sysgears.application.converter.Converter;
 
 import java.util.regex.Matcher;
 
 /**
- * The <code>Parser</code> class provides methods to parse mathematical expression in string.
- * Operations that are calculated in the Parser are described in
+ * The <code>MathParser</code> class provides methods to parse mathematical expression in string.
+ * Operations that are calculated in the MathParser are described in
  * <code>com.sysgears.application.parser.operations.Operations</code>.
  */
-public class Parser implements IParser {
+public class MathParser implements IMathParser {
 
     /**
      * Accuracy of calculation.
@@ -26,19 +26,19 @@ public class Parser implements IParser {
     private final int lowestPriorityIndex;
 
     /**
-     * Constructs Parser object with user's calculation accuracy.
+     * Constructs MathParser object with user's calculation accuracy.
      *
      * @param accuracy accuracy of calculation
      */
-    public Parser(final String accuracy) {
+    public MathParser(final String accuracy) {
         this.accuracy = accuracy;
         this.lowestPriorityIndex = Priority.getLowestPriority();
     }
 
     /**
-     * Constructs Parser object with default calculation accuracy: 9 decimal places.
+     * Constructs MathParser object with default calculation accuracy: 9 decimal places.
      */
-    public Parser() {
+    public MathParser() {
         this("#.#########");
     }
 

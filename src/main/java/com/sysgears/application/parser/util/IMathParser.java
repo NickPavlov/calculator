@@ -1,9 +1,9 @@
 package com.sysgears.application.parser.util;
 
 /**
- * The <code>IParser</code> interface defines the behavior of a parser object.
+ * The <code>IMathParser</code> interface defines the behavior of a parser object.
  */
-public interface IParser {
+public interface IMathParser {
 
     /**
      * Should return the result of an operation given in <code>expression</code>.

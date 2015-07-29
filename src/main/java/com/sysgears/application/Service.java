@@ -1,6 +1,6 @@
 package com.sysgears.application;
 
-import com.sysgears.application.parser.util.IParser;
+import com.sysgears.application.parser.util.IMathParser;
 import com.sysgears.application.commands.Commands;
 import com.sysgears.application.converter.Converter;
 import com.sysgears.application.converter.PrettyText;
@@ -20,9 +20,9 @@ public class Service {
     //public static final int DEFAULT_TERMINAL_WIDTH = 80;
 
     /**
-     * Parser, used to parse mathematical expressions.
+     * MathParser, used to parse mathematical expressions.
      */
-    private final IParser parser;
+    private final IMathParser mathParser;
 
     /**
      * User interface, used to interact with the user.
@@ -36,9 +36,13 @@ public class Service {
 
     /**
      * Constructs The Service object. Directly implements the management of the application.
+     *
+     * @param mathParser mathematical parser
+     * @param ui user interface
+     * @param history history keeper
      */
-    public Service(final IParser parser, final UserInterface ui, final History history) {
-        this.parser = parser;
+    public Service(final IMathParser mathParser, final UserInterface ui, final History history) {
+        this.mathParser = mathParser;
         this.ui = ui;
         this.history = history;
     }
@@ -52,7 +56,7 @@ public class Service {
         try {
             while (command != Commands.EXIT) {
                 ui.sendMessage(">");
-                message = Converter.removeSpaces(ui.read());
+                message = ui.read();
                 command = Commands.parse(message);
                 execute(command, message);
             }
@@ -74,7 +78,7 @@ public class Service {
         final String afterSign = "\n";
         switch (command) {
             case EVALUATE:
-                String value = parser.parse(message);
+                String value = mathParser.parse(message);
                 history.addRecord(Converter.removeSpaces(message) + "=" + value);
                 ui.sendMessage("= " + value + "\n\n");
                 break;

@@ -1,6 +1,6 @@
 package com.sysgears.application;
 
-import com.sysgears.application.parser.Parser;
+import com.sysgears.application.parser.MathParser;
 import com.sysgears.application.history.History;
 import com.sysgears.application.userinteface.UserInterface;
 
@@ -16,7 +16,7 @@ public class Main {
      */
     public static void main(final String[] args) {
         try {
-            final Parser calculator = new Parser();
+            final MathParser calculator = new MathParser();
             final UserInterface ui = new UserInterface(System.in, System.out);
             final History history = new History();
             final Service service = new Service(calculator, ui, history);
