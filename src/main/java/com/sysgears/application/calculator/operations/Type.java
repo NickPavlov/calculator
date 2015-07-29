@@ -9,7 +9,7 @@ public enum Type {
 
     BINARY {
         public String getSearchPattern(final String operator) {
-            return "[\\+\\-]?" + OPERAND + Pattern.quote(operator) + "[\\+\\-]?" + OPERAND;
+            return OPERAND + Pattern.quote(operator) + OPERAND;
         }
 
         public String getSplitPattern(final String operator) {
@@ -19,7 +19,7 @@ public enum Type {
 
     UNARY {
         public String getSearchPattern(final String operator) {
-            return operator + "[\\+\\-]?" + OPERAND;
+            return operator + OPERAND;
         }
 
         public String getSplitPattern(final String operator) {
@@ -30,8 +30,7 @@ public enum Type {
     /**
      * Operand pattern.
      */
-    public final static String OPERAND = "([\\d]+([\\.][\\d]+)?)";
-    //public final static String OPERAND = "(?(?<=\\()([\\+\\-]?\\d+(?=\\)))|\\d+(?!\\)))";
+    public final static String OPERAND = "[\\+\\-]?([\\d]+([\\.][\\d]+)?)";
 
     /**
      * Should return a regex pattern to parse a single operation.
