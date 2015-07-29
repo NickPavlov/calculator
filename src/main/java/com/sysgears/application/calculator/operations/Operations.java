@@ -92,9 +92,9 @@ public enum Operations {
     }
 
     /**
-     * Returns priority of the operation.
+     * Returns priority index of the operation.
      *
-     * @return int
+     * @return priority index
      */
     public int getPriority() {
         return priority;
