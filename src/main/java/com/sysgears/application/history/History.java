@@ -10,14 +10,14 @@ import java.util.List;
 public class History {
 
     /**
-     * The expressions.
+     * History.
      */
     private final List<String> history = new ArrayList<String>();
 
     /**
-     * Adds new expression into history database.
+     * Adds new expression into the history.
      *
-     * @param record expression that will added into database
+     * @param record new record
      */
     public void addRecord(final String record) {
         history.add(record);
