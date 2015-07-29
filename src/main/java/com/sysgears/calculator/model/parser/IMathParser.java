@@ -1,4 +1,4 @@
-package com.sysgears.calculator.model.parser.util;
+package com.sysgears.calculator.model.parser;
 
 /**
  * The <code>IMathParser</code> interface defines the behavior of a parser object.

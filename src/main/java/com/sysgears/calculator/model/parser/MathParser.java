@@ -3,7 +3,6 @@ package com.sysgears.calculator.model.parser;
 import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
-import com.sysgears.calculator.model.parser.util.IMathParser;
 import com.sysgears.calculator.model.converter.Converter;
 
 import java.util.regex.Matcher;

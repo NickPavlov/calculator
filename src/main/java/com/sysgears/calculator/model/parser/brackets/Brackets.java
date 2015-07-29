@@ -1,7 +1,7 @@
 package com.sysgears.calculator.model.parser.brackets;
 
 /**
- * Replacement class contains regex patterns for substring search and methods for their modification.
+ * The <code>Brackets</code> class provides a set of brackets.
  */
 public enum Brackets {
 
@@ -16,16 +16,44 @@ public enum Brackets {
     private static final String OPERAND = "[\\+\\-]?[\\d]+([\\.][\\d]+)?";
 
     /**
+     * Opening bracket.
+     */
+    private String openingBracket;
+
+    /**
+     * Closing bracket.
+     */
+    private String closingBracket;
+
+    /**
      * Regular expression pattern.
      */
     private final String regex;
 
     /**
-     * @param firstBracket  opening bracket
-     * @param secondBracket closing bracket
+     * @param openingBracket  opening bracket
+     * @param closingBracket closing bracket
      */
-    private Brackets(final String firstBracket, final String secondBracket) {
-        this.regex = "\\" + firstBracket + OPERAND + "\\" + secondBracket;
+    private Brackets(final String openingBracket, final String closingBracket) {
+        this.regex = "\\" + openingBracket + OPERAND + "\\" + closingBracket;
+    }
+
+    /**
+     * Returns an opening bracket.
+     *
+     * @return opening brackets
+     */
+    public String getOpeningBracket() {
+        return openingBracket;
+    }
+
+    /**
+     * Returns a closing bracket.
+     *
+     * @return closing bracket
+     */
+    public String getClosingBracket() {
+        return closingBracket;
     }
 
     /**
