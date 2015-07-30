@@ -11,11 +11,6 @@ public enum Brackets {
     ANGLEBRACKETS("<", ">");
 
     /**
-     * Operand.
-     */
-    private static final String OPERAND = "[\\+\\-]?[\\d]+([\\.][\\d]+)?";
-
-    /**
      * Opening bracket.
      */
     private String openingBracket;
@@ -26,24 +21,18 @@ public enum Brackets {
     private String closingBracket;
 
     /**
-     * Regular expression pattern.
-     */
-    private final String regex;
-
-    /**
-     * @param openingBracket  opening bracket
-     * @param closingBracket closing bracket
+     * @param openingBracket an opening bracket
+     * @param closingBracket a closing bracket
      */
     private Brackets(final String openingBracket, final String closingBracket) {
         this.openingBracket = openingBracket;
         this.closingBracket = closingBracket;
-        this.regex = "\\" + openingBracket + OPERAND + "\\" + closingBracket;
     }
 
     /**
      * Returns an opening bracket.
      *
-     * @return opening brackets
+     * @return an opening brackets
      */
     public String getOpeningBracket() {
         return openingBracket;
@@ -52,18 +41,9 @@ public enum Brackets {
     /**
      * Returns a closing bracket.
      *
-     * @return closing bracket
+     * @return a closing bracket
      */
     public String getClosingBracket() {
         return closingBracket;
-    }
-
-    /**
-     * Returns regular expression filter.
-     *
-     * @return regular expression
-     */
-    public String getPattern() {
-        return regex;
     }
 }
