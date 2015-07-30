@@ -29,7 +29,7 @@ public enum Operations {
         }
     },
 
-    POWER("^", Priority.MEDIUM, Type.BINARY_FIRST_WITHOUT_SIGN) {
+    POWER("^", Priority.TOP, Type.BINARY_FIRST_WITHOUT_SIGN) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return Math.pow(firstOperand, secondOperand);
         }
@@ -47,17 +47,19 @@ public enum Operations {
         }
     },
 
+    ADD("+", Priority.LOW, Type.BINARY) {
+        public double evaluate(final double firstOperand, final double secondOperand) {
+            return firstOperand + secondOperand;
+        }
+    },
+
     SUBTRACT("-", Priority.LOW, Type.BINARY) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return firstOperand - secondOperand;
         }
     },
 
-    ADD("+", Priority.LOW, Type.BINARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
-            return firstOperand + secondOperand;
-        }
-    };
+    ;
 
     /**
      * Operator character.

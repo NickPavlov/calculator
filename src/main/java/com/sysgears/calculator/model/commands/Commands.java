@@ -2,7 +2,7 @@ package com.sysgears.calculator.model.commands;
 
 import com.sysgears.calculator.model.commands.util.Command;
 import com.sysgears.calculator.model.commands.util.Type;
-import com.sysgears.calculator.model.converter.Converter;
+import com.sysgears.calculator.model.converter.StringConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public enum Commands {
         this.name = name;
         this.type = type;
         this.description = description;
-        this.regex = (type == Type.USER) ? Converter.buildRegex(name) : name;
+        this.regex = (type == Type.USER) ? StringConverter.buildRegex(name) : name;
     }
 
     /**
@@ -67,7 +67,7 @@ public enum Commands {
     public static Commands parse(final String expression) {
         Commands result = Commands.UNKNOWN_COMMAND;
         for (Commands command : Commands.values()) {
-            if (Converter.findString(expression, command.getRegex(), true)) {
+            if (StringConverter.findString(expression, command.getRegex(), true)) {
                 result = command;
                 break;
             }

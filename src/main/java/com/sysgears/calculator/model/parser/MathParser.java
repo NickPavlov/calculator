@@ -1,6 +1,7 @@
 package com.sysgears.calculator.model.parser;
 
-import com.sysgears.calculator.model.converter.Converter;
+import com.sysgears.calculator.model.converter.StringConverter;
+import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
@@ -56,7 +57,7 @@ public class MathParser implements IMathParser {
             throw new IllegalArgumentException("Expression can't be null.");
         }
 
-        return performAll(Converter.removeSpaces(expression));
+        return performAll(StringConverter.removeSpaces(expression));
     }
 
     /**
@@ -92,7 +93,7 @@ public class MathParser implements IMathParser {
      * @return string with performed operations of the specific type
      */
     private String perform(final Operations operation, final String expression) {
-        Matcher expressionMatcher = Converter.findSubstring(expression, operation.getOperationPattern());
+        Matcher expressionMatcher = StringConverter.findSubstring(expression, operation.getOperationPattern());
         String result = expression;
 
         if (expressionMatcher.find()) {
@@ -101,9 +102,11 @@ public class MathParser implements IMathParser {
             List<String> operands = new ArrayList<String>();
             while (operandsMatcher.find()) {
                 operands.add(operandsMatcher.group());
-                System.out.println("*"+operandsMatcher.group());
             }
-            System.out.println(operands);
+
+            System.out.println("Expression: " + expressionMatcher.group());
+            System.out.println("Operands: " + operands);
+
             double value = 0;
             switch (operands.size()) {
                 case 1:
@@ -112,13 +115,18 @@ public class MathParser implements IMathParser {
                 case 2:
                     value = operation.evaluate(Double.parseDouble(operands.get(0)),
                             Double.parseDouble(operands.get(1)));
-                    System.out.println(value);
                     break;
             }
 
-            result = perform(operation, expression.substring(0, expressionMatcher.start())
-                    + addPlus(Converter.round(value, accuracy))
-                    + expression.substring(expressionMatcher.end(), expression.length()));
+            System.out.println("Value: " + value);
+
+            result = expression.substring(0, expressionMatcher.start())
+                    //+ addPlus(StringConverter.round(value, accuracy))
+                    + StringConverter.round(value, accuracy)
+                    + expression.substring(expressionMatcher.end(), expression.length());
+
+            //temporary
+            //result = perform(operation, result);
         }
 
         return result;
@@ -132,6 +140,16 @@ public class MathParser implements IMathParser {
      * @return a number with the plus sign
      */
     private String addPlus(final String number) {
-        return (number.charAt(0) != '+' & number.charAt(0) != '-') ? '+' + number : number;
+        //return (number.charAt(0) != '+' & number.charAt(0) != '-') ? '+' + number : number;
+        return (number.charAt(0) != '+' & number.charAt(0) != '-') ? '+' + number : "(" + number + ")";
+    }
+
+    //temporary
+    private static int findOpeningBracket(final String expression, Brackets brackets) {
+        return expression.lastIndexOf(brackets.getOpeningBracket());
+    }
+
+    private static int findClosingBracket(final String expression, Brackets brackets) {
+        return expression.indexOf(brackets.getClosingBracket());
     }
 }

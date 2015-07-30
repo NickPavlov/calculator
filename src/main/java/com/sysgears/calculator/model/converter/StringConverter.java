@@ -5,29 +5,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The <code>Converter</code> class provides methods for formatting the strings, the numbers.
+ * The <code>StringConverter</code> class provides methods for formatting the strings, the numbers.
  * Some methods in this class uses regular expressions to parse strings.
  */
-public class Converter {
-
-    /**
-     * Returns maximum length.
-     *
-     * @param list list of strings
-     * @return maximum length
-     */
-    /*
-    public static int findMaxLength(final List<String> list) {
-        int maxLength = 0;
-        for (String string : list) {
-            if (string.length() > maxLength) {
-                maxLength = string.length();
-            }
-        }
-
-        return maxLength;
-    }
-    */
+public class StringConverter {
 
     /**
      * Remove all spaces from the string.
@@ -83,5 +64,8 @@ public class Converter {
      */
     public static String buildRegex(final String arg) {
         return "^(\\\\s)*" + arg.replaceAll(" ", "(\\\\s)+") + "(\\\\s)*$";
+    }
+
+    private StringConverter() {
     }
 }
