@@ -6,10 +6,10 @@ package com.sysgears.calculator.model.parser;
 public interface IMathParser {
 
     /**
-     * Should return the result of an operation given in <code>expression</code>.
+     * Should return the result of the mathematical expressions in <code>expression</code>.
      *
-     * @param expression expression to parse
-     * @return result of an operation
+     * @param expression the mathematical expression to parse
+     * @return parsed mathematical expression
      */
     public String parse(final String expression);
 }

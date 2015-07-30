@@ -4,6 +4,7 @@ import com.sysgears.calculator.model.converter.StringConverter;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
+import com.sysgears.calculator.model.parser.util.MathConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,21 +153,10 @@ public class MathParser implements IMathParser {
                     break;
             }
             result = perform(operation, expression.substring(0, expressionMatcher.start())
-                    + addBrackets(StringConverter.round(value, accuracy))
+                    + MathConverter.addBrackets(StringConverter.round(value, accuracy))
                     + expression.substring(expressionMatcher.end(), expression.length()));
         }
 
         return result;
-    }
-
-    /**
-     * If the number is negative, places it in brackets.
-     * Otherwise returns the original string.
-     *
-     * @param number a number in the string
-     * @return a number in the brackets if it's negative
-     */
-    private String addBrackets(final String number) {
-        return (number.charAt(0) == '-') ? "(" + number + ")" : number;
     }
 }
