@@ -9,46 +9,53 @@ import java.util.regex.Pattern;
  */
 public enum Type {
 
-    BINARY {
-        public String getRegex(final String operator) {
-            return Operands.FIRST.getPattern(false) + Pattern.quote(operator) + Operands.SECOND.getPattern(true);
-            //return OPERAND + Pattern.quote(operator) + OPERAND;
+    /**
+     * Binary operation.
+     * If the first operand is not in brackets, the mathematical sign is ignored.
+     */
+    BINARY_FIRST_WITHOUT_SIGN {
+        public String getPattern(final String operator) {
+            return generateBinaryPattern(operator, false, true);
         }
+    },
 
-        public String getSplitPattern(final String operator) {
-            return "(?<=\\d)" + Pattern.quote(operator);
+    /**
+     * Binary operation.
+     * If the operands are not in brackets, the mathematical signs are taken into account.
+     */
+    BINARY {
+        public String getPattern(final String operator) {
+            return generateBinaryPattern(operator, true, true);
         }
     },
 
     UNARY {
-        public String getRegex(final String operator) {
+        public String getPattern(final String operator) {
             return operator + Operands.SECOND.getPattern(true);
-            //return operator + OPERAND;
-        }
-
-        public String getSplitPattern(final String operator) {
-            return operator;
         }
     };
 
     /**
-     * Operand pattern.
+     * Generates the pattern for a binary operation.
+     *
+     * @param operator          an operator
+     * @param firstOperandSign  if true, mathematical sign of the first operand is taken into account
+     * @param secondOperandSign if true, mathematical sign of the second operand is taken into account
+     * @return the pattern for a binary operation
      */
-    public final static String OPERAND = "[\\+\\-]?([\\d]+([\\.][\\d]+)?)";
+    private static String generateBinaryPattern(final String operator,
+                                                final boolean firstOperandSign,
+                                                final boolean secondOperandSign) {
+
+        return Operands.FIRST.getPattern(firstOperandSign)
+                + Pattern.quote(operator) + Operands.SECOND.getPattern(secondOperandSign);
+    }
 
     /**
      * Should return a regex pattern to parse a single operation.
      *
-     * @param operator string
-     * @return string
+     * @param operator an operator
+     * @return operation regex pattern
      */
-    public abstract String getRegex(final String operator);
-
-    /**
-     * Should return a regex pattern to split a single operation by operator.
-     *
-     * @param operator string
-     * @return string
-     */
-    public abstract String getSplitPattern(final String operator);
+    public abstract String getPattern(final String operator);
 }

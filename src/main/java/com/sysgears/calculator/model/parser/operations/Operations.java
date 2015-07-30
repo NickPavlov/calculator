@@ -29,7 +29,7 @@ public enum Operations {
         }
     },
 
-    POWER("^", Priority.MEDIUM, Type.BINARY) {
+    POWER("^", Priority.MEDIUM, Type.BINARY_FIRST_WITHOUT_SIGN) {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return Math.pow(firstOperand, secondOperand);
         }
@@ -72,23 +72,17 @@ public enum Operations {
     /**
      * Operation regular expression.
      */
-    private final String regex;
-
-    /**
-     * Split pattern.
-     */
-    private final String splitPattern;
+    private final String operationPattern;
 
     /**
      * @param operator operator string expression
      * @param priority operation priority
      * @param type     operation type
      */
-    private Operations(final String operator, final Priority priority, final Type type) {
+    Operations(final String operator, final Priority priority, final Type type) {
         this.operator = operator;
         this.priority = priority.getIndex();
-        this.regex = type.getRegex(operator);
-        this.splitPattern = type.getSplitPattern(operator);
+        this.operationPattern = type.getPattern(operator);
     }
 
     /**
@@ -114,17 +108,8 @@ public enum Operations {
      *
      * @return string
      */
-    public String getRegex() {
-        return regex;
-    }
-
-    /**
-     * Returns regex to split operator and operands.
-     *
-     * @return string
-     */
-    public String getSplitPattern() {
-        return splitPattern;
+    public String getOperationPattern() {
+        return operationPattern;
     }
 
     /**

@@ -92,7 +92,7 @@ public class MathParser implements IMathParser {
      * @return string with performed operations of the specific type
      */
     private String perform(final Operations operation, final String expression) {
-        Matcher expressionMatcher = Converter.findSubstring(expression, operation.getRegex());
+        Matcher expressionMatcher = Converter.findSubstring(expression, operation.getOperationPattern());
         String result = expression;
 
         if (expressionMatcher.find()) {
