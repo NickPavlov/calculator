@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
- * The <code>History</code> class keeps the history of the entered expressions.
+ * The <code>History</code> class keeps the history of the entered records.
  */
 public class History implements IHistory {
 
