@@ -70,6 +70,36 @@ public class MathParser implements IMathParser {
     private String performAll(final String expression) {
         String result = expression;
         //System.out.println(result);
+
+        int temp;
+        Brackets brackets = null;
+        int openingBracket = expression.length();
+        int closingBracket = 0;
+
+        System.out.println(result.matches(Operands.SIGN + Operands.REAL_NUMBER));
+        String resultCopy = "0";
+        while (resultCopy.matches(Operands.SIGN + Operands.REAL_NUMBER)) {
+            for (Brackets b : Brackets.values()) {
+                temp = findOpeningBracket(expression, openingBracket, b);
+                temp = temp == -1 ? openingBracket : temp;
+                if (temp < openingBracket) {
+                    openingBracket = temp;
+                    brackets = b;
+                }
+            }
+            System.out.println("Opening:" + openingBracket);
+            closingBracket = findClosingBracket(expression, closingBracket, brackets);
+            System.out.println("closing:" + closingBracket);
+
+            resultCopy = expression.substring(openingBracket + 1, closingBracket);
+            System.out.println("result: " + resultCopy);
+            --openingBracket;
+            ++closingBracket;
+
+        }
+
+
+/*
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
                 if (operation.getPriority() == priority) {
@@ -81,7 +111,7 @@ public class MathParser implements IMathParser {
         if (!result.equals(expression)) {
             result = performAll(result);
         }
-
+*/
         return result;
     }
 
@@ -144,12 +174,19 @@ public class MathParser implements IMathParser {
         return (number.charAt(0) != '+' & number.charAt(0) != '-') ? '+' + number : "(" + number + ")";
     }
 
+
     //temporary
-    private static int findOpeningBracket(final String expression, Brackets brackets) {
-        return expression.lastIndexOf(brackets.getOpeningBracket());
+    private static int findOpeningBracket(final String expression, final int fromIndex, Brackets brackets) {
+        return expression.lastIndexOf(brackets.getOpeningBracket(), fromIndex);
     }
 
-    private static int findClosingBracket(final String expression, Brackets brackets) {
-        return expression.indexOf(brackets.getClosingBracket());
+    private static int findClosingBracket(final String expression, final int formIndex, Brackets brackets) {
+        return expression.indexOf(brackets.getClosingBracket(), formIndex);
+    }
+
+    public static void main(String[] args) {
+        String expression = "(1+(5+5))*2-1";
+        System.out.println(expression);
+        new MathParser().performAll(expression);
     }
 }
