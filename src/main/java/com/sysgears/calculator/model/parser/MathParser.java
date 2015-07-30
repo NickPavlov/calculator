@@ -1,7 +1,6 @@
 package com.sysgears.calculator.model.parser;
 
 import com.sysgears.calculator.model.converter.StringConverter;
-import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
@@ -19,19 +18,29 @@ import java.util.regex.Pattern;
 public class MathParser implements IMathParser {
 
     /**
-     * Accuracy of calculation.
+     * The regular expression for the real number.
+     */
+    private static final String numberPattern = Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN;
+
+    /**
+     * The numeric literal.
+     */
+    private static final String numericLiteral = "0";
+
+    /**
+     * An accuracy of calculation.
      */
     private final String accuracy;
 
     /**
-     * Lowest priority index.
+     * A lowest priority index.
      */
     private final int lowestPriorityIndex;
 
     /**
-     * Constructs MathParser object with user's calculation accuracy.
+     * Constructs the <code>MathParser</code> object with the user's calculation accuracy.
      *
-     * @param accuracy accuracy of calculation
+     * @param accuracy the accuracy of calculation
      */
     public MathParser(final String accuracy) {
         this.accuracy = accuracy;
@@ -46,83 +55,73 @@ public class MathParser implements IMathParser {
     }
 
     /**
-     * Parses mathematical expression in the string.
+     * Parses a mathematical expression in the string.
      *
-     * @param expression string, mathematical expression
-     * @return string with value
-     * @throws IllegalArgumentException when input argument is not correct
+     * @param expression the mathematical expression
+     * @return the value as the string
+     * @throws IllegalArgumentException when the input argument is not correct
      */
     public String parse(final String expression) {
         if (expression == null) {
             throw new IllegalArgumentException("Expression can't be null.");
         }
 
-        return performAll(StringConverter.removeSpaces(expression));
+        return parseAllOperations(parseAllBrackets(StringConverter.removeSpaces(expression)));
     }
 
     /**
-     * Performs all mathematical operations specified in
+     * Parses all mathematical operations specified in
+     * <code>com.sysgears.calculator.model.parser.operations.Operations</code>
+     * in the separate brackets.
+     *
+     * @param expression the mathematical expression
+     * @return the mathematical expression with parsed operations in the brackets
+     */
+    private String parseAllBrackets(final String expression) {
+
+        /*
+         Temporary.
+         It must take into account all types of brackets specified in Operations, not only round brackets.
+        */
+        final String bracketsPattern = "(?<=\\()([0-9\\Q^/+-*\\E]?(\\([\\+-]?\\d+(\\.\\d+)?\\))?)+(?=\\))";
+
+        final Matcher matcher = Pattern.compile(bracketsPattern).matcher(expression);
+        String result = expression;
+        String temp = numericLiteral;
+        int openingBracketPos = 0;
+        int closingBracketPos = 0;
+        while (matcher.find() && temp.matches(numberPattern)) {
+            temp = matcher.group();
+            openingBracketPos = matcher.start();
+            closingBracketPos = matcher.end();
+        }
+        if (!numericLiteral.equals(temp)) {
+            result = expression.substring(0, openingBracketPos)
+                    + parseAllOperations(temp) + expression.substring(closingBracketPos, expression.length());
+        }
+
+        return result.equals(expression) ? result : parseAllBrackets(result);
+    }
+
+    /**
+     * Parses all mathematical operations specified in
      * <code>com.sysgears.calculator.model.parser.operations.Operations</code>.
      *
-     * @param expression a mathematical expression
-     * @return a string with performed operations
+     * @param expression the mathematical expression
+     * @return the string with performed operations
      */
-    private String performAll(final String expression) {
+    private String parseAllOperations(final String expression) {
         String result = expression;
-        //System.out.println("\n" + result);
 
-        int temp;
-        Brackets brackets = null;
-        int openingBracket = expression.length();
-        int closingBracket = 0;
-
-        String resultCopy = "0";
-        while (resultCopy.matches(Operands.SIGN + Operands.REAL_NUMBER)) {
-            --openingBracket;
-            ++closingBracket;
-            for (Brackets b : Brackets.values()) {
-                temp = findOpeningBracket(expression, openingBracket, b);
-                temp = temp == -1 ? openingBracket : temp;
-                if (temp < openingBracket) {
-                    openingBracket = temp;
-                    brackets = b;
+        for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
+            for (Operations operation : Operations.values()) {
+                if (operation.getPriority() == priority) {
+                    result = perform(operation, result);
                 }
             }
-            //System.out.println("Opening:" + openingBracket);
-            closingBracket = findClosingBracket(expression, closingBracket, brackets);
-            //System.out.println("closing:" + closingBracket);
-
-            if ((openingBracket != -1) && (closingBracket != -1)) {
-                resultCopy = expression.substring(openingBracket + 1, closingBracket);
-                //System.out.println("result(no brackets):"+resultCopy);
-            } else {
-                resultCopy = result;
-                //System.out.println("reslt");
-            }
-
-            //System.out.println("result: " + resultCopy);
         }
 
-
-            for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
-                for (Operations operation : Operations.values()) {
-                    if (operation.getPriority() == priority) {
-                        resultCopy = perform(operation, resultCopy);
-                    }
-                }
-            }
-        System.out.println("resultCopy: " + resultCopy);
-
-        if (openingBracket != -1 && closingBracket != -1) {
-            result = expression.substring(0, openingBracket + 1) + resultCopy + expression.substring(closingBracket, expression.length());
-        }
-
-
-        if (!result.equals(expression)) {
-            result = performAll(result);
-        }
-
-        return result;
+        return result.equals(expression) ? result : parseAllOperations(result);
     }
 
     /**
@@ -135,18 +134,13 @@ public class MathParser implements IMathParser {
     private String perform(final Operations operation, final String expression) {
         Matcher expressionMatcher = StringConverter.findSubstring(expression, operation.getOperationPattern());
         String result = expression;
-
         if (expressionMatcher.find()) {
-            Matcher operandsMatcher = Pattern.compile(Operands.SIGN + Operands.REAL_NUMBER)
+            Matcher operandsMatcher = Pattern.compile(Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN)
                     .matcher(expressionMatcher.group());
             List<String> operands = new ArrayList<String>();
             while (operandsMatcher.find()) {
                 operands.add(operandsMatcher.group());
             }
-
-            System.out.println("Expression: " + expressionMatcher.group());
-            System.out.println("Operands: " + operands);
-
             double value = 0;
             switch (operands.size()) {
                 case 1:
@@ -157,56 +151,22 @@ public class MathParser implements IMathParser {
                             Double.parseDouble(operands.get(1)));
                     break;
             }
-
-            System.out.println("Value: " + value);
-
-            result = expression.substring(0, expressionMatcher.start())
-                    //+ addPlus(StringConverter.round(value, accuracy))
-                    + StringConverter.round(value, accuracy)
-                    + expression.substring(expressionMatcher.end(), expression.length());
-            System.out.println("Result: " + result);
-            //temporary
-            result = perform(operation, result);
+            result = perform(operation, expression.substring(0, expressionMatcher.start())
+                    + addBrackets(StringConverter.round(value, accuracy))
+                    + expression.substring(expressionMatcher.end(), expression.length()));
         }
 
         return result;
     }
 
     /**
-     * Returns the <code>number</code> with the plus sign.
-     * If sign is already present return the originals string.
+     * If the number is negative, places it in brackets.
+     * Otherwise returns the original string.
      *
-     * @param number a number
-     * @return a number with the plus sign
+     * @param number a number in the string
+     * @return a number in the brackets if it's negative
      */
-    private String addPlus(final String number) {
-        //return (number.charAt(0) != '+' & number.charAt(0) != '-') ? '+' + number : number;
-        return (number.charAt(0) != '+' & number.charAt(0) != '-') ? '+' + number : "(" + number + ")";
-    }
-
-    //temporary
-    private static int findOpeningBracket(final String expression, final int fromIndex, Brackets brackets) {
-        return expression.lastIndexOf(brackets.getOpeningBracket(), fromIndex);
-    }
-
-    private static int findClosingBracket(final String expression, final int formIndex, Brackets brackets) {
-        return expression.indexOf(brackets.getClosingBracket(), formIndex);
-    }
-
-    public static void main(String[] args) {
-        String expression = "1+(-1)+(2+(-4)^2+2)+2*(2-2*(-3)^2)";
-        String numberPattern = Operands.SIGN + Operands.REAL_NUMBER;
-        Matcher matcher = Pattern.compile("(?<=\\()([0-9\\Q^+-*\\E]?(\\([\\+-]?+\\d+\\))?)+(?=\\))").matcher(expression);
-        String result;
-
-        result = "(0)";
-        while (matcher.find()) {
-            result = matcher.group();
-            if (!result.matches(numberPattern)) {
-                System.out.println(result);
-            }
-        }
-
-
+    private String addBrackets(final String number) {
+        return (number.charAt(0) == '-') ? "(" + number + ")" : number;
     }
 }

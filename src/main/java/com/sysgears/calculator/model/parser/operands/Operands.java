@@ -17,8 +17,8 @@ public enum Operands {
             }
             closingBrackets.append("]");
 
-            return "(" + generateWithBrackets(SIGN, REAL_NUMBER)
-                    + (enableSign ? SIGN : "") + REAL_NUMBER + "(?!" + closingBrackets.toString() + "))";
+            return "(" + generateWithBrackets(SIGN_PATTERN, NUMBER_PATTERN)
+                    + (enableSign ? SIGN_PATTERN : "") + NUMBER_PATTERN + "(?!" + closingBrackets.toString() + "))";
         }
     },
 
@@ -33,20 +33,20 @@ public enum Operands {
             }
             closingBrackets.append("]");
 
-            return "(" + generateWithBrackets(SIGN, REAL_NUMBER)
-                    + "(?!" + closingBrackets.toString() + ")" + (enableSign ? SIGN : "") + REAL_NUMBER + ")";
+            return "(" + generateWithBrackets(SIGN_PATTERN, NUMBER_PATTERN)
+                    + "(?!" + closingBrackets.toString() + ")" + (enableSign ? SIGN_PATTERN : "") + NUMBER_PATTERN + ")";
         }
     };
 
     /**
-     * Regex pattern for the mathematical sign.
+     * Regex pattern for a mathematical sign.
      */
-    public static final String SIGN = "(?<!\\d+)[\\+-]?";
+    public static final String SIGN_PATTERN = "(?<!\\d+)[\\+-]?";
 
     /**
-     * Regex pattern for the real number.
+     * Regex pattern for a number.
      */
-    public static final String REAL_NUMBER = "\\d+(\\.\\d+)?";
+    public static final String NUMBER_PATTERN = "\\d+(\\.\\d+)?";
 
     /**
      * Generates part of the operand with brackets.
@@ -60,8 +60,8 @@ public enum Operands {
         for (Brackets brackets : Brackets.values()) {
             pattern.append("\\")
                     .append(brackets.getOpeningBracket())
-                    .append(SIGN)
-                    .append(REAL_NUMBER)
+                    .append(SIGN_PATTERN)
+                    .append(NUMBER_PATTERN)
                     .append("\\")
                     .append(brackets.getClosingBracket())
                     .append("|");
