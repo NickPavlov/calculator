@@ -184,7 +184,6 @@ public class MathParser implements IMathParser {
         return (number.charAt(0) != '+' & number.charAt(0) != '-') ? '+' + number : "(" + number + ")";
     }
 
-
     //temporary
     private static int findOpeningBracket(final String expression, final int fromIndex, Brackets brackets) {
         return expression.lastIndexOf(brackets.getOpeningBracket(), fromIndex);
@@ -195,9 +194,16 @@ public class MathParser implements IMathParser {
     }
 
     public static void main(String[] args) {
-        String expression = "1+2*((-2)^2)";
-        //String expression = "(1+1)*2*2+1";
-        //System.out.println(expression);
-        System.out.println(new MathParser().performAll(expression));
+        String expression = "1+((-2)*2)+2*(2-(-3)^2)";
+        String numberPattern = "(?<=\\()" + Operands.SIGN + Operands.REAL_NUMBER + "(?=\\))";
+        Matcher matcher = Pattern.compile("(?<=\\()([0-9\\Q^+-*\\E]?(\\([\\+-]+\\d+\\))?)+(?=\\))").matcher(expression);
+        String result;
+
+        result = "(0)";
+        while (matcher.find()) {
+            result = matcher.group();
+            System.out.println(result);
+
+        }
     }
 }
