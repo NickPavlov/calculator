@@ -1,4 +1,4 @@
-package com.sysgears.calculator.view.user_inteface;
+package com.sysgears.calculator.view.userinteface;
 
 import java.io.*;
 
@@ -54,7 +54,7 @@ public class UserInterface implements IUserInterface {
      * Sends a message to the user.
      *
      * @param message a message to be displayed
-     * @throws IOException when Input/Output error
+     * @throws IOException when an I/O error has occurred
      */
     public void sendMessage(final String message) throws IOException {
         if (message == null) {
@@ -64,19 +64,19 @@ public class UserInterface implements IUserInterface {
     }
 
     /**
-     * Receives a message from user.
+     * Receives a message from the user.
      *
-     * @return string
-     * @throws IOException when I/O error
+     * @return a message from the user
+     * @throws IOException when an I/O error has occurred
      */
-    public String read() throws IOException {
+    public String receiveMessage() throws IOException {
         return new BufferedReader(new InputStreamReader(inputStream)).readLine();
     }
 
     /**
      * Returns an input stream.
      *
-     * @return input stream
+     * @return an input stream
      */
     public InputStream getInputStream() {
         return inputStream;
@@ -85,7 +85,7 @@ public class UserInterface implements IUserInterface {
     /**
      * Returns an output stream.
      *
-     * @return output stream
+     * @return an output stream
      */
     public OutputStream getOutputStream() {
         return outputStream;
@@ -94,7 +94,7 @@ public class UserInterface implements IUserInterface {
     /**
      * Returns a charset name.
      *
-     * @return charset name
+     * @return a charset name
      */
     public String getCharsetName() {
         return charsetName;

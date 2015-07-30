@@ -11,10 +11,18 @@ import java.util.List;
  * Contains a list of the types of permissible commands.
  */
 public enum Commands {
+
+    /**
+     * User commands.
+     */
     HISTORY("history", "Display the history of all calculations.", Type.USER),
     HISTORY_UNIQUE("history unique", "Display all unique calculations.", Type.USER),
     HELP("help", "Display a list of all available commands.", Type.USER),
     EXIT("exit", "Exit the program.", Type.USER),
+
+    /**
+     * System commands.
+     */
     EVALUATE(".?\\d+.?", "", Type.SYSTEM),
     UNKNOWN_COMMAND("", "", Type.SYSTEM);
 
@@ -39,8 +47,8 @@ public enum Commands {
     private final String regex;
 
     /**
-     * @param name a command name
-     * @param type command type
+     * @param name        a command name
+     * @param type        command type
      * @param description description of a command
      */
     private Commands(final String name, final String description, final Type type) {

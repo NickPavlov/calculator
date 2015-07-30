@@ -7,35 +7,53 @@ import java.util.List;
 /**
  * The <code>History</code> class keeps the history of the entered expressions.
  */
-public class History {
+public class History implements IHistory {
 
     /**
      * History.
      */
-    private final List<String> history = new ArrayList<String>();
+    private final List<String> history;
 
     /**
-     * Adds new expression into the history.
+     * Creates the <code>History</code> object with a specified history storage.
      *
-     * @param record new record
+     * @param history history storage
+     */
+    public History(final List<String> history) {
+        this.history = history;
+    }
+
+    /**
+     * Creates the <code>History</code> object with the <code>ArrayList</code> as a storage.
+     */
+    public History() {
+        this(new ArrayList<String>());
+    }
+
+    /**
+     * Adds new record into the history.
+     *
+     * @param record a new record
      */
     public void addRecord(final String record) {
         history.add(record);
     }
 
     /**
-     * Returns the history.
+     * Returns a history.
+     * The real return type of the list - <code>ArrayList</code>.
      *
-     * @return history
+     * @return a history
      */
     public List<String> getHistory() {
-        return history;
+        return new ArrayList<String>(history);
     }
 
     /**
-     * Returns the unique history.
+     * Returns a unique history.
+     * The real eturn type of the list - <code>ArrayList</code>.
      *
-     * @return unique history
+     * @return a unique history
      */
     public List<String> getUniqueHistory() {
         return new ArrayList<String>(new LinkedHashSet<String>(history));

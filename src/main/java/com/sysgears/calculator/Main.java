@@ -2,7 +2,7 @@ package com.sysgears.calculator;
 
 import com.sysgears.calculator.model.parser.MathParser;
 import com.sysgears.calculator.model.history.History;
-import com.sysgears.calculator.view.user_inteface.UserInterface;
+import com.sysgears.calculator.view.userinteface.UserInterface;
 
 /**
  * The <code>Main</code> class creates the necessary objects for calculator work and passes control to the service.

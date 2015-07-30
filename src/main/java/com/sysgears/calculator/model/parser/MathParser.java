@@ -129,8 +129,8 @@ public class MathParser implements IMathParser {
             }
             */
             result = perform(operation, expression.substring(0, matcher.start())
-                    + addBrackets(Converter.round(value, accuracy))
-                    //+ addPlus(Converter.round(value, accuracy))
+                    //+ addBrackets(Converter.round(value, accuracy))
+                    + addPlus(Converter.round(value, accuracy))
                     + expression.substring(matcher.end(), expression.length()));
         }
 
@@ -168,7 +168,8 @@ public class MathParser implements IMathParser {
     }
 
     /**
-     * Returns expression in brackets
+     * Returns expression in brackets.
+     *
      * @param expression
      * @return
      */

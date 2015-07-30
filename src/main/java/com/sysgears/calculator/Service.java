@@ -5,7 +5,7 @@ import com.sysgears.calculator.model.converter.Converter;
 import com.sysgears.calculator.model.converter.PrettyText;
 import com.sysgears.calculator.model.history.History;
 import com.sysgears.calculator.model.parser.IMathParser;
-import com.sysgears.calculator.view.user_inteface.UserInterface;
+import com.sysgears.calculator.view.userinteface.UserInterface;
 
 import java.io.IOException;
 
@@ -56,7 +56,7 @@ public class Service {
         try {
             while (command != Commands.EXIT) {
                 ui.sendMessage(">");
-                message = ui.read();
+                message = ui.receiveMessage();
                 command = Commands.parse(message);
                 execute(command, message);
             }
