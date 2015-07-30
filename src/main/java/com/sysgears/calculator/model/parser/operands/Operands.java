@@ -7,44 +7,35 @@ import com.sysgears.calculator.model.parser.brackets.Brackets;
  */
 public enum Operands {
 
+    /**
+     * The first operand.
+     */
     FIRST {
         public String getPattern(final boolean enableSign) {
-            StringBuilder closingBrackets = new StringBuilder();
-            closingBrackets.append("[");
-            for (Brackets brackets : Brackets.values()) {
-                closingBrackets.append("\\")
-                        .append(brackets.getClosingBracket());
-            }
-            closingBrackets.append("]");
-
             return "(" + generateWithBrackets(SIGN_PATTERN, NUMBER_PATTERN)
-                    + (enableSign ? SIGN_PATTERN : "") + NUMBER_PATTERN + "(?!" + closingBrackets.toString() + "))";
+                    + (enableSign ? SIGN_PATTERN : "") + NUMBER_PATTERN
+                    + "(?!" + Brackets.generateClosingBrackets() + "))";
         }
     },
 
+    /**
+     * The second operand.
+     */
     SECOND {
         public String getPattern(final boolean enableSign) {
-            StringBuilder closingBrackets = new StringBuilder();
-            closingBrackets.append("[");
-            for (Brackets brackets : Brackets.values()) {
-
-                closingBrackets.append("\\")
-                        .append(brackets.getClosingBracket());
-            }
-            closingBrackets.append("]");
-
             return "(" + generateWithBrackets(SIGN_PATTERN, NUMBER_PATTERN)
-                    + "(?!" + closingBrackets.toString() + ")" + (enableSign ? SIGN_PATTERN : "") + NUMBER_PATTERN + ")";
+                    + "(?!" + Brackets.generateOpeningBrackets() + ")"
+                    + (enableSign ? SIGN_PATTERN : "") + NUMBER_PATTERN + ")";
         }
     };
 
     /**
-     * Regex pattern for a mathematical sign.
+     * The regex pattern for a mathematical sign.
      */
     public static final String SIGN_PATTERN = "(?<!\\d+)[\\+-]?";
 
     /**
-     * Regex pattern for a number.
+     * The regex pattern for a number.
      */
     public static final String NUMBER_PATTERN = "\\d+(\\.\\d+)?";
 
