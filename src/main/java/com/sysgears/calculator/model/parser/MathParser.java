@@ -69,16 +69,17 @@ public class MathParser implements IMathParser {
      */
     private String performAll(final String expression) {
         String result = expression;
-        //System.out.println(result);
+        //System.out.println("\n" + result);
 
         int temp;
         Brackets brackets = null;
         int openingBracket = expression.length();
         int closingBracket = 0;
 
-        System.out.println(result.matches(Operands.SIGN + Operands.REAL_NUMBER));
         String resultCopy = "0";
         while (resultCopy.matches(Operands.SIGN + Operands.REAL_NUMBER)) {
+            --openingBracket;
+            ++closingBracket;
             for (Brackets b : Brackets.values()) {
                 temp = findOpeningBracket(expression, openingBracket, b);
                 temp = temp == -1 ? openingBracket : temp;
@@ -87,31 +88,40 @@ public class MathParser implements IMathParser {
                     brackets = b;
                 }
             }
-            System.out.println("Opening:" + openingBracket);
+            //System.out.println("Opening:" + openingBracket);
             closingBracket = findClosingBracket(expression, closingBracket, brackets);
-            System.out.println("closing:" + closingBracket);
+            //System.out.println("closing:" + closingBracket);
 
-            resultCopy = expression.substring(openingBracket + 1, closingBracket);
-            System.out.println("result: " + resultCopy);
-            --openingBracket;
-            ++closingBracket;
+            if ((openingBracket != -1) && (closingBracket != -1)) {
+                resultCopy = expression.substring(openingBracket + 1, closingBracket);
+                //System.out.println("result(no brackets):"+resultCopy);
+            } else {
+                resultCopy = result;
+                //System.out.println("reslt");
+            }
 
+            //System.out.println("result: " + resultCopy);
         }
 
 
-/*
-        for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
-            for (Operations operation : Operations.values()) {
-                if (operation.getPriority() == priority) {
-                    result = perform(operation, result);
-                    //System.out.println(result);
+            for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
+                for (Operations operation : Operations.values()) {
+                    if (operation.getPriority() == priority) {
+                        resultCopy = perform(operation, resultCopy);
+                    }
                 }
             }
+        System.out.println("resultCopy: " + resultCopy);
+
+        if (openingBracket != -1 && closingBracket != -1) {
+            result = expression.substring(0, openingBracket + 1) + resultCopy + expression.substring(closingBracket, expression.length());
         }
+
+
         if (!result.equals(expression)) {
             result = performAll(result);
         }
-*/
+
         return result;
     }
 
@@ -154,9 +164,9 @@ public class MathParser implements IMathParser {
                     //+ addPlus(StringConverter.round(value, accuracy))
                     + StringConverter.round(value, accuracy)
                     + expression.substring(expressionMatcher.end(), expression.length());
-
+            System.out.println("Result: " + result);
             //temporary
-            //result = perform(operation, result);
+            result = perform(operation, result);
         }
 
         return result;
@@ -185,8 +195,9 @@ public class MathParser implements IMathParser {
     }
 
     public static void main(String[] args) {
-        String expression = "(1+(5+5))*2-1";
-        System.out.println(expression);
-        new MathParser().performAll(expression);
+        String expression = "1+2*((-2)^2)";
+        //String expression = "(1+1)*2*2+1";
+        //System.out.println(expression);
+        System.out.println(new MathParser().performAll(expression));
     }
 }
