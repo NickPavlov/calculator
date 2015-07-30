@@ -92,16 +92,18 @@ public class MathParser implements IMathParser {
      * @return string with performed operations of the specific type
      */
     private String perform(final Operations operation, final String expression) {
-        Matcher matcher = Converter.findSubstring(expression, operation.getRegex());
+        Matcher expressionMatcher = Converter.findSubstring(expression, operation.getRegex());
         String result = expression;
 
-        if (matcher.find()) {
-            matcher = Pattern.compile(Operands.SIGN + Operands.REAL_NUMBER).matcher(matcher.group());
+        if (expressionMatcher.find()) {
+            Matcher operandsMatcher = Pattern.compile(Operands.SIGN + Operands.REAL_NUMBER)
+                    .matcher(expressionMatcher.group());
             List<String> operands = new ArrayList<String>();
-            while (matcher.find()) {
-                operands.add(matcher.group());
+            while (operandsMatcher.find()) {
+                operands.add(operandsMatcher.group());
+                System.out.println("*"+operandsMatcher.group());
             }
-
+            System.out.println(operands);
             double value = 0;
             switch (operands.size()) {
                 case 1:
@@ -110,12 +112,13 @@ public class MathParser implements IMathParser {
                 case 2:
                     value = operation.evaluate(Double.parseDouble(operands.get(0)),
                             Double.parseDouble(operands.get(1)));
+                    System.out.println(value);
                     break;
             }
 
-            result = perform(operation, expression.substring(0, matcher.start())
+            result = perform(operation, expression.substring(0, expressionMatcher.start())
                     + addPlus(Converter.round(value, accuracy))
-                    + expression.substring(matcher.end(), expression.length()));
+                    + expression.substring(expressionMatcher.end(), expression.length()));
         }
 
         return result;

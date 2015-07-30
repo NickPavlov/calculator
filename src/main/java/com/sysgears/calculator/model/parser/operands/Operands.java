@@ -39,21 +39,21 @@ public enum Operands {
     };
 
     /**
-     * Regex pattern for mathematical sign.
+     * Regex pattern for the mathematical sign.
      */
-    public static final String SIGN = "[\\+-]?";
+    public static final String SIGN = "(?<!\\d+)[\\+-]?";
 
     /**
-     * Regex pattern for real number.
+     * Regex pattern for the real number.
      */
     public static final String REAL_NUMBER = "\\d+(\\.\\d+)?";
 
     /**
      * Generates part of the operand with brackets.
      *
-     * @param signPattern   pattern for mathematical sign
-     * @param numberPattern pattern for number
-     * @return part with brackets
+     * @param signPattern   a pattern for the mathematical sign
+     * @param numberPattern a pattern for the number
+     * @return a part with brackets
      */
     private static String generateWithBrackets(final String signPattern, final String numberPattern) {
         StringBuilder pattern = new StringBuilder();
