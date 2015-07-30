@@ -1,7 +1,6 @@
 package com.sysgears.calculator.model.parser;
 
 import com.sysgears.calculator.model.converter.Converter;
-import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
@@ -61,20 +60,15 @@ public class MathParser implements IMathParser {
     }
 
     /**
-     * Performs all the mathematical operations of the
+     * Performs all mathematical operations specified in
      * <code>com.sysgears.calculator.model.parser.operations.Operations</code>.
      *
-     * @param expression mathematical expression
-     * @return string with performed operations
+     * @param expression a mathematical expression
+     * @return a string with performed operations
      */
     private String performAll(final String expression) {
         String result = expression;
         //System.out.println(result);
-        /*
-        for (Brackets brackets : Brackets.values()) {
-            result = findBrackets(brackets, result);
-        }
-        */
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
                 if (operation.getPriority() == priority) {
@@ -93,43 +87,33 @@ public class MathParser implements IMathParser {
     /**
      * Performs all operations of the specific type in the string.
      *
-     * @param operation  type of the operation to perform
-     * @param expression string with mathematical expression
+     * @param operation  the type of an operation to perform
+     * @param expression a mathematical expression
      * @return string with performed operations of the specific type
      */
     private String perform(final Operations operation, final String expression) {
-        final Matcher matcher = Converter.findSubstring(expression, operation.getRegex());
+        Matcher matcher = Converter.findSubstring(expression, operation.getRegex());
         String result = expression;
-        if (matcher.find()) {
-            //String[] operands = matcher.group().split(operation.getSplitPattern());
 
-            Matcher matcherExpression = Pattern.compile(Operands.SIGN + Operands.REAL_NUMBER).matcher(matcher.group());
-            List<String> listOfOperands = new ArrayList<String>();
-            while (matcherExpression.find()) {
-                listOfOperands.add(matcherExpression.group());
+        if (matcher.find()) {
+            matcher = Pattern.compile(Operands.SIGN + Operands.REAL_NUMBER).matcher(matcher.group());
+            List<String> operands = new ArrayList<String>();
+            while (matcher.find()) {
+                operands.add(matcher.group());
             }
 
             double value = 0;
-
-            switch (listOfOperands.size()) {
+            switch (operands.size()) {
                 case 1:
-                    value = operation.evaluate(0, Double.parseDouble(listOfOperands.get(0)));
+                    value = operation.evaluate(0, Double.parseDouble(operands.get(0)));
                     break;
                 case 2:
-                    value = operation.evaluate(Double.parseDouble(listOfOperands.get(0)),
-                            Double.parseDouble(listOfOperands.get(1)));
+                    value = operation.evaluate(Double.parseDouble(operands.get(0)),
+                            Double.parseDouble(operands.get(1)));
                     break;
             }
 
-            /*
-            if (!operands[0].isEmpty()) {
-                value = operation.evaluate(Double.parseDouble(operands[0]), Double.parseDouble(operands[1]));
-            } else {
-                value = operation.evaluate(0, Double.parseDouble(operands[1]));
-            }
-            */
             result = perform(operation, expression.substring(0, matcher.start())
-                    //+ addBrackets(Converter.round(value, accuracy))
                     + addPlus(Converter.round(value, accuracy))
                     + expression.substring(matcher.end(), expression.length()));
         }
@@ -138,42 +122,13 @@ public class MathParser implements IMathParser {
     }
 
     /**
-     * Finds and replaces a substring that matches the pattern.
+     * Returns the <code>number</code> with the plus sign.
+     * If sign is already present return the originals string.
      *
-     * @param replacement replacement pattern
-     * @param arg         string
-     * @return modified string, otherwise - the original string
+     * @param number a number
+     * @return a number with the plus sign
      */
-    private String findBrackets(final Brackets replacement, final String arg) {
-        final Matcher matcher = Converter.findSubstring(arg, replacement.getPattern());
-
-        String result = arg;
-        if (matcher.find()) {
-            result = findBrackets(replacement, arg.substring(0, matcher.start())
-                    + matcher.group(0).substring(1, matcher.group(0).length() - 1)
-                    + arg.substring(matcher.end(), arg.length()));
-        }
-
-        return result;
-    }
-
-    /**
-     *
-     *
-     * @param arg a string of the number
-     * @return a string of the number with enabled sign
-     */
-    private String addPlus(final String arg) {
-        return (arg.charAt(0) != '+' & arg.charAt(0) != '-') ? '+' + arg : arg;
-    }
-
-    /**
-     * Returns expression in brackets.
-     *
-     * @param expression
-     * @return
-     */
-    private String addBrackets(final String expression) {
-        return "+(" + expression + ")";
+    private String addPlus(final String number) {
+        return (number.charAt(0) != '+' & number.charAt(0) != '-') ? '+' + number : number;
     }
 }
