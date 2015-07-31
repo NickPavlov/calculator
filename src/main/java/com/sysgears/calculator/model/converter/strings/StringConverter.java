@@ -39,7 +39,7 @@ public class StringConverter {
      * @return true if the substring is present in the <code>str</code>
      */
     public static boolean findString(final String str, final String regex, final boolean caseInsensitive) {
-        return Pattern.compile(caseInsensitive ? "(?i)" : "(?-i)" + regex).matcher(str).find();
+        return Pattern.compile((caseInsensitive ? "(?i)" : "(?-i)") + regex).matcher(str).find();
     }
 
     /**

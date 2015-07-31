@@ -143,9 +143,4 @@ public enum Brackets {
     public String getClosingBracket() {
         return closingBracket;
     }
-
-
-    public static void main(String[] args) {
-        System.out.println(generateNumberPattern(ROUND_BRACKETS, "|"));
-    }
 }
