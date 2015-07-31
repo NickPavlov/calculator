@@ -33,6 +33,12 @@ public enum Type {
         public String getPattern(final String operator) {
             return operator + Operands.SECOND.getPattern(true);
         }
+    },
+
+    CONSTANT {
+        public String getPattern(final String operator) {
+            return operator;
+        }
     };
 
     /**

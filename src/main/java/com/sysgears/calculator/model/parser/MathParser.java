@@ -142,6 +142,9 @@ public class MathParser implements IMathParser {
             }
             double value = 0;
             switch (operands.size()) {
+                case 0:
+                    value = operation.calculate(0, 0);
+                    break;
                 case 1:
                     value = operation.calculate(0, Double.parseDouble(operands.get(0)));
                     break;

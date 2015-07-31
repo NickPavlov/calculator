@@ -7,7 +7,8 @@ package com.sysgears.calculator.model.parser.operations;
 public enum Priority {
 
     TOP(0),
-    MEDIUM(1),
+    HIGH(1),
+    MEDIUM(2),
     LOW(2);
 
     /**

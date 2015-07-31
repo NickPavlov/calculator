@@ -7,30 +7,53 @@ import java.util.regex.Pattern;
  */
 public enum Operations {
 
-    MODULO("mod", Priority.TOP, Type.BINARY) {
+    /**
+     * The top priority operations.
+     * Constants.
+     */
+    PI("PI", Priority.TOP, Type.CONSTANT) {
+        public double calculate(final double firstOperand, final double secondOperand) {
+            return Math.PI;
+        }
+    },
+
+    E("E", Priority.TOP, Type.CONSTANT) {
+        public double calculate(final double firstOperand, final double secondOperand) {
+            return Math.E;
+        }
+    },
+
+    /**
+     * The high priority operations.
+     */
+    MODULO("mod", Priority.HIGH, Type.BINARY) {
         public double calculate(final double firstOperand, final double secondOperand) {
             return firstOperand % secondOperand;
         }
     },
 
-    SIN("sin", Priority.TOP, Type.UNARY) {
+    SIN("sin", Priority.HIGH, Type.UNARY) {
         public double calculate(final double firstOperand, final double secondOperand) {
             return Math.sin(secondOperand * Math.PI / 180);
         }
     },
 
-    COS("cos", Priority.TOP, Type.UNARY) {
+    COS("cos", Priority.HIGH, Type.UNARY) {
         public double calculate(final double firstOperand, final double secondOperand) {
             return Math.cos(secondOperand * Math.PI / 180);
         }
     },
 
-    ABS("abs", Priority.TOP, Type.UNARY) {
+    ABS("abs", Priority.HIGH, Type.UNARY) {
         public double calculate(final double firstOperand, final double secondOperand) {
             return Math.abs(secondOperand);
         }
     },
 
+
+    /**
+     * The medium priority operations.
+     */
     POWER("^", Priority.MEDIUM, Type.BINARY_FIRST_WITHOUT_SIGN) {
         public double calculate(final double firstOperand, final double secondOperand) {
             return Math.pow(firstOperand, secondOperand);
@@ -48,6 +71,11 @@ public enum Operations {
             return firstOperand * secondOperand;
         }
     },
+
+
+    /**
+     * The low priority operations.
+     */
 
     ADD("+", Priority.LOW, Type.BINARY) {
         public double calculate(final double firstOperand, final double secondOperand) {
