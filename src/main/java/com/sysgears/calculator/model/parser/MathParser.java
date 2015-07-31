@@ -1,7 +1,7 @@
 package com.sysgears.calculator.model.parser;
 
 import com.sysgears.calculator.model.converter.NumericalConverter;
-import com.sysgears.calculator.model.converter.StringConverter;
+import com.sysgears.calculator.model.converter.strings.StringConverter;
 import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;

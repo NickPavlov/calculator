@@ -1,9 +1,9 @@
-package com.sysgears.calculator.model.converter;
+package com.sysgears.calculator.model.converter.strings;
 
 import java.util.Collection;
 
 /**
- * The <code>PrettyStrings</code> class provides methods to work with string.
+ * The <code>PrettyStrings</code> class provides methods to generate strings.
  */
 public class PrettyStrings {
 

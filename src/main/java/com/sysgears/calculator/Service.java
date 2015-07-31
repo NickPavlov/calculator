@@ -1,8 +1,8 @@
 package com.sysgears.calculator;
 
 import com.sysgears.calculator.model.commands.Commands;
-import com.sysgears.calculator.model.converter.PrettyStrings;
-import com.sysgears.calculator.model.converter.StringConverter;
+import com.sysgears.calculator.model.converter.strings.PrettyStrings;
+import com.sysgears.calculator.model.converter.strings.StringConverter;
 import com.sysgears.calculator.model.history.IHistory;
 import com.sysgears.calculator.model.parser.IMathParser;
 import com.sysgears.calculator.view.userinteface.IUserInterface;
