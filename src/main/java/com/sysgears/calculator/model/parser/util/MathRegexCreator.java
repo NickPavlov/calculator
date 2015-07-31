@@ -10,12 +10,14 @@ import com.sysgears.calculator.model.parser.operations.Operations;
 public class MathRegexCreator {
 
     /**
-     * @param brackets
-     * @param numberPattern
-     * @return
+     * Creates the regular expression for the mathematical expression in brackets.
+     *
+     * @param brackets      type of brackets
+     * @param numberPattern the pattern of the single number in brackets
+     * @return the regular expression for the mathematical expression in brackets
      */
-    public static String generateBracketsPattern(final Brackets brackets,
-                                                 final String numberPattern) {
+    public static String createBracketsPattern(final Brackets brackets,
+                                               final String numberPattern) {
 
         return "(?<=\\" + brackets.getOpeningBracket() + ")"
                 + "([0-9]?"
@@ -27,12 +29,12 @@ public class MathRegexCreator {
     }
 
     /**
-     * Generates the regular expression for the number in the specific type of brackets.
+     * Create the regular expression for the number in the specific type of brackets.
      *
      * @param brackets the type of brackets
      * @return the regular expression for the number in the brackets
      */
-    public static String generateNumberPattern(final Brackets brackets) {
+    public static String createNumberPattern(final Brackets brackets) {
         return "\\" + (brackets.getOpeningBracket())
                 + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN
                 + "\\" + (brackets.getClosingBracket());

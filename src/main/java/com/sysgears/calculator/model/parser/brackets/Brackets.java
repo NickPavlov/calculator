@@ -37,19 +37,19 @@ public enum Brackets {
 
         numberPattern.append("(");
         for (int index = 0; index < lastIndex; ++index) {
-            numberPattern.append(MathRegexCreator.generateNumberPattern(brackets[index]))
+            numberPattern.append(MathRegexCreator.createNumberPattern(brackets[index]))
                     .append("|");
         }
-        numberPattern.append(MathRegexCreator.generateNumberPattern(brackets[lastIndex]))
+        numberPattern.append(MathRegexCreator.createNumberPattern(brackets[lastIndex]))
                 .append(")?");
 
         StringBuilder bracketsPattern = new StringBuilder();
         bracketsPattern.append("(");
         for (int index = 0; index < lastIndex; ++index) {
-            bracketsPattern.append(MathRegexCreator.generateBracketsPattern(brackets[index], numberPattern.toString()))
+            bracketsPattern.append(MathRegexCreator.createBracketsPattern(brackets[index], numberPattern.toString()))
                     .append("|");
         }
-        bracketsPattern.append(MathRegexCreator.generateBracketsPattern(brackets[lastIndex], numberPattern.toString()))
+        bracketsPattern.append(MathRegexCreator.createBracketsPattern(brackets[lastIndex], numberPattern.toString()))
                 .append(")");
 
         return bracketsPattern.toString();
