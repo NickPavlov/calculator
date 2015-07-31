@@ -3,9 +3,9 @@ package com.sysgears.calculator.model.converter;
 import java.text.DecimalFormat;
 
 /**
- * The <code>NumericalConverter</code> class provides the functionality to convert numbers.
+ * The <code>NumericalOperations</code> class provides the functionality to convert numbers.
  */
-public class NumericalConverter {
+public class NumericalOperations {
 
     /**
      * Returns the number rounded up to formatType decimal places.
@@ -17,6 +17,6 @@ public class NumericalConverter {
         return new DecimalFormat(formatType).format(number);
     }
 
-    private NumericalConverter() {
+    private NumericalOperations() {
     }
 }

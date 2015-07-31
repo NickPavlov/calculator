@@ -1,7 +1,7 @@
 package com.sysgears.calculator;
 
 import com.sysgears.calculator.model.commands.Commands;
-import com.sysgears.calculator.model.converter.strings.PrettyStrings;
+import com.sysgears.calculator.model.converter.strings.StringCreator;
 import com.sysgears.calculator.model.converter.strings.StringConverter;
 import com.sysgears.calculator.model.history.IHistory;
 import com.sysgears.calculator.model.parser.IMathParser;
@@ -81,15 +81,15 @@ public class Service {
                 ui.sendMessage("\nGoodbye!\n");
                 break;
             case HISTORY:
-                ui.sendMessage("\n" + PrettyStrings.createString(history.getHistory(), beforeSign, afterSign) + "\n");
+                ui.sendMessage("\n" + StringCreator.createString(history.getHistory(), beforeSign, afterSign) + "\n");
                 break;
             case HISTORY_UNIQUE:
-                ui.sendMessage("\n" + PrettyStrings.createString(history.getUniqueHistory(), beforeSign, afterSign)
+                ui.sendMessage("\n" + StringCreator.createString(history.getUniqueHistory(), beforeSign, afterSign)
                         + "\n");
                 break;
             case HELP:
             case UNKNOWN_COMMAND:
-                ui.sendMessage("\n" + PrettyStrings.createString(Commands.getCommandsList(), beforeSign, afterSign)
+                ui.sendMessage("\n" + StringCreator.createString(Commands.getCommandsList(), beforeSign, afterSign)
                         + "\n");
                 break;
         }

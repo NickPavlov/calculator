@@ -1,6 +1,6 @@
 package com.sysgears.calculator.model.parser;
 
-import com.sysgears.calculator.model.converter.NumericalConverter;
+import com.sysgears.calculator.model.converter.NumericalOperations;
 import com.sysgears.calculator.model.converter.strings.StringConverter;
 import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
@@ -148,7 +148,7 @@ public class MathParser implements IMathParser {
                     break;
             }
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    + MathConverter.addBrackets(NumericalConverter.round(value, accuracy))
+                    + MathConverter.addBrackets(NumericalOperations.round(value, accuracy))
                     + expression.substring(expressionMatcher.end(), expression.length()));
         }
 
