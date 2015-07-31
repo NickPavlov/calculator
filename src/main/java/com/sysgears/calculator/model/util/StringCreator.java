@@ -8,12 +8,12 @@ import java.util.Collection;
 public class StringCreator {
 
     /**
-     * Creates a string based on elements of the <code>collection</code>.
+     * Creates the string representation of elements of the <code>collection</code>.
      *
      * @param collection the collection to print
      * @param before     the string which will be printed before each element
      * @param after      the string which will be printed after each element
-     * @return a string
+     * @return the string representation of elements
      */
     public static String createFromCollection(final Collection collection, final String before, final String after) {
         String result = "";
