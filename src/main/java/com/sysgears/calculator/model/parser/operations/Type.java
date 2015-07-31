@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public enum Type {
 
     /**
-     * Binary operation.
+     * The binary operation.
      * If the first operand is not in brackets, the mathematical sign is ignored.
      */
     BINARY_FIRST_WITHOUT_SIGN {
@@ -20,7 +20,7 @@ public enum Type {
     },
 
     /**
-     * Binary operation.
+     * The binary operation.
      * If the operands are not in brackets, the mathematical signs are taken into account.
      */
     BINARY {
@@ -29,12 +29,18 @@ public enum Type {
         }
     },
 
+    /**
+     * The unary operation.
+     */
     UNARY {
         public String getPattern(final String operator) {
             return operator + Operands.SECOND.getPattern(true);
         }
     },
 
+    /**
+     * The constant.
+     */
     CONSTANT {
         public String getPattern(final String operator) {
             return operator;
