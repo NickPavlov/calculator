@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains a list of the types of permissible commands.
+ * The <code>Commands</code> class contains a set of permissible commands.
  */
 public enum Commands {
 
@@ -47,11 +47,11 @@ public enum Commands {
     private final String regex;
 
     /**
-     * @param name        a command name
-     * @param type        command type
-     * @param description description of a command
+     * @param name        the command name
+     * @param type        the command type
+     * @param description the description of the command
      */
-    private Commands(final String name, final String description, final Type type) {
+    Commands(final String name, final String description, final Type type) {
         this.name = name;
         this.type = type;
         this.description = description;
@@ -59,12 +59,12 @@ public enum Commands {
     }
 
     /**
-     * Parses an input expression and returns a command type from the <code>Commands</code> class.
+     * Returns the command that corresponds to the <code>expression</code>.
      *
-     * @param expression an input expression
-     * @return command
+     * @param expression the input expression
+     * @return the appropriate command
      */
-    public static Commands parse(final String expression) {
+    public static Commands getCommand(final String expression) {
         Commands result = Commands.UNKNOWN_COMMAND;
         for (Commands command : Commands.values()) {
             if (StringConverter.findString(expression, command.getRegex(), true)) {
@@ -81,7 +81,7 @@ public enum Commands {
      *
      * @return list of commands
      */
-    public static List<Command> getCommandsList() {
+    public static List<Command> getUserCommands() {
         List<Command> result = new ArrayList<Command>();
         for (Commands command : Commands.values()) {
             if (command.type == Type.USER) {

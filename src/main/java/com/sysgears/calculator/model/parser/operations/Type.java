@@ -38,7 +38,7 @@ public enum Type {
     /**
      * Generates the pattern for a binary operation.
      *
-     * @param operator          an operator
+     * @param operator          the operator
      * @param firstOperandSign  if true, mathematical sign of the first operand is taken into account
      * @param secondOperandSign if true, mathematical sign of the second operand is taken into account
      * @return the pattern for a binary operation
@@ -52,7 +52,7 @@ public enum Type {
     }
 
     /**
-     * Should return a regex pattern to parse a single operation.
+     * Should return a regex pattern to getCommand a single operation.
      *
      * @param operator an operator
      * @return operation regex pattern

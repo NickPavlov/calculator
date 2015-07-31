@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * The <code>StringConverter</code> class provides methods for formatting the strings, the numbers.
- * Some methods in this class uses regular expressions to parse strings.
+ * Some methods in this class uses regular expressions to getCommand strings.
  */
 public class StringConverter {
 
@@ -39,9 +39,7 @@ public class StringConverter {
      * @return true if the substring is present in the <code>str</code>
      */
     public static boolean findString(final String str, final String regex, final boolean caseInsensitive) {
-        String tmp = caseInsensitive ? "(?i)" : "(?-i)";
-
-        return Pattern.compile(tmp + regex).matcher(str).find();
+        return Pattern.compile(caseInsensitive ? "(?i)" : "(?-i)" + regex).matcher(str).find();
     }
 
     /**

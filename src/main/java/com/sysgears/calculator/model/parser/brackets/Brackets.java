@@ -44,9 +44,9 @@ public enum Brackets {
         StringBuilder bracketsPattern = new StringBuilder();
         bracketsPattern.append("(");
         for (int index = 0; index < lastIndex; ++index) {
-            bracketsPattern.append(generateExpressionPattern(brackets[index], numberPattern.toString(), "|"));
+            bracketsPattern.append(generateExpression(brackets[index], numberPattern.toString(), "|"));
         }
-        bracketsPattern.append(generateExpressionPattern(brackets[lastIndex], numberPattern.toString(), ")"));
+        bracketsPattern.append(generateExpression(brackets[lastIndex], numberPattern.toString(), ")"));
 
         return bracketsPattern.toString();
 
@@ -88,9 +88,9 @@ public enum Brackets {
         return closingBrackets.toString();
     }
 
-    private static String generateExpressionPattern(final Brackets brackets,
-                                                    final String numberPattern,
-                                                    final String afterExpression) {
+    private static String generateExpression(final Brackets brackets,
+                                             final String numberPattern,
+                                             final String afterExpression) {
 
         return "(?<=\\" + brackets.openingBracket + ")"
                 + "([0-9]?"

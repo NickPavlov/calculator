@@ -1,7 +1,7 @@
 package com.sysgears.calculator;
 
 import com.sysgears.calculator.model.commands.Commands;
-import com.sysgears.calculator.model.converter.strings.StringCreator;
+import com.sysgears.calculator.model.util.StringCreator;
 import com.sysgears.calculator.model.converter.strings.StringConverter;
 import com.sysgears.calculator.model.history.IHistory;
 import com.sysgears.calculator.model.parser.IMathParser;
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class Service {
 
     /**
-     * The mathematical parser. Used to parse mathematical expressions.
+     * The mathematical parser. Used to getCommand mathematical expressions.
      */
     private final IMathParser mathParser;
 
@@ -52,7 +52,7 @@ public class Service {
         try {
             while (command != Commands.EXIT) {
                 message = ui.receiveMessage();
-                command = Commands.parse(message);
+                command = Commands.getCommand(message);
                 execute(command, message);
             }
         } catch (IOException e) {
@@ -81,15 +81,15 @@ public class Service {
                 ui.sendMessage("\nGoodbye!\n");
                 break;
             case HISTORY:
-                ui.sendMessage("\n" + StringCreator.createString(history.getHistory(), beforeSign, afterSign) + "\n");
+                ui.sendMessage("\n" + StringCreator.createFromCollection(history.getHistory(), beforeSign, afterSign) + "\n");
                 break;
             case HISTORY_UNIQUE:
-                ui.sendMessage("\n" + StringCreator.createString(history.getUniqueHistory(), beforeSign, afterSign)
+                ui.sendMessage("\n" + StringCreator.createFromCollection(history.getUniqueHistory(), beforeSign, afterSign)
                         + "\n");
                 break;
             case HELP:
             case UNKNOWN_COMMAND:
-                ui.sendMessage("\n" + StringCreator.createString(Commands.getCommandsList(), beforeSign, afterSign)
+                ui.sendMessage("\n" + StringCreator.createFromCollection(Commands.getUserCommands(), beforeSign, afterSign)
                         + "\n");
                 break;
         }

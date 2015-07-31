@@ -6,7 +6,6 @@ import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
-import com.sysgears.calculator.model.parser.util.MathConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The <code>MathParser</code> class provides methods to parse mathematical expression in string.
+ * The <code>MathParser</code> class provides methods to getCommand mathematical expression in string.
  * Operations that are calculated in the MathParser are described in
  * <code>com.sysgears.calculator.model.parser.operations.Operations</code>.
  */
@@ -108,7 +107,6 @@ public class MathParser implements IMathParser {
      */
     private String parseAllOperations(final String expression) {
         String result = expression;
-
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
                 if (operation.getPriority() == priority) {
@@ -148,7 +146,8 @@ public class MathParser implements IMathParser {
                     break;
             }
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    + MathConverter.addBrackets(NumericalOperations.round(value, accuracy))
+                    //+ MathConverter.addBrackets(NumericalOperations.round(value, accuracy))
+                    + (NumericalOperations.round(value, accuracy))
                     + expression.substring(expressionMatcher.end(), expression.length()));
         }
 
