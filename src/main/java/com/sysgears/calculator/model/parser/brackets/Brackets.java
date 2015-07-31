@@ -3,8 +3,6 @@ package com.sysgears.calculator.model.parser.brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 
-import java.util.regex.Pattern;
-
 /**
  * The <code>Brackets</code> class provides a set of brackets.
  */
@@ -36,14 +34,15 @@ public enum Brackets {
         final Brackets[] brackets = Brackets.values();
         final int lastIndex = brackets.length - 1;
 
-        final StringBuilder bracketsPattern = new StringBuilder();
+        final StringBuilder numberPattern = new StringBuilder();
 
-        bracketsPattern.append("(");
+        numberPattern.append("(");
         for (int index = 0; index < lastIndex; ++index) {
-            bracketsPattern.append(generateNumberPattern(brackets[index], "|"));
+            numberPattern.append(generateNumberPattern(brackets[index], "|"));
         }
-        bracketsPattern.append(generateNumberPattern(brackets[lastIndex], ")"));
+        numberPattern.append(generateNumberPattern(brackets[lastIndex], ")?"));
 
+        //-----
 
         StringBuilder bracketsPattern = new StringBuilder();
 
@@ -54,15 +53,10 @@ public enum Brackets {
                 .append("([0-9]?")
                 .append(Operations.generateOperatorsPattern()).append("?")
 
-                .append("(")
-                .append("\\(")
-                .append(Operands.SIGN_PATTERN)
-                .append(Operands.NUMBER_PATTERN)
-                .append("\\)")
-                .append(")?)+")
+                .append(numberPattern.toString())
+                .append(")+")
 
                 .append("(?=").append("\\)").append(")")
-                .append("|")
 
                 .append(")");
 
@@ -111,9 +105,9 @@ public enum Brackets {
      * @return the regular expression for the number in the brackets
      */
     private static String generateNumberPattern(final Brackets brackets, final String afterExpression) {
-        return Pattern.quote(brackets.openingBracket)
+        return "\\" + (brackets.openingBracket)
                 + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN
-                + Pattern.quote(brackets.closingBracket)
+                + "\\" +(brackets.closingBracket)
                 + afterExpression;
     }
 
@@ -142,5 +136,10 @@ public enum Brackets {
      */
     public String getClosingBracket() {
         return closingBracket;
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println(generateNumberPattern(ROUND_BRACKETS, "|"));
     }
 }
