@@ -14,7 +14,7 @@ public enum Operands {
         public String getPattern(final boolean enableSign) {
             return "(" + generateWithBrackets(SIGN_PATTERN, NUMBER_PATTERN)
                     + (enableSign ? SIGN_PATTERN : "") + NUMBER_PATTERN
-                    + "(?!" + Brackets.generateClosingBrackets() + "))";
+                    + "(?!" + Brackets.generateClosingPattern() + "))";
         }
     },
 
@@ -24,7 +24,7 @@ public enum Operands {
     SECOND {
         public String getPattern(final boolean enableSign) {
             return "(" + generateWithBrackets(SIGN_PATTERN, NUMBER_PATTERN)
-                    + "(?!" + Brackets.generateOpeningBrackets() + ")"
+                    + "(?!" + Brackets.generateOpeningPattern() + ")"
                     + (enableSign ? SIGN_PATTERN : "") + NUMBER_PATTERN + ")";
         }
     };

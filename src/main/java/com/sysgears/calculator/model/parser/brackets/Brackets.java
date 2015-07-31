@@ -30,7 +30,6 @@ public enum Brackets {
      * @return the regular expression for the all type of brackets
      */
     public static String generatePattern() {
-
         final Brackets[] brackets = Brackets.values();
         final int lastIndex = brackets.length - 1;
 
@@ -42,25 +41,17 @@ public enum Brackets {
         }
         numberPattern.append(generateNumberPattern(brackets[lastIndex], ")?"));
 
-        //-----
-
         StringBuilder bracketsPattern = new StringBuilder();
+        bracketsPattern.append("(");
+        for (int index = 0; index < lastIndex; ++index) {
+            bracketsPattern.append(generateExpressionPattern(brackets[index], numberPattern.toString(), "|"));
+        }
+        bracketsPattern.append(generateExpressionPattern(brackets[lastIndex], numberPattern.toString(), ")"));
 
-        bracketsPattern.append("(")
+        return bracketsPattern.toString();
 
-                .append("(?<=").append("\\(").append(")")
-
-                .append("([0-9]?")
-                .append(Operations.generateOperatorsPattern()).append("?")
-
-                .append(numberPattern.toString())
-                .append(")+")
-
-                .append("(?=").append("\\)").append(")")
-
-                .append(")");
-
-        return bracketsPattern.toString(); //"(?<=\\()([0-9\\Q^/+-*\\E]?(\\([\\+-]?\\d+(\\.\\d+)?\\))?)+(?=\\))"
+        //Valid.
+        //"(?<=\\()([0-9\\Q^/+-*\\E]?(\\([\\+-]?\\d+(\\.\\d+)?\\))?)+(?=\\))"
     }
 
     /**
@@ -68,7 +59,7 @@ public enum Brackets {
      *
      * @return the regular expression for all opening brackets
      */
-    public static String generateOpeningBrackets() {
+    public static String generateOpeningPattern() {
         StringBuilder openingBrackets = new StringBuilder();
         openingBrackets.append("[");
         for (Brackets brackets : Brackets.values()) {
@@ -85,7 +76,7 @@ public enum Brackets {
      *
      * @return the regular expression for all closing brackets
      */
-    public static String generateClosingBrackets() {
+    public static String generateClosingPattern() {
         StringBuilder closingBrackets = new StringBuilder();
         closingBrackets.append("[");
         for (Brackets brackets : Brackets.values()) {
@@ -95,6 +86,21 @@ public enum Brackets {
         closingBrackets.append("]");
 
         return closingBrackets.toString();
+    }
+
+    private static String generateExpressionPattern(final Brackets brackets,
+                                                    final String numberPattern,
+                                                    final String afterExpression) {
+
+        return "(?<=\\" + brackets.openingBracket + ")"
+                + "([0-9]?"
+                + Operations.generateOperatorsPattern()
+                + "?"
+                + numberPattern
+                + ")+"
+                + "(?=\\" + brackets.closingBracket
+                + ")"
+                + afterExpression;
     }
 
     /**
