@@ -1,6 +1,8 @@
 package com.sysgears.calculator.model.parser;
 
+import com.sysgears.calculator.model.converter.NumericalConverter;
 import com.sysgears.calculator.model.converter.StringConverter;
+import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
@@ -69,6 +71,28 @@ public class MathParser implements IMathParser {
 
         return parseAllOperations(parseAllBrackets(StringConverter.removeSpaces(expression)));
     }
+
+    /* Temporary. */
+
+    /**
+     * Generates the regular expression for all type of brackets specified in
+     * <code>com.sysgears.calculator.model.parser.brackets.Brackets</code>.
+     *
+     * @return the regular expression for the all type of brackets
+     */
+    public static String generateBracketsPattern() {
+        final Brackets[] brackets = Brackets.values();
+        final int lastIndex = brackets.length - 1;
+
+        final StringBuilder bracketsPattern = new StringBuilder();
+        bracketsPattern.append("(");
+        for (int index = 0; index < lastIndex; ++index) {
+
+        }
+
+        return "";
+    }
+
 
     /**
      * Parses all mathematical operations specified in
@@ -145,15 +169,15 @@ public class MathParser implements IMathParser {
             double value = 0;
             switch (operands.size()) {
                 case 1:
-                    value = operation.evaluate(0, Double.parseDouble(operands.get(0)));
+                    value = operation.calculate(0, Double.parseDouble(operands.get(0)));
                     break;
                 case 2:
-                    value = operation.evaluate(Double.parseDouble(operands.get(0)),
+                    value = operation.calculate(Double.parseDouble(operands.get(0)),
                             Double.parseDouble(operands.get(1)));
                     break;
             }
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    + MathConverter.addBrackets(StringConverter.round(value, accuracy))
+                    + MathConverter.addBrackets(NumericalConverter.round(value, accuracy))
                     + expression.substring(expressionMatcher.end(), expression.length()));
         }
 

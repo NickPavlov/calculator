@@ -40,11 +40,11 @@ public enum Operands {
     public static final String NUMBER_PATTERN = "\\d+(\\.\\d+)?";
 
     /**
-     * Generates part of the operand with brackets.
+     * Generates the part of the operand with brackets.
      *
-     * @param signPattern   a pattern for the mathematical sign
-     * @param numberPattern a pattern for the number
-     * @return a part with brackets
+     * @param signPattern   the pattern for the mathematical sign
+     * @param numberPattern the pattern for the number
+     * @return the part with brackets
      */
     private static String generateWithBrackets(final String signPattern, final String numberPattern) {
         StringBuilder pattern = new StringBuilder();

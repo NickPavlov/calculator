@@ -8,55 +8,55 @@ import java.util.regex.Pattern;
 public enum Operations {
 
     MODULO("mod", Priority.TOP, Type.BINARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
+        public double calculate(final double firstOperand, final double secondOperand) {
             return firstOperand % secondOperand;
         }
     },
 
     SIN("sin", Priority.TOP, Type.UNARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
+        public double calculate(final double firstOperand, final double secondOperand) {
             return Math.sin(secondOperand * Math.PI / 180);
         }
     },
 
     COS("cos", Priority.TOP, Type.UNARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
+        public double calculate(final double firstOperand, final double secondOperand) {
             return Math.cos(secondOperand * Math.PI / 180);
         }
     },
 
     ABS("abs", Priority.TOP, Type.UNARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
+        public double calculate(final double firstOperand, final double secondOperand) {
             return Math.abs(secondOperand);
         }
     },
 
-    POWER("^", Priority.TOP, Type.BINARY_FIRST_WITHOUT_SIGN) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
+    POWER("^", Priority.MEDIUM, Type.BINARY_FIRST_WITHOUT_SIGN) {
+        public double calculate(final double firstOperand, final double secondOperand) {
             return Math.pow(firstOperand, secondOperand);
         }
     },
 
     DIVISION("/", Priority.MEDIUM, Type.BINARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
+        public double calculate(final double firstOperand, final double secondOperand) {
             return firstOperand / secondOperand;
         }
     },
 
     MULTIPLY("*", Priority.MEDIUM, Type.BINARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
+        public double calculate(final double firstOperand, final double secondOperand) {
             return firstOperand * secondOperand;
         }
     },
 
     ADD("+", Priority.LOW, Type.BINARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
+        public double calculate(final double firstOperand, final double secondOperand) {
             return firstOperand + secondOperand;
         }
     },
 
     SUBTRACT("-", Priority.LOW, Type.BINARY) {
-        public double evaluate(final double firstOperand, final double secondOperand) {
+        public double calculate(final double firstOperand, final double secondOperand) {
             return firstOperand - secondOperand;
         }
     };
@@ -85,20 +85,20 @@ public enum Operations {
         final Operations[] operations = Operations.values();
         final int lastIndex = operations.length - 1;
 
-        final StringBuilder operators = new StringBuilder();
-        operators.append("(");
+        final StringBuilder operatorsPattern = new StringBuilder();
+        operatorsPattern.append("(");
         for (int index = 0; index < lastIndex; ++index) {
-            operators.append(Pattern.quote(operations[index].getOperator())).append("|");
+            operatorsPattern.append(Pattern.quote(operations[index].getOperator())).append("|");
         }
-        operators.append(Pattern.quote(operations[lastIndex].getOperator())).append(")");
+        operatorsPattern.append(Pattern.quote(operations[lastIndex].getOperator())).append(")");
 
-        return operators.toString();
+        return operatorsPattern.toString();
     }
 
     /**
-     * @param operator operator string expression
-     * @param priority operation priority
-     * @param type     operation type
+     * @param operator the operator
+     * @param priority the operation priority
+     * @param type     the operation type
      */
     Operations(final String operator, final Priority priority, final Type type) {
         this.operator = operator;
@@ -139,7 +139,7 @@ public enum Operations {
      *
      * @param firstOperand  The first operand
      * @param secondOperand The second operand
-     * @return string
+     * @return the calculated value
      */
-    public abstract double evaluate(final double firstOperand, final double secondOperand);
+    public abstract double calculate(final double firstOperand, final double secondOperand);
 }

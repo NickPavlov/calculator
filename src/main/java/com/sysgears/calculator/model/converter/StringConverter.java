@@ -1,6 +1,5 @@
 package com.sysgears.calculator.model.converter;
 
-import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,9 +22,9 @@ public class StringConverter {
     /**
      * Looking for a substring that matches the specified pattern.
      *
-     * @param arg   string
-     * @param regex regular expression
-     * @return Matcher object
+     * @param arg   a string
+     * @param regex a regular expression
+     * @return the Matcher object
      */
     public static Matcher findSubstring(final String arg, final String regex) {
         return Pattern.compile(regex).matcher(arg);
@@ -34,36 +33,26 @@ public class StringConverter {
     /**
      * Returns true if string has a substring that matches the specified pattern.
      *
-     * @param arg             string
-     * @param regex           regular expression
-     * @param caseInsensitive case-insensitive
-     * @return boolean
+     * @param str             a string
+     * @param regex           a regular expression
+     * @param caseInsensitive if true - case-insensitive
+     * @return true if the substring is present in the <code>str</code>
      */
-    public static boolean findString(final String arg, final String regex, final boolean caseInsensitive) {
+    public static boolean findString(final String str, final String regex, final boolean caseInsensitive) {
         String tmp = caseInsensitive ? "(?i)" : "(?-i)";
 
-        return Pattern.compile(tmp + regex).matcher(arg).find();
+        return Pattern.compile(tmp + regex).matcher(str).find();
     }
 
     /**
-     * Returns a number rounded up to formatType decimal places.
-     *
-     * @param number double
-     * @return string
-     */
-    public static String round(final double number, final String formatType) {
-        return new DecimalFormat(formatType).format(number);
-    }
-
-    /**
-     * Generates a regex pattern based on a sequence of words.
+     * Generates a regex pattern based on the <code>expression</code>.
      * The number of spaces between words is unlimited.
      *
-     * @param arg a sequence of words
-     * @return regular expression
+     * @param expression a string
+     * @return a regular expression
      */
-    public static String buildRegex(final String arg) {
-        return "^(\\\\s)*" + arg.replaceAll(" ", "(\\\\s)+") + "(\\\\s)*$";
+    public static String buildRegex(final String expression) {
+        return "^(\\\\s)*" + expression.replaceAll(" ", "(\\\\s)+") + "(\\\\s)*$";
     }
 
     private StringConverter() {
