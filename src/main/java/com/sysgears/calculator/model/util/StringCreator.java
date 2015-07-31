@@ -11,8 +11,8 @@ public class StringCreator {
      * Creates the string representation of elements of the <code>collection</code>.
      *
      * @param collection the collection to print
-     * @param before     the string which will be printed before each element
-     * @param after      the string which will be printed after each element
+     * @param before     the string which will be printed before the each element
+     * @param after      the string which will be printed after the each element
      * @return the string representation of elements
      */
     public static String createFromCollection(final Collection collection, final String before, final String after) {
