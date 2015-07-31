@@ -9,7 +9,7 @@ public enum Priority {
     TOP(0),
     HIGH(1),
     MEDIUM(2),
-    LOW(2);
+    LOW(3);
 
     /**
      * Priority index.

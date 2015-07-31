@@ -23,15 +23,10 @@ public enum Operations {
         }
     },
 
+
     /**
      * The high priority operations.
      */
-    MODULO("mod", Priority.HIGH, Type.BINARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return firstOperand % secondOperand;
-        }
-    },
-
     SIN("sin", Priority.HIGH, Type.UNARY) {
         public double calculate(final double firstOperand, final double secondOperand) {
             return Math.sin(secondOperand * Math.PI / 180);
@@ -44,9 +39,27 @@ public enum Operations {
         }
     },
 
+    ATAN("atan", Priority.HIGH, Type.UNARY) {
+        public double calculate(final double firstOperand, final double secondOperand) {
+            return Math.atan(secondOperand);
+        }
+    },
+
+    EXP("exp", Priority.HIGH, Type.UNARY) {
+        public double calculate(final double firstOperand, final double secondOperand) {
+            return Math.exp(secondOperand);
+        }
+    },
+
     ABS("abs", Priority.HIGH, Type.UNARY) {
         public double calculate(final double firstOperand, final double secondOperand) {
             return Math.abs(secondOperand);
+        }
+    },
+
+    MODULO("mod", Priority.HIGH, Type.BINARY) {
+        public double calculate(final double firstOperand, final double secondOperand) {
+            return firstOperand % secondOperand;
         }
     },
 
