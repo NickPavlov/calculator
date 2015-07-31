@@ -54,7 +54,6 @@ public class Service {
         Commands command = null;
         try {
             while (command != Commands.EXIT) {
-                ui.sendMessage(">");
                 message = ui.receiveMessage();
                 command = Commands.parse(message);
                 execute(command, message);

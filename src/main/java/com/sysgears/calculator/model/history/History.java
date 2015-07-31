@@ -10,14 +10,14 @@ import java.util.List;
 public class History implements IHistory {
 
     /**
-     * History.
+     * The history.
      */
     private final List<String> history;
 
     /**
-     * Creates the <code>History</code> object with a specified history storage.
+     * Creates the <code>History</code> object with the specified history storage.
      *
-     * @param history history storage
+     * @param history the history storage
      */
     public History(final List<String> history) {
         this.history = history;
@@ -31,9 +31,9 @@ public class History implements IHistory {
     }
 
     /**
-     * Adds new record into the history.
+     * Adds the new record into the history.
      *
-     * @param record a new record
+     * @param record the new record
      */
     public void addRecord(final String record) {
         history.add(record);
@@ -43,17 +43,17 @@ public class History implements IHistory {
      * Returns a history.
      * The real return type of the list - <code>ArrayList</code>.
      *
-     * @return a history
+     * @return the history
      */
     public List<String> getHistory() {
         return new ArrayList<String>(history);
     }
 
     /**
-     * Returns a unique history.
-     * The real eturn type of the list - <code>ArrayList</code>.
+     * Returns the unique history.
+     * The real return type of the list - <code>ArrayList</code>.
      *
-     * @return a unique history
+     * @return the unique history
      */
     public List<String> getUniqueHistory() {
         return new ArrayList<String>(new LinkedHashSet<String>(history));

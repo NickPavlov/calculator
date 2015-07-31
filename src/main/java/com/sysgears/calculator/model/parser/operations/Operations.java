@@ -1,5 +1,7 @@
 package com.sysgears.calculator.model.parser.operations;
 
+import java.util.regex.Pattern;
+
 /**
  * The <code>Operations</code> class provides a basic set of operators required to operate the parser.
  */
@@ -57,9 +59,7 @@ public enum Operations {
         public double evaluate(final double firstOperand, final double secondOperand) {
             return firstOperand - secondOperand;
         }
-    },
-
-    ;
+    };
 
     /**
      * Operator character.
@@ -75,6 +75,25 @@ public enum Operations {
      * Operation regular expression.
      */
     private final String operationPattern;
+
+    /**
+     * Generates the regular expression pattern for all operators.
+     *
+     * @return the regular expression pattern for all operators
+     */
+    public static String generateOperatorsPattern() {
+        final Operations[] operations = Operations.values();
+        final int lastIndex = operations.length - 1;
+
+        final StringBuilder operators = new StringBuilder();
+        operators.append("(");
+        for (int index = 0; index < lastIndex; ++index) {
+            operators.append(Pattern.quote(operations[index].getOperator())).append("|");
+        }
+        operators.append(Pattern.quote(operations[lastIndex].getOperator())).append(")");
+
+        return operators.toString();
+    }
 
     /**
      * @param operator operator string expression
