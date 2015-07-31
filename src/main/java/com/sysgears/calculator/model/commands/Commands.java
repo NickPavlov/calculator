@@ -2,7 +2,7 @@ package com.sysgears.calculator.model.commands;
 
 import com.sysgears.calculator.model.commands.util.Command;
 import com.sysgears.calculator.model.commands.util.Type;
-import com.sysgears.calculator.model.converter.strings.StringConverter;
+import com.sysgears.calculator.model.converter.StringConverter;
 
 import java.util.ArrayList;
 import java.util.List;

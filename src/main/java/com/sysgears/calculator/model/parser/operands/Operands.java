@@ -32,7 +32,7 @@ public enum Operands {
     /**
      * The regex pattern for a mathematical sign.
      */
-    public static final String SIGN_PATTERN = "(?<!\\d+)[\\+-]?";
+    public static final String SIGN_PATTERN = "(?<![\\d\\)" + Brackets.generateClosingPattern() + "])[\\+-]?";
 
     /**
      * The regex pattern for a number.

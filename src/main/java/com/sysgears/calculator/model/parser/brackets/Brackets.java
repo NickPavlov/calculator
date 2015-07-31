@@ -14,12 +14,12 @@ public enum Brackets {
     ANGLE_BRACKETS("<", ">");
 
     /**
-     * Opening bracket.
+     * The opening bracket.
      */
     private String openingBracket;
 
     /**
-     * Closing bracket.
+     * The closing bracket.
      */
     private String closingBracket;
 
@@ -113,7 +113,7 @@ public enum Brackets {
     private static String generateNumberPattern(final Brackets brackets, final String afterExpression) {
         return "\\" + (brackets.openingBracket)
                 + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN
-                + "\\" +(brackets.closingBracket)
+                + "\\" + (brackets.closingBracket)
                 + afterExpression;
     }
 
