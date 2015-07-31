@@ -132,7 +132,6 @@ public class MathParser implements IMathParser {
      */
     private String parseOperation(final Operations operation, final String expression) {
         final Matcher expressionMatcher = Pattern.compile(operation.getOperationPattern()).matcher(expression);
-        //final Matcher expressionMatcher = StringConverter.findSubstring(expression, operation.getOperationPattern());
         String result = expression;
         if (expressionMatcher.find()) {
             Matcher operandsMatcher = Pattern.compile(Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN)
@@ -141,7 +140,6 @@ public class MathParser implements IMathParser {
             while (operandsMatcher.find()) {
                 operands.add(operandsMatcher.group());
             }
-            System.out.println("Operands: " + operands);
             double value = 0;
             switch (operands.size()) {
                 case 1:
