@@ -16,6 +16,16 @@ public class MathConverter {
         return (number.charAt(0) == '-') ? "(" + number + ")" : number;
     }
 
+    /**
+     * Removes extra brackets in the <code>expression</code>.
+     *
+     * @param expression the expression to remove extra brackets
+     * @return the expression without extra brackets
+     */
+    public static String removeExtraBrackets(final String expression) {
+        return "";
+    }
+
     private MathConverter() {
     }
 }
