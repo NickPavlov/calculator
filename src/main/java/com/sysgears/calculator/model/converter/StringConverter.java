@@ -32,17 +32,6 @@ public class StringConverter {
         return Pattern.compile((caseInsensitive ? "(?i)" : "(?-i)") + pattern).matcher(expression).find();
     }
 
-    /**
-     * Generates the regex pattern based on the <code>expression</code>.
-     * The number of spaces between words is unlimited.
-     *
-     * @param expression a string
-     * @return a regular expression
-     */
-    public static String buildRegex(final String expression) {
-        return "^(\\\\s)*" + expression.replaceAll(" ", "(\\\\s)+") + "(\\\\s)*$";
-    }
-
     private StringConverter() {
     }
 }

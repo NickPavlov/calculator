@@ -1,7 +1,6 @@
 package com.sysgears.calculator.model.parser.brackets;
 
-import com.sysgears.calculator.model.parser.operands.Operands;
-import com.sysgears.calculator.model.parser.operations.Operations;
+import com.sysgears.calculator.model.parser.util.MathRegexCreator;
 
 /**
  * The <code>Brackets</code> class provides a set of brackets.
@@ -37,21 +36,22 @@ public enum Brackets {
 
         numberPattern.append("(");
         for (int index = 0; index < lastIndex; ++index) {
-            numberPattern.append(generateNumberPattern(brackets[index], "|"));
+            numberPattern.append(MathRegexCreator.generateNumberPattern(brackets[index]))
+                    .append("|");
         }
-        numberPattern.append(generateNumberPattern(brackets[lastIndex], ")?"));
+        numberPattern.append(MathRegexCreator.generateNumberPattern(brackets[lastIndex]))
+                .append(")?");
 
         StringBuilder bracketsPattern = new StringBuilder();
         bracketsPattern.append("(");
         for (int index = 0; index < lastIndex; ++index) {
-            bracketsPattern.append(generateExpression(brackets[index], numberPattern.toString(), "|"));
+            bracketsPattern.append(MathRegexCreator.generateBracketsPattern(brackets[index], numberPattern.toString()))
+                    .append("|");
         }
-        bracketsPattern.append(generateExpression(brackets[lastIndex], numberPattern.toString(), ")"));
+        bracketsPattern.append(MathRegexCreator.generateBracketsPattern(brackets[lastIndex], numberPattern.toString()))
+                .append(")");
 
         return bracketsPattern.toString();
-
-        //Valid.
-        //"(?<=\\()([0-9\\Q^/+-*\\E]?(\\([\\+-]?\\d+(\\.\\d+)?\\))?)+(?=\\))"
     }
 
     /**
@@ -86,35 +86,6 @@ public enum Brackets {
         closingBrackets.append("]");
 
         return closingBrackets.toString();
-    }
-
-    private static String generateExpression(final Brackets brackets,
-                                             final String numberPattern,
-                                             final String afterExpression) {
-
-        return "(?<=\\" + brackets.openingBracket + ")"
-                + "([0-9]?"
-                + Operations.generateOperatorsPattern()
-                + "?"
-                + numberPattern
-                + ")+"
-                + "(?=\\" + brackets.closingBracket
-                + ")"
-                + afterExpression;
-    }
-
-    /**
-     * Generates the regular expression for the number in the specific type of brackets.
-     *
-     * @param brackets        the type of brackets
-     * @param afterExpression the expression that will be added at the end
-     * @return the regular expression for the number in the brackets
-     */
-    private static String generateNumberPattern(final Brackets brackets, final String afterExpression) {
-        return "\\" + (brackets.openingBracket)
-                + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN
-                + "\\" + (brackets.closingBracket)
-                + afterExpression;
     }
 
     /**

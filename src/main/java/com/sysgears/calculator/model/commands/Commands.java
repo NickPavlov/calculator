@@ -3,6 +3,7 @@ package com.sysgears.calculator.model.commands;
 import com.sysgears.calculator.model.commands.util.Command;
 import com.sysgears.calculator.model.commands.util.Type;
 import com.sysgears.calculator.model.converter.StringConverter;
+import com.sysgears.calculator.model.util.RegexCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public enum Commands {
         this.name = name;
         this.type = type;
         this.description = description;
-        this.regex = (type == Type.USER) ? StringConverter.buildRegex(name) : name;
+        this.regex = (type == Type.USER) ? RegexCreator.buildRegex(name) : name;
     }
 
     /**
