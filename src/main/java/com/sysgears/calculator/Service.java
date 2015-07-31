@@ -15,20 +15,17 @@ import java.io.IOException;
 public class Service {
 
     /**
-     * The math parser.
-     * Used to parse mathematical expressions.
+     * The mathematical parser. Used to parse mathematical expressions.
      */
     private final IMathParser mathParser;
 
     /**
-     * The user interface.
-     * Used to interact with the user.
+     * The user interface. Used to interact with the user.
      */
     private final IUserInterface ui;
 
     /**
-     * The history.
-     * Used for storing the history of calculations.
+     * The history. Used for storing the history of records.
      */
     private final IHistory history;
 
@@ -36,14 +33,14 @@ public class Service {
      * Creates the <code>Service</code> object.
      * Directly implements the management of the calculator.
      *
-     * @param mathParser a mathematical parser
-     * @param ui         a user interface
-     * @param history    a history
+     * @param mathParser the mathematical parser
+     * @param ui         the user interface
+     * @param history    the history storage
      */
     public Service(final IMathParser mathParser, final IUserInterface ui, final IHistory history) {
         this.mathParser = mathParser;
-        this.ui = ui;
         this.history = history;
+        this.ui = ui;
     }
 
     /**

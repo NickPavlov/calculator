@@ -72,28 +72,6 @@ public class MathParser implements IMathParser {
         return parseAllOperations(parseAllBrackets(StringConverter.removeSpaces(expression)));
     }
 
-    /* Temporary. */
-
-    /**
-     * Generates the regular expression for all type of brackets specified in
-     * <code>com.sysgears.calculator.model.parser.brackets.Brackets</code>.
-     *
-     * @return the regular expression for the all type of brackets
-     */
-    public static String generateBracketsPattern() {
-        final Brackets[] brackets = Brackets.values();
-        final int lastIndex = brackets.length - 1;
-
-        final StringBuilder bracketsPattern = new StringBuilder();
-        bracketsPattern.append("(");
-        for (int index = 0; index < lastIndex; ++index) {
-
-        }
-
-        return "";
-    }
-
-
     /**
      * Parses all mathematical operations specified in
      * <code>com.sysgears.calculator.model.parser.operations.Operations</code>
@@ -103,14 +81,7 @@ public class MathParser implements IMathParser {
      * @return the mathematical expression with parsed operations in the brackets
      */
     private String parseAllBrackets(final String expression) {
-
-        /*
-         Temporary.
-         It must take into account all types of brackets specified in Operations, not only round brackets.
-        */
-        final String bracketsPattern = "(?<=\\()([0-9\\Q^/+-*\\E]?(\\([\\+-]?\\d+(\\.\\d+)?\\))?)+(?=\\))";
-
-        final Matcher matcher = Pattern.compile(bracketsPattern).matcher(expression);
+        final Matcher matcher = Pattern.compile(Brackets.generatePattern()).matcher(expression);
         String result = expression;
         String temp = numericLiteral;
         int openingBracketPos = 0;
