@@ -1,7 +1,6 @@
 package com.sysgears.calculator.model.parser;
 
 import com.sysgears.calculator.model.converter.StringConverter;
-import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
@@ -73,7 +72,7 @@ public class MathParser implements IMathParser {
             throw new IllegalArgumentException("Expression can't be null.");
         }
 
-        return parseAllOperations(parseAllBrackets(StringConverter.removeSpaces(expression)));
+        return parseOperations(parseBrackets(StringConverter.removeSpaces(expression)));
     }
 
     /**
@@ -84,23 +83,8 @@ public class MathParser implements IMathParser {
      * @param expression the mathematical expression
      * @return the mathematical expression with parsed operations in the brackets
      */
-    private String parseAllBrackets(final String expression) {
-        final Matcher matcher = Pattern.compile(Brackets.generatePattern()).matcher(expression);
-        String result = expression;
-        String temp = numericLiteral;
-        int openingBracketPos = 0;
-        int closingBracketPos = 0;
-        while (matcher.find() && temp.matches(numberPattern)) {
-            temp = matcher.group();
-            openingBracketPos = matcher.start();
-            closingBracketPos = matcher.end();
-        }
-        if (!numericLiteral.equals(temp)) {
-            result = expression.substring(0, openingBracketPos)
-                    + parseAllOperations(temp) + expression.substring(closingBracketPos, expression.length());
-        }
-
-        return result.equals(expression) ? result : parseAllBrackets(result);
+    private String parseBrackets(final String expression) {
+        return "";
     }
 
     /**
@@ -110,7 +94,7 @@ public class MathParser implements IMathParser {
      * @param expression the mathematical expression
      * @return the string with performed operations
      */
-    private String parseAllOperations(final String expression) {
+    private String parseOperations(final String expression) {
         String result = expression;
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
@@ -120,7 +104,7 @@ public class MathParser implements IMathParser {
             }
         }
 
-        return result.equals(expression) ? result : parseAllOperations(result);
+        return result.equals(expression) ? result : parseOperations(result);
     }
 
     /**

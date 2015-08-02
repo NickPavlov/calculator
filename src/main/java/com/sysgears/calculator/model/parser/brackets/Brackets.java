@@ -1,7 +1,5 @@
 package com.sysgears.calculator.model.parser.brackets;
 
-import com.sysgears.calculator.model.parser.util.MathRegexCreator;
-
 /**
  * The <code>Brackets</code> class provides a set of brackets.
  */
@@ -22,38 +20,6 @@ public enum Brackets {
      * The closing bracket.
      */
     private String closingBracket;
-
-    /**
-     * Generates the regular expression for all type of brackets specified in
-     * <code>com.sysgears.calculator.model.parser.brackets.Brackets</code>.
-     *
-     * @return the regular expression for the all type of brackets
-     */
-    public static String generatePattern() {
-        final Brackets[] brackets = Brackets.values();
-        final int lastIndex = brackets.length - 1;
-
-        final StringBuilder numberPattern = new StringBuilder();
-
-        numberPattern.append("(");
-        for (int index = 0; index < lastIndex; ++index) {
-            numberPattern.append(MathRegexCreator.createNumberPattern(brackets[index]))
-                    .append("|");
-        }
-        numberPattern.append(MathRegexCreator.createNumberPattern(brackets[lastIndex]))
-                .append(")?");
-
-        StringBuilder bracketsPattern = new StringBuilder();
-        bracketsPattern.append("(");
-        for (int index = 0; index < lastIndex; ++index) {
-            bracketsPattern.append(MathRegexCreator.createBracketsPattern(brackets[index], numberPattern.toString()))
-                    .append("|");
-        }
-        bracketsPattern.append(MathRegexCreator.createBracketsPattern(brackets[lastIndex], numberPattern.toString()))
-                .append(")");
-
-        return bracketsPattern.toString();
-    }
 
     /**
      * Generates the regular expression for all opening brackets.
