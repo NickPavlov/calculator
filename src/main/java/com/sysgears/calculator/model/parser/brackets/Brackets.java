@@ -22,12 +22,29 @@ public enum Brackets {
     private String closingBracket;
 
     /**
+     * Returns the closing bracket which corresponds to the given opening bracket.
+     *
+     * @param openingBracket the opening bracket
+     * @return the closing bracket
+     */
+    public static String getClosingPair(final String openingBracket) {
+        final Brackets[] brackets = Brackets.values();
+
+        int index = 0;
+        while ((index < brackets.length) && !brackets[index].openingBracket.equals(openingBracket)) {
+            ++index;
+        }
+
+        return brackets[index].closingBracket;
+    }
+
+    /**
      * Generates the regular expression for all opening brackets.
      *
      * @return the regular expression for all opening brackets
      */
     public static String generateOpeningPattern() {
-        StringBuilder openingBrackets = new StringBuilder();
+        final StringBuilder openingBrackets = new StringBuilder();
         openingBrackets.append("[");
         for (Brackets brackets : Brackets.values()) {
             openingBrackets.append("\\")
