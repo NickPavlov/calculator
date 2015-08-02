@@ -177,7 +177,9 @@ public class MathParser implements IMathParser {
         final Matcher expressionMatcher = Pattern.compile(operation.getOperationPattern()).matcher(expression);
         String result = expression;
         if (expressionMatcher.find()) {
-            Matcher operandsMatcher = Pattern.compile("(?<![\\d\\)" + Brackets.generateClosingPattern() + "])" + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN)
+            String operandPattern = "(?<![\\d\\)" + Brackets.generateClosingPattern() + "])"
+                    + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN;
+            Matcher operandsMatcher = Pattern.compile(operandPattern)
                     .matcher(expressionMatcher.group());
             List<String> operands = new ArrayList<String>();
             while (operandsMatcher.find()) {
