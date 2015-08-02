@@ -1,6 +1,7 @@
 package com.sysgears.calculator.model.parser;
 
 import com.sysgears.calculator.model.converter.StringConverter;
+import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
@@ -72,7 +73,9 @@ public class MathParser implements IMathParser {
             throw new IllegalArgumentException("Expression can't be null.");
         }
 
-        return parseOperations(parseBrackets(StringConverter.removeSpaces(expression)));
+        String withoutSpaces = StringConverter.removeSpaces(expression);
+
+        return parseBrackets(withoutSpaces, withoutSpaces.length());
     }
 
     /**
@@ -83,8 +86,63 @@ public class MathParser implements IMathParser {
      * @param expression the mathematical expression
      * @return the mathematical expression with parsed operations in the brackets
      */
-    private String parseBrackets(final String expression) {
-        return "";
+    private String parseBrackets(final String expression, final int openingBracketIndex) {
+        final Matcher matcher = Pattern.compile(Brackets.generateOpeningPattern())
+                .matcher(expression.substring(0, openingBracketIndex));
+
+        String result = expression;
+        if (matcher.find()) {
+            int start = matcher.start();
+            //looks for the last opening bracket.
+            while (matcher.find()) {
+                start = matcher.start();
+            }
+            //System.out.println("start: " + start);
+            String openingBracket = "" + result.charAt(start);
+            String closingBracket = Brackets.getClosingPair(openingBracket);
+            //System.out.println("openingBracket: " + openingBracket);
+            //System.out.println("closingBracket: " + closingBracket);
+            //System.out.println("\n\n");
+
+            int openingBracketsCount = 1;
+            int closingBracketsCount = 0;
+            int index = start;
+            while (openingBracketsCount != closingBracketsCount) {
+                ++index;
+                //System.out.println("result.charAt(index): " + result.charAt(index));
+                if (openingBracket.equals("" + result.charAt(index))) {
+                    ++openingBracketsCount;
+                }
+                if (closingBracket.equals("" + result.charAt(index))) {
+                    ++closingBracketsCount;
+                }
+            }
+            /*
+            System.out.println("openingBracketsCount" + openingBracketsCount);
+            System.out.println("closingBracketsCount" + closingBracketsCount);
+            String beforeBrackets = result.substring(0, start);
+            String inBrackets = result.substring(start, index);
+            String afterBrackets = result.substring(index, result.length());
+
+            System.out.println("beforeBrackets: " + beforeBrackets);
+            System.out.println("inBrackets: " + inBrackets);
+            System.out.println("afterBrackets: " + afterBrackets);
+            */
+
+            result = result.substring(0, start)
+                    + parseOperations(result.substring(start, index))
+                    + result.substring(index, result.length());
+
+            /*
+            System.out.println();
+            System.out.println("result: " + result);
+            System.out.println();
+            */
+            result = parseBrackets(result, start);
+        }
+
+
+        return parseOperations(result);
     }
 
     /**

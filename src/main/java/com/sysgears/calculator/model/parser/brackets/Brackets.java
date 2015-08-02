@@ -22,20 +22,21 @@ public enum Brackets {
     private String closingBracket;
 
     /**
-     * Returns the closing bracket which corresponds to the given opening bracket.
+     * Returns a closing bracket which corresponds to a given opening bracket.
      *
      * @param openingBracket the opening bracket
      * @return the closing bracket
      */
     public static String getClosingPair(final String openingBracket) {
-        final Brackets[] brackets = Brackets.values();
+        String closingBracket = "";
+        for (Brackets brackets : Brackets.values()) {
+             if (brackets.openingBracket.equals(openingBracket)) {
+                 closingBracket = brackets.closingBracket;
+                 break;
+             }
+         }
 
-        int index = 0;
-        while ((index < brackets.length) && !brackets[index].openingBracket.equals(openingBracket)) {
-            ++index;
-        }
-
-        return brackets[index].closingBracket;
+        return closingBracket;
     }
 
     /**

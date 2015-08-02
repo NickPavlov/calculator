@@ -51,8 +51,8 @@ public enum Operands {
         for (Brackets brackets : Brackets.values()) {
             pattern.append("\\")
                     .append(brackets.getOpeningBracket())
-                    .append(SIGN_PATTERN)
-                    .append(NUMBER_PATTERN)
+                    .append(signPattern)
+                    .append(numberPattern)
                     .append("\\")
                     .append(brackets.getClosingBracket())
                     .append("|");
