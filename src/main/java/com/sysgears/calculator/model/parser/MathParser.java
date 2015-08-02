@@ -5,6 +5,7 @@ import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operands.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.Priority;
+import com.sysgears.calculator.model.parser.util.MathConverter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -176,12 +177,13 @@ public class MathParser implements IMathParser {
         final Matcher expressionMatcher = Pattern.compile(operation.getOperationPattern()).matcher(expression);
         String result = expression;
         if (expressionMatcher.find()) {
-            Matcher operandsMatcher = Pattern.compile(Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN)
+            Matcher operandsMatcher = Pattern.compile("(?<![\\d\\)" + Brackets.generateClosingPattern() + "])" + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN)
                     .matcher(expressionMatcher.group());
             List<String> operands = new ArrayList<String>();
             while (operandsMatcher.find()) {
                 operands.add(operandsMatcher.group());
             }
+            System.out.println(operands);
             double value = 0;
             switch (operands.size()) {
                 case 0:
@@ -196,8 +198,8 @@ public class MathParser implements IMathParser {
                     break;
             }
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    //+ MathConverter.addBrackets(NumericalConverter.format(value, accuracy))
-                    + formatter.format(value)
+                    //+ formatter.format(value)
+                    + MathConverter.addPlus(formatter.format(value))
                     + expression.substring(expressionMatcher.end(), expression.length()));
         }
 

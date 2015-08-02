@@ -7,6 +7,10 @@ import com.sysgears.calculator.model.parser.brackets.Brackets;
  */
 public class MathConverter {
 
+    public static String addPlus(final String number) {
+        return ((number.charAt(0) != '-') & (number.charAt(0) != '+')) ? '+' + number : number;
+    }
+
     /**
      * If the number is negative, places it in brackets.
      * Otherwise returns the original string.
