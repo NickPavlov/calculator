@@ -97,17 +97,22 @@ public class MathParser implements IMathParser {
             char closingBracket = Brackets.getClosingPair(openingBracket);
             int openingBracketsCount = 1;
             int closingBracketsCount = 0;
-            int index = start;
-            while (openingBracketsCount != closingBracketsCount) {
-                ++index;
+            int index = start + 1;
+            while ((index < result.length()) && (openingBracketsCount != closingBracketsCount)) {
                 if (openingBracket == result.charAt(index)) {
                     ++openingBracketsCount;
                 } else if (closingBracket == result.charAt(index)) {
                     ++closingBracketsCount;
                 }
+                ++index;
             }
-            result = parseBrackets(result.substring(0, start) + parseOperations(result.substring(start, index))
-                    + result.substring(index, result.length()), start);
+            /*
+            if (openingBracketsCount != closingBracketsCount) {
+                throw new ParseException("Closing bracket not found.", index - 1);
+            }
+            */
+            result = parseBrackets(result.substring(0, start) + parseOperations(result.substring(start, index - 1))
+                    + result.substring(index - 1, result.length()), start);
         }
 
         return parseOperations(result);
