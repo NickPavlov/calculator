@@ -72,8 +72,9 @@ public class Service {
         final String afterSign = "\n";
         switch (command) {
             case CALCULATE:
-                String value = mathParser.parse(message.replaceAll(Commands.CALCULATE.getRegex(), ""));
-                history.addRecord(message + "=" + value);
+                final String parameter = message.replaceAll(Commands.CALCULATE.getRegex(), "");
+                String value = mathParser.parse(parameter);
+                history.addRecord(parameter + "=" + value);
                 ui.sendMessage("= " + value + "\n\n");
                 break;
             case EXIT:
