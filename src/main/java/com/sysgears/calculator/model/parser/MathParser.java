@@ -149,12 +149,8 @@ public class MathParser implements IMathParser {
             while (operandsMatcher.find()) {
                 operands.add(Double.parseDouble(operandsMatcher.group()));
             }
-            System.out.println(operands);
-
-            double value = operation.calculate(operands);
-
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    + MathConverter.addPlus(formatter.format(value))
+                    + MathConverter.addPlus(formatter.format(operation.calculate(operands)))
                     + expression.substring(expressionMatcher.end(), expression.length()));
         }
 
