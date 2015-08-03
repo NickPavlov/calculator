@@ -73,7 +73,7 @@ public class MathParser implements IMathParser {
             throw new IllegalArgumentException("Expression can't be null.");
         }
 
-        return parseAllOperations(parseAllBrackets(StringConverter.removeSpaces(expression)));
+        return parseOperations(parseBrackets(StringConverter.removeSpaces(expression)));
     }
 
     /**
@@ -84,7 +84,7 @@ public class MathParser implements IMathParser {
      * @param expression the mathematical expression
      * @return the mathematical expression with parsed operations in the brackets
      */
-    private String parseAllBrackets(final String expression) {
+    private String parseBrackets(final String expression) {
         final Matcher matcher = Pattern.compile(Brackets.generatePattern()).matcher(expression);
         String result = expression;
         String temp = numericLiteral;
@@ -97,10 +97,10 @@ public class MathParser implements IMathParser {
         }
         if (!numericLiteral.equals(temp)) {
             result = expression.substring(0, openingBracketPos)
-                    + parseAllOperations(temp) + expression.substring(closingBracketPos, expression.length());
+                    + parseOperations(temp) + expression.substring(closingBracketPos, expression.length());
         }
 
-        return result.equals(expression) ? result : parseAllBrackets(result);
+        return result.equals(expression) ? result : parseBrackets(result);
     }
 
     /**
@@ -110,7 +110,7 @@ public class MathParser implements IMathParser {
      * @param expression the mathematical expression
      * @return the string with performed operations
      */
-    private String parseAllOperations(final String expression) {
+    private String parseOperations(final String expression) {
         String result = expression;
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
@@ -120,7 +120,7 @@ public class MathParser implements IMathParser {
             }
         }
 
-        return result.equals(expression) ? result : parseAllOperations(result);
+        return result.equals(expression) ? result : parseOperations(result);
     }
 
     /**
