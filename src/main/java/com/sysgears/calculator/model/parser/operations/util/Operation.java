@@ -18,7 +18,7 @@ public class Operation {
     /**
      * The operation priority.
      */
-    private final String priority;
+    private final Priority priority;
 
     /**
      * Creates the <code>Operation</code> object, specified by name, operator and priority.
@@ -27,7 +27,7 @@ public class Operation {
      * @param operator the operator
      * @param priority the operation priority
      */
-    public Operation(final String name, final String operator, final String priority) {
+    public Operation(final String name, final String operator, final Priority priority) {
         this.name = name;
         this.operator = operator;
         this.priority = priority;
@@ -56,7 +56,7 @@ public class Operation {
      *
      * @return the operation priority
      */
-    public String getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 

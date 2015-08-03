@@ -1,5 +1,6 @@
 package com.sysgears.calculator.model.parser.operations;
 
+import com.sysgears.calculator.model.parser.operations.util.Operation;
 import com.sysgears.calculator.model.parser.operations.util.Priority;
 import com.sysgears.calculator.model.parser.operations.util.Type;
 
@@ -69,12 +70,6 @@ public enum Operations {
         }
     },
 
-    MODULO("mod", Priority.HIGH, Type.BINARY) {
-        public double calculate(final List<Double> operands) {
-            return operands.get(0) % operands.get(1);
-        }
-    },
-
 
     /**
      * The medium priority operations.
@@ -134,14 +129,13 @@ public enum Operations {
      *
      * @return the list of operations
      */
-    public static List<String> getOperationsList() {
-        final List<String> listOfCommands = new ArrayList<String>();
+    public static List<Operation> getOperationsList() {
+        final List<Operation> listOfOperations = new ArrayList<Operation>();
         for (Operations operation : Operations.values()) {
-            listOfCommands.add("Name: " + operation + "; Operator: "
-                    + operation.getOperator() + "; Priority: " + operation.getPriority() + ";");
+            listOfOperations.add(new Operation(operation.name(), operation.operator, operation.priority));
         }
 
-        return null;
+        return listOfOperations;
     }
 
     /**
