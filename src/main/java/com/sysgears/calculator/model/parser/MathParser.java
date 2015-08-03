@@ -129,7 +129,7 @@ public class MathParser implements IMathParser {
         String result = expression;
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
-                if (operation.getPriority() == priority) {
+                if (operation.getPriority().getIndex() == priority) {
                     result = parseOperation(operation, result);
                 }
             }
