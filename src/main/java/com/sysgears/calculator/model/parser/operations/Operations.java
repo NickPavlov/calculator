@@ -50,12 +50,17 @@ public enum Operations {
         }
     },
 
+    SINH("sinh", Priority.HIGH, Type.UNARY) {
+        public double calculate(final List<Double> operands) {
+            return Math.sinh(operands.get(0) * Math.PI / 180);
+        }
+    },
+
     COSH("cosh", Priority.HIGH, Type.UNARY) {
         public double calculate(final List<Double> operands) {
             return Math.cosh(operands.get(0) * Math.PI / 180);
         }
     },
-
 
     ATAN("atan", Priority.HIGH, Type.UNARY) {
         public double calculate(final List<Double> operands) {
