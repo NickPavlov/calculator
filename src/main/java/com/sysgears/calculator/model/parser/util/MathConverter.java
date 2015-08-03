@@ -40,20 +40,21 @@ public class MathConverter {
      * @return the expression without extra brackets
      */
     public static String removeExtraBrackets(final String expression) {
-        final String openingBrackets = Brackets.generateOpeningPattern();
-        final String closingBrackets = Brackets.generateClosingPattern();
         final String realNumber = Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN;
+        final StringBuilder pattern = new StringBuilder();
+        pattern.append("(?<=").append(Brackets.generateOpeningPattern()).append(")(");
+        for (Brackets brackets : Brackets.values()) {
+            pattern.append("\\").append(brackets.getOpeningBracket())
+                    .append(realNumber).append("\\").append(brackets.getClosingBracket())
+                    .append("|");
+        }
+        pattern.append(")(?=").append(Brackets.generateClosingPattern()).append(")");
 
-        final String generalPattern = "(?<=" + openingBrackets + ")"
-                + openingBrackets + realNumber + closingBrackets
-                + "(?=" + closingBrackets + ")";
-
-        final Matcher matcher = Pattern.compile(generalPattern).matcher(expression);
-
+        final Matcher matcher = Pattern.compile(pattern.toString()).matcher(expression);
         String result = expression;
         while (matcher.find()) {
-            result = result.substring(0, matcher.start()) + result.substring(matcher.start() + 1, matcher.end())
-                    + result.substring(matcher.end() + 1, result.length());
+            result = result.substring(0, matcher.start()) + result.substring(matcher.start() + 1, matcher.end() - 1)
+                    + result.substring(matcher.end(), result.length());
         }
 
         return result.equals(expression) ? result : removeExtraBrackets(result);
