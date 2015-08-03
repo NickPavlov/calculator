@@ -70,7 +70,7 @@ public class MathParser implements IMathParser {
             throw new IllegalArgumentException("Expression can't be null.");
         }
 
-        String result = MathConverter.removeExtraBrackets(expression.replaceAll(" ", ""));
+        String result = expression.replaceAll(" ", "");
 
         return parseBrackets(result, result.length());
     }
@@ -147,7 +147,7 @@ public class MathParser implements IMathParser {
      */
     private String parseOperation(final Operations operation, final String expression) {
         final Matcher expressionMatcher = Pattern.compile(operation.getOperationPattern()).matcher(expression);
-        String result = expression;
+        String result = MathConverter.removeExtraBrackets(expression);
         if (expressionMatcher.find()) {
             Matcher operandsMatcher = Pattern.compile(OPERAND_PATTERN).matcher(expressionMatcher.group());
             List<Double> operands = new ArrayList<Double>();
