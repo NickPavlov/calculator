@@ -3,6 +3,7 @@ package com.sysgears.calculator.model.parser.operations;
 import com.sysgears.calculator.model.parser.operations.util.Priority;
 import com.sysgears.calculator.model.parser.operations.util.Type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -121,12 +122,27 @@ public enum Operations {
     /**
      * Operation priority.
      */
-    private final int priority;
+    private final Priority priority;
 
     /**
      * Operation regular expression.
      */
     private final String operationPattern;
+
+    /**
+     * Returns the list of operations.
+     *
+     * @return the list of operations
+     */
+    public static List<String> getOperationsList() {
+        final List<String> listOfCommands = new ArrayList<String>();
+        for (Operations operation : Operations.values()) {
+            listOfCommands.add("Name: " + operation + "; Operator: "
+                    + operation.getOperator() + "; Priority: " + operation.getPriority() + ";");
+        }
+
+        return null;
+    }
 
     /**
      * @param operator the operator
@@ -135,7 +151,7 @@ public enum Operations {
      */
     Operations(final String operator, final Priority priority, final Type type) {
         this.operator = operator;
-        this.priority = priority.getIndex();
+        this.priority = priority;
         this.operationPattern = type.getPattern(operator);
     }
 
@@ -144,7 +160,7 @@ public enum Operations {
      *
      * @return priority index
      */
-    public int getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 

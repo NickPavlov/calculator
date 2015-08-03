@@ -58,7 +58,7 @@ public enum Brackets {
      * @return the regular expression for all closing brackets
      */
     public static String generateClosingPattern() {
-        StringBuilder closingBrackets = new StringBuilder().append("[");
+        final StringBuilder closingBrackets = new StringBuilder().append("[");
         for (Brackets brackets : Brackets.values()) {
             closingBrackets.append("\\").append(brackets.getClosingBracket());
         }

@@ -28,17 +28,17 @@ public enum Commands {
     UNKNOWN_COMMAND("", "", Type.SYSTEM);
 
     /**
-     * Command name.
+     * Operation name.
      */
     private final String name;
 
     /**
-     * Command type.
+     * Operation type.
      */
     private final Type type;
 
     /**
-     * Command description.
+     * Operation description.
      */
     private final String description;
 

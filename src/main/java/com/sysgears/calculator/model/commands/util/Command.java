@@ -1,22 +1,22 @@
 package com.sysgears.calculator.model.commands.util;
 
 /**
- * The <code>Command</code> class provides functionality to work with commands.
+ * The <code>Operation</code> class provides functionality to work with commands.
  */
 public class Command {
 
     /**
-     * Command name.
+     * Operation name.
      */
     private final String name;
 
     /**
-     * Command description.
+     * Operation description.
      */
     private final String description;
 
     /**
-     * Creates the <code>Command</code> object specified by name and description.
+     * Creates the <code>Operation</code> object specified by name and description.
      *
      * @param name        command name
      * @param description command description
