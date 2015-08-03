@@ -3,7 +3,7 @@ package com.sysgears.calculator.model.util;
 import java.util.regex.Pattern;
 
 /**
- * The <code>StringMatcher</code> class provides methods for formatting the strings, the numbers.
+ * The <code>StringMatcher</code> class provides functionality for searching in strings.
  */
 public class StringMatcher {
 

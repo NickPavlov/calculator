@@ -29,11 +29,11 @@ public enum Brackets {
     public static char getClosingPair(final char openingBracket) {
         char closingBracket = '\u0000';
         for (Brackets brackets : Brackets.values()) {
-             if (brackets.openingBracket == openingBracket) {
-                 closingBracket = brackets.closingBracket;
-                 break;
-             }
-         }
+            if (brackets.openingBracket == openingBracket) {
+                closingBracket = brackets.closingBracket;
+                break;
+            }
+        }
 
         return closingBracket;
     }
@@ -44,15 +44,12 @@ public enum Brackets {
      * @return the regular expression for all opening brackets
      */
     public static String generateOpeningPattern() {
-        final StringBuilder openingBrackets = new StringBuilder();
-        openingBrackets.append("[");
+        final StringBuilder openingBrackets = new StringBuilder().append("[");
         for (Brackets brackets : Brackets.values()) {
-            openingBrackets.append("\\")
-                    .append(brackets.getOpeningBracket());
+            openingBrackets.append("\\").append(brackets.getOpeningBracket());
         }
-        openingBrackets.append("]");
 
-        return openingBrackets.toString();
+        return openingBrackets.append("]").toString();
     }
 
     /**
@@ -61,15 +58,12 @@ public enum Brackets {
      * @return the regular expression for all closing brackets
      */
     public static String generateClosingPattern() {
-        StringBuilder closingBrackets = new StringBuilder();
-        closingBrackets.append("[");
+        StringBuilder closingBrackets = new StringBuilder().append("[");
         for (Brackets brackets : Brackets.values()) {
-            closingBrackets.append("\\")
-                    .append(brackets.getClosingBracket());
+            closingBrackets.append("\\").append(brackets.getClosingBracket());
         }
-        closingBrackets.append("]");
 
-        return closingBrackets.toString();
+        return closingBrackets.append("]").toString();
     }
 
     /**
