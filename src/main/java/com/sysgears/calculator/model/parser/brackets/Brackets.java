@@ -5,21 +5,21 @@ package com.sysgears.calculator.model.parser.brackets;
  */
 public enum Brackets {
 
-    ROUND_BRACKETS("(", ")"),
-    SQUARE_BRACKETS("[", "]"),
-    CURLY_BRACKETS("{", "}"),
-    ANGLE_BRACKETS("<", ">"),
-    CUSTOM_BRACKETS("#", "$");
+    ROUND_BRACKETS('(', ')'),
+    SQUARE_BRACKETS('[', ']'),
+    CURLY_BRACKETS('{', '}'),
+    ANGLE_BRACKETS('<', '>'),
+    CUSTOM_BRACKETS('#', '$');
 
     /**
      * The opening bracket.
      */
-    private String openingBracket;
+    private char openingBracket;
 
     /**
      * The closing bracket.
      */
-    private String closingBracket;
+    private char closingBracket;
 
     /**
      * Returns a closing bracket which corresponds to a given opening bracket.
@@ -27,10 +27,10 @@ public enum Brackets {
      * @param openingBracket the opening bracket
      * @return the closing bracket
      */
-    public static String getClosingPair(final String openingBracket) {
-        String closingBracket = "";
+    public static char getClosingPair(final char openingBracket) {
+        char closingBracket = '\u0000';
         for (Brackets brackets : Brackets.values()) {
-             if (brackets.openingBracket.equals(openingBracket)) {
+             if (brackets.openingBracket == openingBracket) {
                  closingBracket = brackets.closingBracket;
                  break;
              }
@@ -77,7 +77,7 @@ public enum Brackets {
      * @param openingBracket the opening bracket
      * @param closingBracket the closing bracket
      */
-    Brackets(final String openingBracket, final String closingBracket) {
+    Brackets(final char openingBracket, final char closingBracket) {
         this.openingBracket = openingBracket;
         this.closingBracket = closingBracket;
     }
@@ -87,7 +87,7 @@ public enum Brackets {
      *
      * @return the opening brackets
      */
-    public String getOpeningBracket() {
+    public char getOpeningBracket() {
         return openingBracket;
     }
 
@@ -96,7 +96,7 @@ public enum Brackets {
      *
      * @return the closing bracket
      */
-    public String getClosingBracket() {
+    public char getClosingBracket() {
         return closingBracket;
     }
 }

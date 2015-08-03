@@ -21,19 +21,16 @@ import java.util.regex.Pattern;
 public class MathParser implements IMathParser {
 
     /**
+     * The regular expression for the operand.
+     */
+    private static final String OPERAND_PATTERN = "(?<![\\d\\)" + Brackets.generateClosingPattern() + "])"
+            + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN;
+
+    /**
      * The default accuracy of calculation.
      */
     public static final String DEFAULT_ACCURACY = "#.#########";
 
-    /**
-     * The regular expression for the real number.
-     */
-    private static final String numberPattern = Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN;
-
-    /**
-     * The numeric literal.
-     */
-    private static final String numericLiteral = "0";
 
     /**
      * The number formatter.
@@ -99,8 +96,8 @@ public class MathParser implements IMathParser {
                 start = matcher.start();
             }
             //System.out.println("start: " + start);
-            String openingBracket = "" + result.charAt(start);
-            String closingBracket = Brackets.getClosingPair(openingBracket);
+            char openingBracket = result.charAt(start);
+            char closingBracket = Brackets.getClosingPair(openingBracket);
             //System.out.println("openingBracket: " + openingBracket);
             //System.out.println("closingBracket: " + closingBracket);
             //System.out.println("\n\n");
@@ -111,10 +108,10 @@ public class MathParser implements IMathParser {
             while (openingBracketsCount != closingBracketsCount) {
                 ++index;
                 //System.out.println("result.charAt(index): " + result.charAt(index));
-                if (openingBracket.equals("" + result.charAt(index))) {
+                if (openingBracket == result.charAt(index)) {
                     ++openingBracketsCount;
                 }
-                if (closingBracket.equals("" + result.charAt(index))) {
+                if (closingBracket == result.charAt(index)) {
                     ++closingBracketsCount;
                 }
             }
@@ -177,10 +174,7 @@ public class MathParser implements IMathParser {
         final Matcher expressionMatcher = Pattern.compile(operation.getOperationPattern()).matcher(expression);
         String result = expression;
         if (expressionMatcher.find()) {
-            String operandPattern = "(?<![\\d\\)" + Brackets.generateClosingPattern() + "])"
-                    + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN;
-            Matcher operandsMatcher = Pattern.compile(operandPattern)
-                    .matcher(expressionMatcher.group());
+            Matcher operandsMatcher = Pattern.compile(OPERAND_PATTERN).matcher(expressionMatcher.group());
             List<String> operands = new ArrayList<String>();
             while (operandsMatcher.find()) {
                 operands.add(operandsMatcher.group());
