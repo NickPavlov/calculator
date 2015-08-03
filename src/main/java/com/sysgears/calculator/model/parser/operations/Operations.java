@@ -3,6 +3,8 @@ package com.sysgears.calculator.model.parser.operations;
 import com.sysgears.calculator.model.parser.operations.util.Priority;
 import com.sysgears.calculator.model.parser.operations.util.Type;
 
+import java.util.List;
+
 /**
  * The <code>Operations</code> class provides a basic set of operators required to operate the parser.
  */
@@ -13,13 +15,14 @@ public enum Operations {
      * Constants.
      */
     PI("PI", Priority.TOP, Type.CONSTANT) {
-        public double calculate(final double firstOperand, final double secondOperand) {
+        //public double calculate(final double firstOperand, final double secondOperand) {
+        public double calculate(final List<Double> operands) {
             return Math.PI;
         }
     },
 
     E("E", Priority.TOP, Type.CONSTANT) {
-        public double calculate(final double firstOperand, final double secondOperand) {
+        public double calculate(final List<Double> operands) {
             return Math.E;
         }
     },
@@ -29,38 +32,45 @@ public enum Operations {
      * The high priority operations.
      */
     SIN("sin", Priority.HIGH, Type.UNARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return Math.sin(secondOperand * Math.PI / 180);
+        public double calculate(final List<Double> operands) {
+            return Math.sin(operands.get(0) * Math.PI / 180);
         }
     },
 
     COS("cos", Priority.HIGH, Type.UNARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return Math.cos(secondOperand * Math.PI / 180);
+        public double calculate(final List<Double> operands) {
+            return Math.cos(operands.get(0) * Math.PI / 180);
         }
     },
 
+    COSH("cosh", Priority.HIGH, Type.UNARY) {
+        public double calculate(final List<Double> operands) {
+            return Math.cosh(operands.get(0) * Math.PI / 180);
+        }
+    },
+
+
     ATAN("atan", Priority.HIGH, Type.UNARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return Math.atan(secondOperand);
+        public double calculate(final List<Double> operands) {
+            return Math.atan(operands.get(0) * Math.PI / 180);
         }
     },
 
     EXP("exp", Priority.HIGH, Type.UNARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return Math.exp(secondOperand);
+        public double calculate(final List<Double> operands) {
+            return Math.exp(operands.get(0));
         }
     },
 
     ABS("abs", Priority.HIGH, Type.UNARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return Math.abs(secondOperand);
+        public double calculate(final List<Double> operands) {
+            return Math.abs(operands.get(0));
         }
     },
 
     MODULO("mod", Priority.HIGH, Type.BINARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return firstOperand % secondOperand;
+        public double calculate(final List<Double> operands) {
+            return operands.get(0) % operands.get(1);
         }
     },
 
@@ -69,20 +79,20 @@ public enum Operations {
      * The medium priority operations.
      */
     POWER("^", Priority.MEDIUM, Type.BINARY_FIRST_WITHOUT_SIGN) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return Math.pow(firstOperand, secondOperand);
+        public double calculate(final List<Double> operands) {
+            return Math.pow(operands.get(0), operands.get(1));
         }
     },
 
     DIVISION("/", Priority.MEDIUM, Type.BINARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return firstOperand / secondOperand;
+        public double calculate(final List<Double> operands) {
+            return operands.get(0) / operands.get(1);
         }
     },
 
     MULTIPLY("*", Priority.MEDIUM, Type.BINARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return firstOperand * secondOperand;
+        public double calculate(final List<Double> operands) {
+            return operands.get(0) * operands.get(1);
         }
     },
 
@@ -92,14 +102,14 @@ public enum Operations {
      */
 
     ADD("+", Priority.LOW, Type.BINARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return firstOperand + secondOperand;
+        public double calculate(final List<Double> operands) {
+            return operands.get(0) + operands.get(1);
         }
     },
 
     SUBTRACT("-", Priority.LOW, Type.BINARY) {
-        public double calculate(final double firstOperand, final double secondOperand) {
-            return firstOperand - secondOperand;
+        public double calculate(final List<Double> operands) {
+            return operands.get(0) - operands.get(1);
         }
     };
 
@@ -158,11 +168,9 @@ public enum Operations {
 
     /**
      * Should return the result of the operation.
-     * Method is abstract and need to be overridden.
      *
-     * @param firstOperand  The first operand
-     * @param secondOperand The second operand
+     * @param operands the list of operands
      * @return the calculated value
      */
-    public abstract double calculate(final double firstOperand, final double secondOperand);
+    public abstract double calculate(final List<Double> operands);
 }

@@ -147,24 +147,14 @@ public class MathParser implements IMathParser {
         String result = expression;
         if (expressionMatcher.find()) {
             Matcher operandsMatcher = Pattern.compile(OPERAND_PATTERN).matcher(expressionMatcher.group());
-            List<String> operands = new ArrayList<String>();
+            List<Double> operands = new ArrayList<Double>();
             while (operandsMatcher.find()) {
-                operands.add(operandsMatcher.group());
+                operands.add(Double.parseDouble(operandsMatcher.group()));
             }
             System.out.println(operands);
-            double value = 0;
-            switch (operands.size()) {
-                case 0:
-                    value = operation.calculate(0, 0);
-                    break;
-                case 1:
-                    value = operation.calculate(0, Double.parseDouble(operands.get(0)));
-                    break;
-                case 2:
-                    value = operation.calculate(Double.parseDouble(operands.get(0)),
-                            Double.parseDouble(operands.get(1)));
-                    break;
-            }
+
+            double value = operation.calculate(operands);
+
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
                     + MathConverter.addPlus(formatter.format(value))
                     + expression.substring(expressionMatcher.end(), expression.length()));
