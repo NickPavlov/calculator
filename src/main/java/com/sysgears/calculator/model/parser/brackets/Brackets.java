@@ -23,6 +23,7 @@ public enum Brackets {
 
     /**
      * Returns a closing bracket which corresponds to a given opening bracket.
+     * If there is no closing bracket - returns '\u0000'.
      *
      * @param openingBracket the opening bracket
      * @return the closing bracket
