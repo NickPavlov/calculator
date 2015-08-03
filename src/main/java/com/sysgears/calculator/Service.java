@@ -1,10 +1,9 @@
 package com.sysgears.calculator;
 
 import com.sysgears.calculator.model.commands.Commands;
-import com.sysgears.calculator.model.util.StringCreator;
-import com.sysgears.calculator.model.converter.StringConverter;
 import com.sysgears.calculator.model.history.IHistory;
 import com.sysgears.calculator.model.parser.IMathParser;
+import com.sysgears.calculator.model.util.StringCreator;
 import com.sysgears.calculator.view.userinteface.IUserInterface;
 
 import java.io.IOException;
@@ -74,7 +73,7 @@ public class Service {
         switch (command) {
             case EVALUATE:
                 String value = mathParser.parse(message);
-                history.addRecord(StringConverter.removeSpaces(message) + "=" + value);
+                history.addRecord(message + "=" + value);
                 ui.sendMessage("= " + value + "\n\n");
                 break;
             case EXIT:

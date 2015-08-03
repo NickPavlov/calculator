@@ -2,7 +2,7 @@ package com.sysgears.calculator.model.commands;
 
 import com.sysgears.calculator.model.commands.util.Command;
 import com.sysgears.calculator.model.commands.util.Type;
-import com.sysgears.calculator.model.converter.StringConverter;
+import com.sysgears.calculator.model.util.StringMatcher;
 import com.sysgears.calculator.model.util.RegexCreator;
 
 import java.util.ArrayList;
@@ -56,7 +56,9 @@ public enum Commands {
         this.name = name;
         this.type = type;
         this.description = description;
-        this.regex = (type == Type.USER) ? RegexCreator.buildRegex(name) : name;
+        this.regex = (type == Type.USER)
+                ? RegexCreator.createAtBeginning(RegexCreator.createWithSpaces(name))
+                : name;
     }
 
     /**
@@ -68,7 +70,7 @@ public enum Commands {
     public static Commands getCommand(final String expression) {
         Commands result = Commands.UNKNOWN_COMMAND;
         for (Commands command : Commands.values()) {
-            if (StringConverter.findString(expression, command.getRegex(), true)) {
+            if (StringMatcher.findSubstring(expression, command.getRegex(), true)) {
                 result = command;
                 break;
             }

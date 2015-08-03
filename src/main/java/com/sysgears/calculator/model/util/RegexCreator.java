@@ -6,13 +6,35 @@ package com.sysgears.calculator.model.util;
 public class RegexCreator {
 
     /**
-     * Generates the regex pattern based on the <code>expression</code>.
-     * The number of spaces between words is unlimited.
+     * Returns the regular expression built on the <code>expression</code>,
+     * in which whitespaces are replaced by "\s+".
      *
-     * @param expression a string
-     * @return a regular expression
+     * @param expression the original expression
+     * @return the regex with whitespaces
      */
-    public static String buildRegex(final String expression) {
-        return "^(\\\\s)*" + expression.replaceAll(" ", "(\\\\s)") + "(\\\\s)*$";
+    public static String createWithSpaces(final String expression) {
+        return expression.replaceAll(" ", "(\\\\s+)");
+    }
+
+    /**
+     * Returns the regular expression built on the <code>expression</code>,
+     * which should be in the beginning of the line.
+     *
+     * @param expression the original expression
+     * @return the regex, which should be in the beginning of the line.
+     */
+    public static String createAtBeginning(final String expression) {
+        return "^(\\s)*" + expression;
+    }
+
+    /**
+     * Returns the regular expression built on the <code>expression</code>,
+     * which should be in the end of the line.
+     *
+     * @param expression the original expression
+     * @return the regex, which should be in the end of the line.
+     */
+    public static String createAtEnd(final String expression) {
+        return expression + "(\\s)*$";
     }
 }

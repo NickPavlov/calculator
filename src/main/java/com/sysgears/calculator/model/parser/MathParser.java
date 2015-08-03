@@ -1,9 +1,8 @@
 package com.sysgears.calculator.model.parser;
 
-import com.sysgears.calculator.model.converter.StringConverter;
 import com.sysgears.calculator.model.parser.brackets.Brackets;
-import com.sysgears.calculator.model.parser.operations.util.Operands;
 import com.sysgears.calculator.model.parser.operations.Operations;
+import com.sysgears.calculator.model.parser.operations.util.Operands;
 import com.sysgears.calculator.model.parser.operations.util.Priority;
 import com.sysgears.calculator.model.parser.util.MathConverter;
 
@@ -71,7 +70,7 @@ public class MathParser implements IMathParser {
             throw new IllegalArgumentException("Expression can't be null.");
         }
 
-        String withoutSpaces = StringConverter.removeSpaces(expression);
+        String withoutSpaces = expression.replaceAll(" ", "");
 
         return parseBrackets(withoutSpaces, withoutSpaces.length());
     }
@@ -88,7 +87,6 @@ public class MathParser implements IMathParser {
     private String parseBrackets(final String expression, final int openingBracketIndex) {
         final Matcher matcher = Pattern.compile(Brackets.generateOpeningPattern())
                 .matcher(expression.substring(0, openingBracketIndex));
-
         String result = expression;
         if (matcher.find()) {
             int start = matcher.start();
@@ -168,7 +166,6 @@ public class MathParser implements IMathParser {
                     break;
             }
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    //+ formatter.format(value)
                     + MathConverter.addPlus(formatter.format(value))
                     + expression.substring(expressionMatcher.end(), expression.length()));
         }

@@ -18,17 +18,6 @@ public class MathConverter {
     }
 
     /**
-     * If the number is negative, places it in brackets.
-     * Otherwise returns the original string.
-     *
-     * @param number the number in the string
-     * @return the number in the brackets if it's negative
-     */
-    public static String addBrackets(final String number) {
-        return (number.charAt(0) == '-') ? '(' + number + ')' : number;
-    }
-
-    /**
      * Removes extra mathematical signs for the <code>expression</code>.
      * <p>Example: "-+" = "-"; "+-" = "-"; "--" = "+"; "++" = "+".<p>
      *
