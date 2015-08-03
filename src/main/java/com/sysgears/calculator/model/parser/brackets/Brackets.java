@@ -8,9 +8,7 @@ public enum Brackets {
     ROUND_BRACKETS('(', ')'),
     SQUARE_BRACKETS('[', ']'),
     CURLY_BRACKETS('{', '}'),
-    ANGLE_BRACKETS('<', '>'),
-    CUSTOM_BRACKETS('#', '$');
-
+    ANGLE_BRACKETS('<', '>');
     /**
      * The opening bracket.
      */

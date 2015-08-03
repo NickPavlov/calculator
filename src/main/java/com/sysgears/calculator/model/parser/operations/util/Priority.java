@@ -1,4 +1,4 @@
-package com.sysgears.calculator.model.parser.operations;
+package com.sysgears.calculator.model.parser.operations.util;
 
 /**
  * The <code>Priority</code> class provides functionality to work with a priorities.
@@ -35,7 +35,7 @@ public enum Priority {
     /**
      * @param priority index index
      */
-    private Priority(final int priority) {
+    Priority(final int priority) {
         this.index = priority;
     }
 

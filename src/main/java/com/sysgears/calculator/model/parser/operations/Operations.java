@@ -1,5 +1,8 @@
 package com.sysgears.calculator.model.parser.operations;
 
+import com.sysgears.calculator.model.parser.operations.util.Priority;
+import com.sysgears.calculator.model.parser.operations.util.Type;
+
 /**
  * The <code>Operations</code> class provides a basic set of operators required to operate the parser.
  */

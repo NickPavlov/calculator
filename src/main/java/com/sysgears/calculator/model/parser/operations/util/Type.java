@@ -1,6 +1,6 @@
-package com.sysgears.calculator.model.parser.operations;
+package com.sysgears.calculator.model.parser.operations.util;
 
-import com.sysgears.calculator.model.parser.operands.Operands;
+import com.sysgears.calculator.model.parser.operations.util.Operands;
 
 import java.util.regex.Pattern;
 
