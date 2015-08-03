@@ -18,16 +18,6 @@ public class MathConverter {
     }
 
     /**
-     * Removes extra mathematical signs for the <code>expression</code>.
-     * <p>Example: "-+" = "-"; "+-" = "-"; "--" = "+"; "++" = "+".<p>
-     *
-     * @return the expression without extra signs
-     */
-    public static String removeExtraSigns(final String expression) {
-        return "";
-    }
-
-    /**
      * Removes extra brackets in the <code>expression</code>.
      *
      * @param expression the expression to remove extra brackets
