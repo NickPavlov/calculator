@@ -16,6 +16,7 @@ public enum Commands {
     /**
      * User commands.
      */
+    CALCULATE("calc", "Calculates the expression.", "<math_expr>", Type.USER),
     HISTORY("history", "Display the history of all calculations.", Type.USER),
     HISTORY_UNIQUE("history unique", "Display all unique calculations.", Type.USER),
     HELP("help", "Display a list of all available commands.", Type.USER),
@@ -24,8 +25,7 @@ public enum Commands {
     /**
      * System commands.
      */
-    EVALUATE(".?\\d+.?", "", Type.SYSTEM),
-    UNKNOWN_COMMAND("", "", Type.SYSTEM);
+    UNKNOWN_COMMAND("unknown command", "", Type.SYSTEM);
 
     /**
      * Operation name.
@@ -48,17 +48,33 @@ public enum Commands {
     private final String regex;
 
     /**
+     * The command metaVar parameter.
+     */
+    private final String metaVar;
+
+    /**
      * @param name        the command name
      * @param type        the command type
-     * @param description the description of the command
+     * @param metaVar     the command metaVar parameter
+     * @param description the command description
      */
-    Commands(final String name, final String description, final Type type) {
+    Commands(final String name, final String description, final String metaVar, final Type type) {
         this.name = name;
         this.type = type;
+        this.metaVar = metaVar;
         this.description = description;
         this.regex = (type == Type.USER)
                 ? RegexCreator.createAtBeginning(RegexCreator.createWithSpaces(name))
                 : name;
+    }
+
+    /**
+     * @param name        the command name
+     * @param description the command type
+     * @param type        the command description
+     */
+    Commands(String name, String description, final Type type) {
+        this(name, description, "", type);
     }
 
     /**
@@ -88,7 +104,7 @@ public enum Commands {
         List<Command> result = new ArrayList<Command>();
         for (Commands command : Commands.values()) {
             if (command.type == Type.USER) {
-                result.add(new Command(command.name, command.description));
+                result.add(new Command(command.name, command.description, command.metaVar));
             }
         }
 
@@ -102,5 +118,14 @@ public enum Commands {
      */
     public String getRegex() {
         return this.regex;
+    }
+
+    /**
+     * Returns the command metaVar parameter.
+     *
+     * @return the metaVar parameter
+     */
+    public String getMetaVar() {
+        return metaVar;
     }
 }

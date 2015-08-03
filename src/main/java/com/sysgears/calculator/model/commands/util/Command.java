@@ -6,14 +6,19 @@ package com.sysgears.calculator.model.commands.util;
 public class Command {
 
     /**
-     * Operation name.
+     * The operation name.
      */
     private final String name;
 
     /**
-     * Operation description.
+     * The operation description.
      */
     private final String description;
+
+    /**
+     * The metaVar parameter.
+     */
+    private final String metaVar;
 
     /**
      * Creates the <code>Operation</code> object specified by name and description.
@@ -21,9 +26,10 @@ public class Command {
      * @param name        command name
      * @param description command description
      */
-    public Command(final String name, final String description) {
+    public Command(final String name, final String description, final String metaVar) {
         this.name = name;
         this.description = description;
+        this.metaVar = metaVar;
     }
 
     /**
@@ -45,12 +51,21 @@ public class Command {
     }
 
     /**
+     * Returns the metaVar parameter.
+     *
+     * @return the metaVar parameter
+     */
+    public String getMetaVar() {
+        return metaVar;
+    }
+
+    /**
      * Returns a string representation of a command.
      *
      * @return string
      */
     @Override
     public String toString() {
-        return name + " : " + description;
+        return name + " " + metaVar + " : " + description;
     }
 }
