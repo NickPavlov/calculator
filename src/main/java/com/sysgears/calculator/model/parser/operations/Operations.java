@@ -29,6 +29,11 @@ public enum Operations {
         }
     },
 
+    GOLDEN_SECTION("FI", Priority.TOP, Type.CONSTANT) {
+        public double calculate(final List<Double> operands) {
+            return 1.618033988;
+        }
+    },
 
     /**
      * The high priority operations.

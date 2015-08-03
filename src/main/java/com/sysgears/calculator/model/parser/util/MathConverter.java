@@ -49,10 +49,9 @@ public class MathConverter {
                     .append("|");
         }
         pattern.append(")(?=").append(Brackets.generateClosingPattern()).append(")");
-
         final Matcher matcher = Pattern.compile(pattern.toString()).matcher(expression);
         String result = expression;
-        while (matcher.find()) {
+        if (matcher.find()) {
             result = result.substring(0, matcher.start()) + result.substring(matcher.start() + 1, matcher.end() - 1)
                     + result.substring(matcher.end(), result.length());
         }
@@ -61,5 +60,9 @@ public class MathConverter {
     }
 
     private MathConverter() {
+    }
+
+    public static void main(String[] args) {
+        System.out.println(removeExtraBrackets("sin([{-1}])^{[(2)]}"));
     }
 }
