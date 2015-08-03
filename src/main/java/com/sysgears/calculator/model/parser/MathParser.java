@@ -4,6 +4,7 @@ import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.util.Operands;
 import com.sysgears.calculator.model.parser.operations.util.Priority;
+import com.sysgears.calculator.model.parser.util.MathConverter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -69,9 +70,9 @@ public class MathParser implements IMathParser {
             throw new IllegalArgumentException("Expression can't be null.");
         }
 
-        String withoutSpaces = expression.replaceAll(" ", "");
+        String result = MathConverter.removeExtraBrackets(expression.replaceAll(" ", ""));
 
-        return parseBrackets(withoutSpaces, withoutSpaces.length());
+        return parseBrackets(result, result.length());
     }
 
     /**

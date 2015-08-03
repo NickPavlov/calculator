@@ -45,11 +45,8 @@ public class MathConverter {
             result = result.substring(0, matcher.start()) + result.substring(matcher.start() + 1, matcher.end())
                     + result.substring(matcher.end() + 1, result.length());
         }
-        if (!result.equals(expression)) {
-            result = removeExtraBrackets(result);
-        }
 
-        return result;
+        return result.equals(expression) ? result : removeExtraBrackets(result);
     }
 
     private MathConverter() {
