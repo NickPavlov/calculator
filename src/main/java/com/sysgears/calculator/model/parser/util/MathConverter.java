@@ -14,7 +14,7 @@ public class MathConverter {
     /**
      * Appends '+' at the start of the <code>expression</code> if the first char not equal to '-' and '+'.
      *
-     * @param expression the expression
+     * @param expression the original expression
      * @return the expression with the plus sign at the start
      */
     /*
@@ -22,6 +22,16 @@ public class MathConverter {
         return ((expression.charAt(0) != '-') & (expression.charAt(0) != '+')) ? '+' + expression : expression;
     }
     */
+
+    /**
+     * Places the <code>expression</code> in brackets.
+     *
+     * @param expression the original expression
+     * @return the expression placed in brackets
+     */
+    public static String addBrackets(final String expression) {
+        return (expression.charAt(0) == '-') ? '(' + expression + ')' : expression;
+    }
 
     /**
      * Removes extra brackets in the <code>expression</code>.
