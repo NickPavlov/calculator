@@ -135,6 +135,11 @@ public enum Operations {
     private final String operationPattern;
 
     /**
+     * The operation type.
+     */
+    private final Type type;
+
+    /**
      * Returns the list of operations.
      *
      * @return the list of operations
@@ -142,7 +147,8 @@ public enum Operations {
     public static List<Operation> getOperationsList() {
         final List<Operation> listOfOperations = new ArrayList<Operation>();
         for (Operations operation : Operations.values()) {
-            listOfOperations.add(new Operation(operation.name(), operation.operator, operation.priority));
+            listOfOperations.add(
+                    new Operation(operation.name(), operation.operator, operation.priority, operation.type));
         }
 
         return listOfOperations;
@@ -156,6 +162,7 @@ public enum Operations {
     Operations(final String operator, final Priority priority, final Type type) {
         this.operator = operator;
         this.priority = priority;
+        this.type = type;
         this.operationPattern = type.getPattern(operator);
     }
 
@@ -184,6 +191,15 @@ public enum Operations {
      */
     public String getOperationPattern() {
         return operationPattern;
+    }
+
+    /**
+     * Returns the operation type.
+     *
+     * @return the operation type
+     */
+    public Type getType() {
+        return type;
     }
 
     /**

@@ -21,16 +21,22 @@ public class Operation {
     private final Priority priority;
 
     /**
+     * The operation type.
+     */
+    private final Type type;
+
+    /**
      * Creates the <code>Operation</code> object, specified by name, operator and priority.
      *
      * @param name the operation name
      * @param operator the operator
      * @param priority the operation priority
      */
-    public Operation(final String name, final String operator, final Priority priority) {
+    public Operation(final String name, final String operator, final Priority priority, final Type type) {
         this.name = name;
         this.operator = operator;
         this.priority = priority;
+        this.type = type;
     }
 
     /**
@@ -61,12 +67,22 @@ public class Operation {
     }
 
     /**
+     * Returns the operation type.
+     *
+     * @return the operation type
+     */
+    public Type getType() {
+        return type;
+    }
+
+    /**
      * Returns a string representation of the operation.
      *
      * @return a string
      */
     @Override
     public String toString() {
-        return name + " { operator='" + operator + '\'' + ", priority='" + priority + '\'' +'}';
+        return name + " { operator='"
+                + operator + '\'' + ", priority='" + priority.name() + '\'' + ", type='" + type.name() + "\'}";
     }
 }
