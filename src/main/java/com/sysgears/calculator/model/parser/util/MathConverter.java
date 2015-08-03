@@ -7,8 +7,14 @@ import com.sysgears.calculator.model.parser.brackets.Brackets;
  */
 public class MathConverter {
 
-    public static String addPlus(final String number) {
-        return ((number.charAt(0) != '-') & (number.charAt(0) != '+')) ? '+' + number : number;
+    /**
+     * Appends '+' at the start of the <code>expression</code> if the first char not equal to '-' and '+'.
+     *
+     * @param expression the expression
+     * @return the expression with the plus sign at the start
+     */
+    public static String addPlus(final String expression) {
+        return ((expression.charAt(0) != '-') & (expression.charAt(0) != '+')) ? '+' + expression : expression;
     }
 
     /**
@@ -24,6 +30,7 @@ public class MathConverter {
 
     /**
      * Removes extra mathematical signs for the <code>expression</code>.
+     * <p>Example: "-+" = "-"; "+-" = "-"; "--" = "+"; "++" = "+".<p>
      *
      * @return the expression without extra signs
      */

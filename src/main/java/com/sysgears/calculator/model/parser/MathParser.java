@@ -82,6 +82,7 @@ public class MathParser implements IMathParser {
      * in the separate brackets.
      *
      * @param expression the mathematical expression
+     * @param openingBracketIndex the index to which you want to search for an opening bracket
      * @return the mathematical expression with parsed operations in the brackets
      */
     private String parseBrackets(final String expression, final int openingBracketIndex) {
@@ -91,23 +92,16 @@ public class MathParser implements IMathParser {
         String result = expression;
         if (matcher.find()) {
             int start = matcher.start();
-            //looks for the last opening bracket.
             while (matcher.find()) {
                 start = matcher.start();
             }
-            //System.out.println("start: " + start);
             char openingBracket = result.charAt(start);
             char closingBracket = Brackets.getClosingPair(openingBracket);
-            //System.out.println("openingBracket: " + openingBracket);
-            //System.out.println("closingBracket: " + closingBracket);
-            //System.out.println("\n\n");
-
             int openingBracketsCount = 1;
             int closingBracketsCount = 0;
             int index = start;
             while (openingBracketsCount != closingBracketsCount) {
                 ++index;
-                //System.out.println("result.charAt(index): " + result.charAt(index));
                 if (openingBracket == result.charAt(index)) {
                     ++openingBracketsCount;
                 }
@@ -115,30 +109,10 @@ public class MathParser implements IMathParser {
                     ++closingBracketsCount;
                 }
             }
-            /*
-            System.out.println("openingBracketsCount" + openingBracketsCount);
-            System.out.println("closingBracketsCount" + closingBracketsCount);
-            String beforeBrackets = result.substring(0, start);
-            String inBrackets = result.substring(start, index);
-            String afterBrackets = result.substring(index, result.length());
-
-            System.out.println("beforeBrackets: " + beforeBrackets);
-            System.out.println("inBrackets: " + inBrackets);
-            System.out.println("afterBrackets: " + afterBrackets);
-            */
-
-            result = result.substring(0, start)
+            result = parseBrackets(result.substring(0, start)
                     + parseOperations(result.substring(start, index))
-                    + result.substring(index, result.length());
-
-            /*
-            System.out.println();
-            System.out.println("result: " + result);
-            System.out.println();
-            */
-            result = parseBrackets(result, start);
+                    + result.substring(index, result.length()), start);
         }
-
 
         return parseOperations(result);
     }
