@@ -13,7 +13,7 @@ public class StringMatcher {
      * @param expression      the original string
      * @param pattern         the regular expression
      * @param caseInsensitive if true - case-insensitive
-     * @return true if the substring is present in the <code>str</code>
+     * @return true if the substring is present
      */
     public static boolean findSubstring(final String expression,
                                         final String pattern,
