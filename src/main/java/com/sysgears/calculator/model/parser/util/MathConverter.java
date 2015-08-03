@@ -12,18 +12,6 @@ import java.util.regex.Pattern;
 public class MathConverter {
 
     /**
-     * Appends '+' at the start of the <code>expression</code> if the first char not equal to '-' and '+'.
-     *
-     * @param expression the original expression
-     * @return the expression with the plus sign at the start
-     */
-    /*
-    public static String addPlus(final String expression) {
-        return ((expression.charAt(0) != '-') & (expression.charAt(0) != '+')) ? '+' + expression : expression;
-    }
-    */
-
-    /**
      * Places the <code>expression</code> in brackets.
      *
      * @param expression the original expression
