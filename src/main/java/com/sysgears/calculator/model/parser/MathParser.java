@@ -81,12 +81,12 @@ public class MathParser implements IMathParser {
      * in the separate brackets.
      *
      * @param expression the mathematical expression
-     * @param openingBracketIndex the index to which you want to search for an opening bracket
+     * @param openingBracketBorder the index to which you want to search for an opening bracket
      * @return the mathematical expression with parsed operations in the brackets
      */
-    private String parseBrackets(final String expression, final int openingBracketIndex) {
+    private String parseBrackets(final String expression, final int openingBracketBorder) {
         final Matcher matcher = Pattern.compile(Brackets.generateOpeningPattern())
-                .matcher(expression.substring(0, openingBracketIndex));
+                .matcher(expression.substring(0, openingBracketBorder));
         String result = expression;
         if (matcher.find()) {
             int start = matcher.start();
@@ -102,13 +102,11 @@ public class MathParser implements IMathParser {
                 ++index;
                 if (openingBracket == result.charAt(index)) {
                     ++openingBracketsCount;
-                }
-                if (closingBracket == result.charAt(index)) {
+                } else if (closingBracket == result.charAt(index)) {
                     ++closingBracketsCount;
                 }
             }
-            result = parseBrackets(result.substring(0, start)
-                    + parseOperations(result.substring(start, index))
+            result = parseBrackets(result.substring(0, start) + parseOperations(result.substring(start, index))
                     + result.substring(index, result.length()), start);
         }
 
