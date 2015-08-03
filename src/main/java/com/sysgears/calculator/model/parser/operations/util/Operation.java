@@ -83,6 +83,6 @@ public class Operation {
     @Override
     public String toString() {
         return name + " { operator='"
-                + operator + '\'' + ", priority='" + priority.name() + '\'' + ", type='" + type.name() + "\'}";
+                + operator + '\'' + ", priority='" + priority.name() + '\'' + ", type='" + type.name() + "\' }";
     }
 }
