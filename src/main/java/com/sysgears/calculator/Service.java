@@ -3,6 +3,7 @@ package com.sysgears.calculator;
 import com.sysgears.calculator.model.commands.Commands;
 import com.sysgears.calculator.model.history.IHistory;
 import com.sysgears.calculator.model.parser.IMathParser;
+import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.util.StringCreator;
 import com.sysgears.calculator.view.userinteface.IUserInterface;
 
@@ -77,19 +78,27 @@ public class Service {
                 history.addRecord(parameter + "=" + value);
                 ui.sendMessage("= " + value + "\n\n");
                 break;
+            case OPERATIONS:
+                ui.sendMessage("\n"
+                        + StringCreator.createFromCollection(Operations.getOperationsList(), beforeSign, afterSign)
+                        + "\n");
+                break;
+            case HISTORY:
+                ui.sendMessage("\n" + StringCreator.createFromCollection(history.getHistory(), beforeSign, afterSign)
+                        + "\n");
+                break;
+            case HISTORY_UNIQUE:
+                ui.sendMessage("\n"
+                        + StringCreator.createFromCollection(history.getUniqueHistory(), beforeSign, afterSign)
+                        + "\n");
+                break;
             case EXIT:
                 ui.sendMessage("\nGoodbye!\n");
                 break;
-            case HISTORY:
-                ui.sendMessage("\n" + StringCreator.createFromCollection(history.getHistory(), beforeSign, afterSign) + "\n");
-                break;
-            case HISTORY_UNIQUE:
-                ui.sendMessage("\n" + StringCreator.createFromCollection(history.getUniqueHistory(), beforeSign, afterSign)
-                        + "\n");
-                break;
             case HELP:
             case UNKNOWN_COMMAND:
-                ui.sendMessage("\n" + StringCreator.createFromCollection(Commands.getUserCommands(), beforeSign, afterSign)
+                ui.sendMessage("\n"
+                        + StringCreator.createFromCollection(Commands.getUserCommands(), beforeSign, afterSign)
                         + "\n");
                 break;
         }

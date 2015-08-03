@@ -67,10 +67,6 @@ public class Operation {
      */
     @Override
     public String toString() {
-        return "Operation{" +
-                "name='" + name + '\'' +
-                ", operator='" + operator + '\'' +
-                ", priority='" + priority + '\'' +
-                '}';
+        return name + " { operator='" + operator + '\'' + ", priority='" + priority + '\'' +'}';
     }
 }

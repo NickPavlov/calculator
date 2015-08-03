@@ -17,8 +17,9 @@ public enum Commands {
      * User commands.
      */
     CALCULATE("calc", "Calculates the expression.", "<math_expr>", Type.USER),
-    HISTORY("history", "Display the history of all calculations.", Type.USER),
+    HISTORY("history", "Display the history of calculations.", Type.USER),
     HISTORY_UNIQUE("history unique", "Display all unique calculations.", Type.USER),
+    OPERATIONS("operations", "Display the list of operations.", Type.USER),
     HELP("help", "Display a list of all available commands.", Type.USER),
     EXIT("exit", "Exit the program.", Type.USER),
 
