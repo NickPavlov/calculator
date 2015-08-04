@@ -20,12 +20,6 @@ import java.util.regex.Pattern;
 public class MathParser implements IMathParser {
 
     /**
-     * The regular expression for the operand.
-     */
-    public static final String OPERAND_PATTERN = "(?<![\\d\\)" + Brackets.generateClosingPattern() + "])"
-            + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN;
-
-    /**
      * The default accuracy of calculation.
      */
     public static final String DEFAULT_ACCURACY = "#.#########";
@@ -148,7 +142,7 @@ public class MathParser implements IMathParser {
         final Matcher expressionMatcher = Pattern.compile(operation.getOperationPattern()).matcher(expression);
         String result = MathConverter.removeExtraBrackets(expression);
         if (expressionMatcher.find()) {
-            Matcher operandsMatcher = Pattern.compile(OPERAND_PATTERN).matcher(expressionMatcher.group());
+            Matcher operandsMatcher = Pattern.compile(Operands.OPERAND_PATTERN).matcher(expressionMatcher.group());
             List<Double> operands = new ArrayList<Double>();
             while (operandsMatcher.find()) {
                 operands.add(Double.parseDouble(operandsMatcher.group()));

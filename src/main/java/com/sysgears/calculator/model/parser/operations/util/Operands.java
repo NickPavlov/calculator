@@ -29,6 +29,7 @@ public enum Operands {
         }
     };
 
+
     /**
      * The regex pattern for a mathematical sign.
      */
@@ -38,6 +39,12 @@ public enum Operands {
      * The regex pattern for a number.
      */
     public static final String NUMBER_PATTERN = "\\d+(\\.\\d+)?";
+
+    /**
+     * The regular expression for the operand.
+     */
+    public static final String OPERAND_PATTERN = "(?<![\\d\\)" + Brackets.generateClosingPattern() + "])"
+            + SIGN_PATTERN + NUMBER_PATTERN;
 
     /**
      * Generates the part of the operand with brackets.
