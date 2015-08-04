@@ -22,7 +22,7 @@ public class MathParser implements IMathParser {
     /**
      * The regular expression for the operand.
      */
-    private static final String OPERAND_PATTERN = "(?<![\\d\\)" + Brackets.generateClosingPattern() + "])"
+    public static final String OPERAND_PATTERN = "(?<![\\d\\)" + Brackets.generateClosingPattern() + "])"
             + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN;
 
     /**
