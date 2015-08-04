@@ -69,10 +69,10 @@ public class MathParser implements IMathParser {
             /* Before parsing.*/
             result = MathConverter.removeEmptyBrackets(MathConverter.removeExtraSigns(result));
             /* After parsing. */
-            result = MathConverter.removeExtraSigns(parseBrackets(result, result.length()));
-            result = MathConverter.removeBrackets(result);
-            result = MathConverter.removeExtraSigns(result);
-            result = MathConverter.removeFirstPlus(result);
+            //result = MathConverter.removeExtraSigns(parseBrackets(result, result.length()));
+            //result = MathConverter.removeBrackets(result);
+            //result = MathConverter.removeExtraSigns(result);
+            //result = MathConverter.removeFirstPlus(result);
         }
 
         return result;
@@ -110,8 +110,11 @@ public class MathParser implements IMathParser {
                 ++index;
             }
             /*
-            if (openingBracketsCount != closingBracketsCount) {
-                throw new ParseException("Closing bracket not found.", index - 1);
+            String value = parseOperations(result.substring(start, index - 1));
+            if (value.charAt(0) == '-') {
+                //also should remove brackets!
+                result = parseBrackets(parseBrackets(result.substring(0, start) + value
+                    + result.substring(index - 1, result.length()), start);
             }
             */
             result = parseBrackets(result.substring(0, start) + parseOperations(result.substring(start, index - 1))
@@ -133,6 +136,13 @@ public class MathParser implements IMathParser {
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
                 if (operation.getPriority().getIndex() == priority) {
+                    /*
+                    if (result.charAt(0) == '-') {
+                        result = (result)*-1;
+                        result = parseOperation(operation, result);
+                        result = (result)*-1
+                    }
+                    */
                     result = parseOperation(operation, result);
                 }
             }
@@ -157,8 +167,7 @@ public class MathParser implements IMathParser {
             while (operandsMatcher.find()) {
                 operands.add(Double.parseDouble(operandsMatcher.group()));
             }
-            final String value = MathConverter.addPlus(
-                    MathConverter.addBrackets(formatter.format(operation.calculate(operands))));
+            final String value = formatter.format(operation.calculate(operands));
 
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
                     + value + expression.substring(expressionMatcher.end(), expression.length()));
