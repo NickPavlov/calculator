@@ -53,8 +53,8 @@ public class MathConverter {
         final Matcher matcher = Pattern.compile(pattern.toString()).matcher(expression);
         String result = expression;
         if (matcher.find()) {
-            result = result.substring(0, matcher.start()) + result.substring(matcher.start() + 1, matcher.end() - 1)
-                    + result.substring(matcher.end(), result.length());
+            result = result.substring(0, matcher.start() - 1) + result.substring(matcher.start(), matcher.end())
+                    + result.substring(matcher.end() + 1, result.length());
         }
 
         return result.equals(expression) ? result : removeExtraBrackets(result);
