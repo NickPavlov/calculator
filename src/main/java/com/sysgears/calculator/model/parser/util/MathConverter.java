@@ -22,6 +22,19 @@ public class MathConverter {
     }
 
     /**
+     * Removes empty brackets in the <code>expression</code>.
+     *
+     * @param expression the expression to remove empty brackets
+     * @return the expression without empty brackets
+     */
+    public static String removeEmptyBrackets(final String expression) {
+        final String result = expression
+                .replaceAll(Brackets.generateOpeningPattern() + Brackets.generateClosingPattern(), "");
+
+        return result.equals(expression) ? result : removeEmptyBrackets(result);
+    }
+
+    /**
      * Removes extra brackets in the <code>expression</code>.
      *
      * @param expression the expression to remove extra brackets
