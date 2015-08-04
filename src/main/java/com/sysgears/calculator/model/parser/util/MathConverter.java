@@ -12,6 +12,15 @@ import java.util.regex.Pattern;
 public class MathConverter {
 
     /**
+     *
+     * @param expression
+     * @return
+     */
+    public static String addPlus(final String expression) {
+        return "";
+    }
+
+    /**
      * In case the <code>expression</code> is negative, places it in brackets.
      * Otherwise, returns the original expression.
      *
