@@ -62,7 +62,7 @@ public class MathParser implements IMathParser {
      *
      * @param expression the mathematical expression
      * @return the value as the string
-     * @throws IllegalArgumentException when the input argument is not correct
+     * @throws IllegalArgumentException when the input argument is null
      */
     public String parse(final String expression) {
         if (expression == null) {
