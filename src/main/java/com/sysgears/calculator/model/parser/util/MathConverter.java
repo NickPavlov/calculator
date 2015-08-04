@@ -76,8 +76,4 @@ public class MathConverter {
 
     private MathConverter() {
     }
-
-    public static void main(String[] args) {
-        System.out.println(removeExtraSigns("------------"));
-    }
 }
