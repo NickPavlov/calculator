@@ -35,7 +35,7 @@ public class MathParser implements IMathParser {
     private final int lowestPriorityIndex;
 
     /**
-     * Constructs the <code>MathParser</code> object with the user's calculation accuracy.
+     * Creates the <code>MathParser</code> object with the user's calculation accuracy.
      *
      * @param accuracy the accuracy of calculation
      */
@@ -45,7 +45,7 @@ public class MathParser implements IMathParser {
     }
 
     /**
-     * Constructs MathParser object with default calculation accuracy: 9 decimal places.
+     * Creates the <code>MathParser</code> object with default calculation accuracy in 9 decimal places.
      */
     public MathParser() {
         this(DEFAULT_ACCURACY);
