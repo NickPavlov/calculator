@@ -60,6 +60,23 @@ public class MathConverter {
         return result.equals(expression) ? result : removeExtraBrackets(result);
     }
 
+    /**
+     * Removes extra mathematical signs in the <code>expression</code>.
+     *
+     * @param expression the expression to remove extra mathematical signs
+     * @return the expression without extra mathematical signs
+     */
+    public static String removeExtraSigns(final String expression) {
+        String result = expression.replaceAll("\\+\\-", "-")
+                .replaceAll("\\-\\+", "-").replaceAll("\\-\\-", "+").replaceAll("\\+\\+", "+");
+
+        return result.equals(expression) ? result : removeExtraSigns(result);
+    }
+
     private MathConverter() {
+    }
+
+    public static void main(String[] args) {
+        System.out.println(removeExtraSigns("------------"));
     }
 }
