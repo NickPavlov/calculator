@@ -69,8 +69,10 @@ public class MathParser implements IMathParser {
             /* Before parsing.*/
             result = MathConverter.removeEmptyBrackets(MathConverter.removeExtraSigns(result));
             /* After parsing. */
-            result = MathConverter.removeFirstPlus(
-                    MathConverter.removeExtraSigns(parseBrackets(result, result.length())));
+            result = MathConverter.removeExtraSigns(parseBrackets(result, result.length()));
+            result = MathConverter.removeBrackets(result);
+            result = MathConverter.removeExtraSigns(result);
+            result = MathConverter.removeFirstPlus(result);
         }
 
         return result;
