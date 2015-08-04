@@ -2,6 +2,7 @@ package com.sysgears.calculator.model.parser.util;
 
 import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operations.util.Operands;
+import com.sysgears.calculator.model.util.strings.StringConverter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,6 +83,18 @@ public class MathConverter {
                 .replaceAll("\\-\\+", "-").replaceAll("\\-\\-", "+").replaceAll("\\+\\+", "+");
 
         return result.equals(expression) ? result : removeExtraSigns(result);
+    }
+
+    /**
+     * Removes the first plus, if it is present in the <code>expression</code>.
+     *
+     * @param expression the original expression
+     * @return the expression without first plus.
+     */
+    public static String removeFirstPlus(final String expression) {
+        return (expression.charAt(0) == '+')
+                ? StringConverter.removeCharAt(expression, 0)
+                : expression;
     }
 
     private MathConverter() {
