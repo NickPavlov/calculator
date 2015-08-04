@@ -68,7 +68,8 @@ public class MathParser implements IMathParser {
         if (expression == null) {
             throw new IllegalArgumentException("Expression can't be null.");
         }
-        String result = MathConverter.removeEmptyBrackets(expression.replaceAll(" ", ""));
+        String result = expression.replaceAll(" ", "");
+        result = MathConverter.removeEmptyBrackets(MathConverter.removeExtraSigns(result));
 
         return result.isEmpty() ? "0" : parseBrackets(result, result.length());
     }
