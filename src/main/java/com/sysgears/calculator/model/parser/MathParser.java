@@ -63,11 +63,17 @@ public class MathParser implements IMathParser {
             throw new IllegalArgumentException("Expression can't be null.");
         }
         String result = expression.replaceAll(" ", "");
-        result = MathConverter.removeEmptyBrackets(MathConverter.removeExtraSigns(result));
+        if (result.isEmpty()) {
+            result = "0";
+        } else {
+            /* Before parsing.*/
+            result = MathConverter.removeEmptyBrackets(MathConverter.removeExtraSigns(result));
+            /* After parsing. */
+            result = MathConverter.removeFirstPlus(
+                    MathConverter.removeExtraSigns(parseBrackets(result, result.length())));
+        }
 
-        return result.isEmpty()
-                ? "0"
-                : MathConverter.removeExtraSigns(parseBrackets(result, result.length()));
+        return result;
     }
 
     /**
