@@ -12,12 +12,13 @@ import java.util.regex.Pattern;
 public class MathConverter {
 
     /**
+     * Appends the plus sign at the start of the <code>expression</code>.
      *
-     * @param expression
-     * @return
+     * @param expression the original expression
+     * @return the expression with the plus at the start
      */
     public static String addPlus(final String expression) {
-        return "";
+        return '+' + expression;
     }
 
     /**
@@ -34,7 +35,7 @@ public class MathConverter {
     /**
      * Removes empty brackets in the <code>expression</code>.
      *
-     * @param expression the expression to remove empty brackets
+     * @param expression the original expression
      * @return the expression without empty brackets
      */
     public static String removeEmptyBrackets(final String expression) {
@@ -47,7 +48,7 @@ public class MathConverter {
     /**
      * Removes extra brackets in the <code>expression</code>.
      *
-     * @param expression the expression to remove extra brackets
+     * @param expression the original expression
      * @return the expression without extra brackets
      */
     public static String removeExtraBrackets(final String expression) {
@@ -73,7 +74,7 @@ public class MathConverter {
     /**
      * Removes extra mathematical signs in the <code>expression</code>.
      *
-     * @param expression the expression to remove extra mathematical signs
+     * @param expression the original expression
      * @return the expression without extra mathematical signs
      */
     public static String removeExtraSigns(final String expression) {
