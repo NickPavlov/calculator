@@ -65,7 +65,9 @@ public class MathParser implements IMathParser {
         String result = expression.replaceAll(" ", "");
         result = MathConverter.removeEmptyBrackets(MathConverter.removeExtraSigns(result));
 
-        return result.isEmpty() ? "0" : parseBrackets(result, result.length());
+        return result.isEmpty()
+                ? "0"
+                : MathConverter.removeExtraSigns(parseBrackets(result, result.length()));
     }
 
     /**
@@ -147,9 +149,11 @@ public class MathParser implements IMathParser {
             while (operandsMatcher.find()) {
                 operands.add(Double.parseDouble(operandsMatcher.group()));
             }
+            final String value = MathConverter.addPlus(
+                    MathConverter.addBrackets(formatter.format(operation.calculate(operands))));
+
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    + MathConverter.addBrackets(formatter.format(operation.calculate(operands)))
-                    + expression.substring(expressionMatcher.end(), expression.length()));
+                    + value + expression.substring(expressionMatcher.end(), expression.length()));
         }
 
         return result;

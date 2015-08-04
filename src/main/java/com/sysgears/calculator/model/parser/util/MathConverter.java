@@ -18,7 +18,7 @@ public class MathConverter {
      * @return the expression with the plus at the start
      */
     public static String addPlus(final String expression) {
-        return '+' + expression;
+        return "+" + expression;
     }
 
     /**
@@ -29,7 +29,7 @@ public class MathConverter {
      * @return the expression placed in brackets
      */
     public static String addBrackets(final String expression) {
-        return (expression.charAt(0) == '-') ? '(' + expression + ')' : expression;
+        return (expression.charAt(0) == '-') ? "(" + expression + ")" : expression;
     }
 
     /**
