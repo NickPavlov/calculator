@@ -12,7 +12,8 @@ import java.util.regex.Pattern;
 public class MathConverter {
 
     /**
-     * Places the <code>expression</code> in brackets.
+     * In case the <code>expression</code> is negative, places it in brackets.
+     * Otherwise, returns the original expression.
      *
      * @param expression the original expression
      * @return the expression placed in brackets
