@@ -155,7 +155,6 @@ public class MathParser implements IMathParser {
                 operands.add(Double.parseDouble(operandsMatcher.group()));
             }
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    //+ formatter.format(operation.calculate(operands))
                     + MathConverter.addBrackets(formatter.format(operation.calculate(operands)))
                     + expression.substring(expressionMatcher.end(), expression.length()));
         }
