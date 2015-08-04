@@ -2,7 +2,7 @@ package com.sysgears.calculator.model.commands;
 
 import com.sysgears.calculator.model.commands.util.Command;
 import com.sysgears.calculator.model.commands.util.Type;
-import com.sysgears.calculator.model.util.StringMatcher;
+import com.sysgears.calculator.model.util.strings.StringMatcher;
 import com.sysgears.calculator.model.util.RegexCreator;
 
 import java.util.ArrayList;

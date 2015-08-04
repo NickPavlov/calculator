@@ -4,7 +4,7 @@ import com.sysgears.calculator.model.commands.Commands;
 import com.sysgears.calculator.model.history.IHistory;
 import com.sysgears.calculator.model.parser.IMathParser;
 import com.sysgears.calculator.model.parser.operations.Operations;
-import com.sysgears.calculator.model.util.StringCreator;
+import com.sysgears.calculator.model.util.strings.StringCreator;
 import com.sysgears.calculator.view.userinteface.IUserInterface;
 
 import java.io.IOException;
