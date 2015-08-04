@@ -16,7 +16,7 @@ public enum Commands {
     /**
      * User commands.
      */
-    CALCULATE("calc", "Calculates the expression.", "<math_expr>", Type.USER),
+    CALCULATE("calc", "Calculates the expression.", "<math_expr>", true, Type.USER),
     HISTORY("history", "Display the history of calculations.", Type.USER),
     HISTORY_UNIQUE("history unique", "Display all unique calculations.", Type.USER),
     OPERATIONS("operations", "Display the list of operations.", Type.USER),
@@ -59,14 +59,31 @@ public enum Commands {
      * @param metaVar     the command metaVar parameter
      * @param description the command description
      */
-    Commands(final String name, final String description, final String metaVar, final Type type) {
+    Commands(final String name, final String description, final String metaVar, final boolean options, final Type type) {
         this.name = name;
         this.type = type;
         this.metaVar = metaVar;
         this.description = description;
-        this.regex = (type == Type.USER)
-                ? RegexCreator.createAtBeginning(RegexCreator.createWithSpaces(name))
-                : name;
+        String regex;
+        if (type == Type.USER) {
+            regex = RegexCreator.createAtBeginning(RegexCreator.createWithSpaces(name));
+            if (!options) {
+                regex = RegexCreator.createAtEnd(regex);
+            }
+
+        } else {
+            regex = name;
+        }
+        this.regex = regex;
+    }
+
+    /**
+     * @param name        the command name
+     * @param description the command type
+     * @param type        the command description
+     */
+    Commands(String name, String description, final boolean options, final Type type) {
+        this(name, description, "", options, type);
     }
 
     /**
@@ -75,7 +92,7 @@ public enum Commands {
      * @param type        the command description
      */
     Commands(String name, String description, final Type type) {
-        this(name, description, "", type);
+        this(name, description, "", false, type);
     }
 
     /**
