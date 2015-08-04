@@ -37,4 +37,7 @@ public class RegexCreator {
     public static String createAtEnd(final String expression) {
         return expression + "(\\s)*$";
     }
+
+    private RegexCreator() {
+    }
 }
