@@ -30,7 +30,6 @@ public class MathParser implements IMathParser {
      */
     public static final String DEFAULT_ACCURACY = "#.#########";
 
-
     /**
      * The number formatter.
      */
@@ -80,7 +79,7 @@ public class MathParser implements IMathParser {
      * <code>com.sysgears.calculator.model.parser.operations.Operations</code>
      * in the separate brackets.
      *
-     * @param expression the mathematical expression
+     * @param expression           the mathematical expression
      * @param openingBracketBorder the index to which you want to search for an opening bracket
      * @return the mathematical expression with parsed operations in the brackets
      */
