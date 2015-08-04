@@ -97,6 +97,29 @@ public class MathConverter {
                 : expression;
     }
 
+    /**
+     * Removes brackets, if between them a number.
+     *
+     * @param expression the original expression
+     * @return the expression without brackets at the beginning and the end
+     */
+    public static String removeBrackets(final String expression) {
+        final String pattern = Brackets.generateOpeningPattern()
+                + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN + Brackets.generateClosingPattern();
+        final Matcher matcher = Pattern.compile(pattern).matcher(expression);
+        String result = expression;
+        String number;
+        if (matcher.find()) {
+            number = StringConverter.removeCharAt(matcher.group(), 0);
+            number = StringConverter.removeCharAt(number, number.length() - 1);
+            result = result.substring(0, matcher.start()) + number + result.substring(matcher.end());
+        }
+
+        return result.equals(expression)
+                ? result
+                : removeBrackets(result);
+    }
+
     private MathConverter() {
     }
 }
