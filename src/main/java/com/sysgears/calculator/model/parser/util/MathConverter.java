@@ -37,17 +37,6 @@ public class MathConverter {
     }
 
     /**
-     * In case the <code>expression</code> is negative, places it in brackets.
-     * Otherwise, returns the original expression.
-     *
-     * @param expression the original expression
-     * @return the expression placed in brackets
-     */
-    public static String addBrackets(final String expression) {
-        return (expression.charAt(0) == '-') ? "(" + expression + ")" : expression;
-    }
-
-    /**
      * Removes empty brackets in the <code>expression</code>.
      *
      * @param expression the original expression
