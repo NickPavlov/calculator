@@ -1,6 +1,5 @@
 package com.sysgears.calculator.model.parser.operations;
 
-import com.sysgears.calculator.model.parser.operations.util.Operation;
 import com.sysgears.calculator.model.parser.operations.util.Priority;
 import com.sysgears.calculator.model.parser.operations.util.Type;
 
@@ -143,11 +142,11 @@ public enum Operations {
      *
      * @return the list of operations
      */
-    public static List<Operation> getOperations(final Type type) {
-        final List<Operation> listOfOperations = new ArrayList<Operation>();
+    public static List<Operations> getOperations(final Type type) {
+        final List<Operations> listOfOperations = new ArrayList<Operations>();
         for (Operations operation : Operations.values()) {
             if (operation.type == type) {
-                listOfOperations.add(new Operation(operation));
+                listOfOperations.add(operation);
             }
         }
 
@@ -200,6 +199,17 @@ public enum Operations {
      */
     public Type getType() {
         return type;
+    }
+
+    /**
+     * Returns a string representation of the operation.
+     *
+     * @return a string
+     */
+    @Override
+    public String toString() {
+        return this.name() + ": operator='"
+                + operator + '\'' + ", priority='" + priority.name() + '\'' + ", type='" + type.name() + "\'";
     }
 
     /**

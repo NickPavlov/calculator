@@ -29,22 +29,22 @@ public enum Commands {
     UNKNOWN_COMMAND("unknown command", "", Type.SYSTEM);
 
     /**
-     * Operation name.
+     * The command name.
      */
     private final String name;
 
     /**
-     * Operation type.
+     * The command type.
      */
     private final Type type;
 
     /**
-     * Operation description.
+     * The command description.
      */
     private final String description;
 
     /**
-     * Regex filter to search for commands in a string.
+     * The command pattern
      */
     private final String regex;
 
