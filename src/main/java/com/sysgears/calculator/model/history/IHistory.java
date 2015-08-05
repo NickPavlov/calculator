@@ -8,21 +8,21 @@ import java.util.List;
 public interface IHistory {
 
     /**
-     * Should add a new record into the history.
+     * Adds a new record into the history.
      *
      * @param record a new record
      */
     public void addRecord(final String record);
 
     /**
-     * Should return a full list of records.
+     * Returns a full list of records.
      *
      * @return all history
      */
     public List<String> getHistory();
 
     /**
-     * Should return a list of records without repetition.
+     * Returns a list of records without repetition.
      *
      * @return a list of records without repetition
      */
