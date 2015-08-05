@@ -100,8 +100,9 @@ public class MathParser implements IMathParser {
             String beforeBrackets = result.substring(0, start);
             String value = parseOperations(result.substring(start + 1, index++));
             if ((value.charAt(0) == '-')) {
-                if (beforeBrackets.isEmpty() || beforeBrackets.charAt(start - 1) == '-'
-                        || beforeBrackets.charAt(start - 1) == '+' || beforeBrackets.charAt(start - 1) == '(') {
+                char lastChar = beforeBrackets.charAt(start - 1);
+                if (beforeBrackets.isEmpty() || (lastChar == '-') || (lastChar == '+')
+                        || Brackets.OPENING_PATTERN.matcher(lastChar + "").find()) {
                     value = '+' + value;
                 }
             }
