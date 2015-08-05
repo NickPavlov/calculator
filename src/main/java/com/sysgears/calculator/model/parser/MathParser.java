@@ -108,22 +108,23 @@ public class MathParser implements IMathParser {
             while ((index < result.length()) && (result.charAt(index) != closingBracket)) {
                 ++index;
             }
-            final String beforeBrackets = result.substring(0, start);
-            final String value = parseOperations(result.substring(start + 1, index++));
-            final String afterBrackets = result.substring(index);
-
+            String beforeBrackets = result.substring(0, start);
+            String value = parseOperations(result.substring(start + 1, index++));
             if ((value.charAt(0) == '-')) {
-                result = parseBrackets(beforeBrackets + '+' + value + afterBrackets, start);
-            } else {
-                result = parseBrackets(beforeBrackets + value + afterBrackets, start);
+                if (beforeBrackets.isEmpty() || beforeBrackets.charAt(start - 1) == '-'
+                        || beforeBrackets.charAt(start - 1) == '+' || beforeBrackets.charAt(start - 1) == '(') {
+                    value = '+' + value;
+                }
             }
+            System.out.println("Value: " + value);
+            result = parseBrackets(beforeBrackets + value + result.substring(index), start);
         }
 
         return MathConverter.removeExtraSigns(parseOperations(result));
     }
 
     public static void main(String[] args) {
-        String expression = "-1+(-1)";
+        String expression = "(-1)*(-1)";
         System.out.println("Original expression: " + expression);
         System.out.println("Final result: " + new MathParser().parse(expression));
     }
