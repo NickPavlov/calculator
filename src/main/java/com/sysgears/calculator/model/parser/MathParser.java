@@ -122,12 +122,6 @@ public class MathParser implements IMathParser {
         return MathConverter.removeExtraSigns(parseOperations(result));
     }
 
-    public static void main(String[] args) {
-        String expression = "(-1)*(-1)";
-        System.out.println("Original expression: " + expression);
-        System.out.println("Final result: " + new MathParser().parse(expression));
-    }
-
     /**
      * Parses all mathematical operations specified in
      * <code>com.sysgears.calculator.model.parser.operations.Operations</code>.
