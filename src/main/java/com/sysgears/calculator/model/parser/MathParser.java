@@ -102,7 +102,7 @@ public class MathParser implements IMathParser {
             if ((value.charAt(0) == '-')) {
                 if (beforeBrackets.isEmpty() || (beforeBrackets.charAt(start - 1) == '-')
                         || (beforeBrackets.charAt(start - 1) == '+')
-                        || beforeBrackets.charAt(start - 1) == '(') {
+                        || Brackets.OPENING_PATTERN.matcher(beforeBrackets.charAt(start - 1) + "").find()) {
                     value = '+' + value;
                 }
             }
