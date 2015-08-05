@@ -62,10 +62,10 @@ public class MathParser implements IMathParser {
     }
 
     /**
-     * Parses a mathematical expression in the string.
+     * Parses the mathematical expression in the string.
      *
      * @param expression the mathematical expression
-     * @return the value as the string
+     * @return the parsed value as the string
      * @throws IllegalArgumentException when the input argument is null
      */
     public String parse(final String expression) {
@@ -79,10 +79,8 @@ public class MathParser implements IMathParser {
             /* Before parsing.*/
             result = MathConverter.removeEmptyBrackets(MathConverter.removeExtraSigns(result));
             /* After parsing. */
-            //result = MathConverter.removeExtraSigns(parseBrackets(result, result.length()));
-            //result = MathConverter.removeBrackets(result);
-            //result = MathConverter.removeExtraSigns(result);
-            //result = MathConverter.removeFirstPlus(result);
+            result = MathConverter.removeExtraSigns(parseBrackets(result, result.length()));
+            result = MathConverter.removeFirstPlus(result);
         }
 
         return result;
@@ -110,11 +108,9 @@ public class MathParser implements IMathParser {
             while ((index < result.length()) && (result.charAt(index) != closingBracket)) {
                 ++index;
             }
-
             final String beforeBrackets = result.substring(0, start);
             final String value = parseOperations(result.substring(start + 1, index++));
             final String afterBrackets = result.substring(index);
-
             if ((value.charAt(0) == '-')
                     && (beforeBrackets.isEmpty()
                     || OPENING_PATTERN.matcher("" + beforeBrackets.charAt(beforeBrackets.length() - 1)).find())) {
@@ -130,7 +126,7 @@ public class MathParser implements IMathParser {
 
 
     public static void main(String[] args) {
-        String expression = "(2)^(-1-1+1)";
+        String expression = "-1-1";
         System.out.println("Expression: " + expression);
         System.out.println(new MathParser().parseBrackets(expression, expression.length()));
     }
@@ -158,7 +154,6 @@ public class MathParser implements IMathParser {
                 }
             }
         }
-        System.out.println("Result: " + result);
         if (inverted) {
             result = MathConverter.invertSigns(MathConverter.appendPlus(result));
         }
