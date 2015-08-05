@@ -6,6 +6,7 @@ import com.sysgears.calculator.model.parser.operations.util.Type;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * The <code>Operations</code> class provides a basic set of operators required to operate the parser.
@@ -130,7 +131,7 @@ public enum Operations {
     /**
      * Operation regular expression.
      */
-    private final String operationPattern;
+    private final Pattern operationPattern;
 
     /**
      * The operation type.
@@ -162,7 +163,7 @@ public enum Operations {
         this.operator = operator;
         this.priority = priority;
         this.type = type;
-        this.operationPattern = type.getPattern(operator);
+        this.operationPattern = Pattern.compile(type.getPattern(operator));
     }
 
     /**
@@ -188,7 +189,7 @@ public enum Operations {
      *
      * @return string
      */
-    public String getOperationPattern() {
+    public Pattern getOperationPattern() {
         return operationPattern;
     }
 

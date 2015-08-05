@@ -145,7 +145,7 @@ public class MathParser implements IMathParser {
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
                 if (operation.getPriority().getIndex() == priority) {
-                    result = parseOperation(operation, result, Pattern.compile(operation.getOperationPattern()));
+                    result = parseOperation(operation, result);
                 }
             }
         }
@@ -163,8 +163,8 @@ public class MathParser implements IMathParser {
      * @param expression the mathematical expression
      * @return the string with performed operations of the specific type
      */
-    private String parseOperation(final Operations operation, final String expression, final Pattern pattern) {
-        final Matcher expressionMatcher = pattern.matcher(expression);
+    private String parseOperation(final Operations operation, final String expression) {
+        final Matcher expressionMatcher = operation.getOperationPattern().matcher(expression);
         String result = MathConverter.removeExtraBrackets(expression);
         if (expressionMatcher.find()) {
             Matcher operandsMatcher = OPERAND_PATTERN.matcher(expressionMatcher.group());
@@ -174,7 +174,7 @@ public class MathParser implements IMathParser {
             }
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
                     + formatter.format(operation.calculate(operands))
-                    + expression.substring(expressionMatcher.end()), pattern);
+                    + expression.substring(expressionMatcher.end()));
         }
 
         return result;
