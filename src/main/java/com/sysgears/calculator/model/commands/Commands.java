@@ -1,9 +1,8 @@
 package com.sysgears.calculator.model.commands;
 
-import com.sysgears.calculator.model.commands.util.Command;
 import com.sysgears.calculator.model.commands.util.Type;
-import com.sysgears.calculator.model.util.strings.StringMatcher;
 import com.sysgears.calculator.model.util.RegexCreator;
+import com.sysgears.calculator.model.util.strings.StringMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,11 +117,11 @@ public enum Commands {
      *
      * @return list of commands
      */
-    public static List<Command> getUserCommands() {
-        List<Command> result = new ArrayList<Command>();
+    public static List<Commands> getUserCommands() {
+        List<Commands> result = new ArrayList<Commands>();
         for (Commands command : Commands.values()) {
             if (command.type == Type.USER) {
-                result.add(new Command(command.name, command.description, command.metaVar));
+                result.add(command);
             }
         }
 
@@ -145,5 +144,15 @@ public enum Commands {
      */
     public String getMetaVar() {
         return metaVar;
+    }
+
+    /**
+     * Returns a string representation of a command.
+     *
+     * @return string
+     */
+    @Override
+    public String toString() {
+        return name + " " + metaVar + " : " + description;
     }
 }
