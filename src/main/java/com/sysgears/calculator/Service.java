@@ -76,23 +76,28 @@ public class Service {
                 final String mathExpression = message.replaceAll(Commands.CALCULATE.getRegex(), "");
                 final String value = mathParser.parse(mathExpression);
                 history.addRecord(mathExpression + "=" + value);
-                ui.sendMessage("= " + value + "\n\n");
+                ui.sendMessage("= " + value + "\n");
                 break;
             case OPERATIONS:
-                ui.sendMessage(StringCreator.createFromCollection(Operations.getOperations(Type.BINARY)) + "\n\n");
+                ui.sendMessage("Binary:\n");
+                ui.sendMessage(StringCreator.createFromCollection(Operations.getOperations(Type.BINARY)) + "\n");
+                ui.sendMessage("Unary:\n");
+                ui.sendMessage(StringCreator.createFromCollection(Operations.getOperations(Type.UNARY)) + "\n");
+                ui.sendMessage("Constants:\n");
+                ui.sendMessage(StringCreator.createFromCollection(Operations.getOperations(Type.CONSTANT)) + "\n");
                 break;
             case HISTORY:
-                ui.sendMessage(StringCreator.createFromCollection(history.getHistory())+ "\n\n");
+                ui.sendMessage(StringCreator.createFromCollection(history.getHistory())+ "\n");
                 break;
             case HISTORY_UNIQUE:
-                ui.sendMessage(StringCreator.createFromCollection(history.getUniqueHistory()) + "\n\n");
+                ui.sendMessage(StringCreator.createFromCollection(history.getUniqueHistory()) + "\n");
                 break;
             case EXIT:
-                ui.sendMessage("Goodbye!\n\n");
+                ui.sendMessage("Goodbye!\n");
                 break;
             case HELP:
             case UNKNOWN_COMMAND:
-                ui.sendMessage(StringCreator.createFromCollection(Commands.getUserCommands()) + "\n\n");
+                ui.sendMessage(StringCreator.createFromCollection(Commands.getUserCommands()) + "\n");
                 break;
         }
     }
