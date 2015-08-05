@@ -105,15 +105,16 @@ public class MathParser implements IMathParser {
             while (matcher.find()) {
                 start = matcher.start();
             }
-            char closingBracket = Brackets.getClosingPair(result.charAt(start));
+            final char closingBracket = Brackets.getClosingPair(result.charAt(start));
             int index = start + 1;
             while ((index < result.length()) && (result.charAt(index) != closingBracket)) {
                 ++index;
             }
 
-            String beforeBrackets = result.substring(0, start);
-            String value = parseOperations(result.substring(start + 1, index++));
-            String afterBrackets = result.substring(index);
+            final String beforeBrackets = result.substring(0, start);
+            final String value = parseOperations(result.substring(start + 1, index++));
+            final String afterBrackets = result.substring(index);
+
             if ((value.charAt(0) == '-')
                     && (beforeBrackets.isEmpty()
                     || OPENING_PATTERN.matcher("" + beforeBrackets.charAt(beforeBrackets.length() - 1)).find())) {
@@ -129,7 +130,7 @@ public class MathParser implements IMathParser {
 
 
     public static void main(String[] args) {
-        String expression = "sin(-1)^2";
+        String expression = "(2)^(-1-1+1)";
         System.out.println("Expression: " + expression);
         System.out.println(new MathParser().parseBrackets(expression, expression.length()));
     }
