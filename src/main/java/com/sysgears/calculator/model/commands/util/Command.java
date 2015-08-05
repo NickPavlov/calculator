@@ -21,10 +21,10 @@ public class Command {
     private final String metaVar;
 
     /**
-     * Creates the <code>Operation</code> object specified by name and description.
+     * Creates the <code>Operation</code> object specified by the name and description.
      *
-     * @param name        command name
-     * @param description command description
+     * @param name        the command name
+     * @param description the command description
      */
     public Command(final String name, final String description, final String metaVar) {
         this.name = name;
@@ -33,18 +33,18 @@ public class Command {
     }
 
     /**
-     * Returns a command name.
+     * Returns the command name.
      *
-     * @return command name
+     * @return the command name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Returns a command description.
+     * Returns the command description.
      *
-     * @return command description
+     * @return the command description
      */
     public String getDescription() {
         return description;
