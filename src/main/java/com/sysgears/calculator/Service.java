@@ -79,12 +79,12 @@ public class Service {
                 ui.sendMessage("= " + value + "\n");
                 break;
             case OPERATIONS:
-                ui.sendMessage("Binary:\n");
-                ui.sendMessage(StringCreator.createFromCollection(Operations.getOperations(Type.BINARY)) + "\n");
-                ui.sendMessage("Unary:\n");
-                ui.sendMessage(StringCreator.createFromCollection(Operations.getOperations(Type.UNARY)) + "\n");
                 ui.sendMessage("Constants:\n");
                 ui.sendMessage(StringCreator.createFromCollection(Operations.getOperations(Type.CONSTANT)) + "\n");
+                ui.sendMessage("Unary:\n");
+                ui.sendMessage(StringCreator.createFromCollection(Operations.getOperations(Type.UNARY)) + "\n");
+                ui.sendMessage("Binary:\n");
+                ui.sendMessage(StringCreator.createFromCollection(Operations.getOperations(Type.BINARY)) + "\n");
                 break;
             case HISTORY:
                 ui.sendMessage(StringCreator.createFromCollection(history.getHistory())+ "\n");
