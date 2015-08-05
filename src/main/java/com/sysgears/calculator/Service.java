@@ -53,6 +53,7 @@ public class Service {
         try {
             while (command != Commands.EXIT) {
                 message = ui.receiveMessage();
+                ui.sendMessage("\n");
                 command = Commands.getCommand(message);
                 execute(command, message);
             }
@@ -72,29 +73,26 @@ public class Service {
     private void execute(final Commands command, final String message) throws IOException {
         switch (command) {
             case CALCULATE:
-                final String parameter = message.replaceAll(Commands.CALCULATE.getRegex(), "");
-                String value = mathParser.parse(parameter);
-                history.addRecord(parameter + "=" + value);
+                final String mathExpression = message.replaceAll(Commands.CALCULATE.getRegex(), "");
+                final String value = mathParser.parse(mathExpression);
+                history.addRecord(mathExpression + "=" + value);
                 ui.sendMessage("= " + value + "\n\n");
                 break;
             case OPERATIONS:
-                ui.sendMessage("\n" + StringCreator.createFromCollection(Operations.getOperations(Type.BINARY)) + "\n");
+                ui.sendMessage(StringCreator.createFromCollection(Operations.getOperations(Type.BINARY)) + "\n\n");
                 break;
             case HISTORY:
-                ui.sendMessage("\n" + StringCreator.createFromCollection(history.getHistory())
-                        + "\n");
+                ui.sendMessage(StringCreator.createFromCollection(history.getHistory())+ "\n\n");
                 break;
             case HISTORY_UNIQUE:
-                ui.sendMessage("\n"
-                        + StringCreator.createFromCollection(history.getUniqueHistory())
-                        + "\n");
+                ui.sendMessage(StringCreator.createFromCollection(history.getUniqueHistory()) + "\n\n");
                 break;
             case EXIT:
-                ui.sendMessage("\nGoodbye!\n");
+                ui.sendMessage("Goodbye!\n\n");
                 break;
             case HELP:
             case UNKNOWN_COMMAND:
-                ui.sendMessage("\n" + StringCreator.createFromCollection(Commands.getUserCommands()) + "\n");
+                ui.sendMessage(StringCreator.createFromCollection(Commands.getUserCommands()) + "\n\n");
                 break;
         }
     }
