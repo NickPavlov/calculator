@@ -105,7 +105,6 @@ public enum Operations {
     /**
      * The low priority operations.
      */
-
     SUBTRACT("-", Priority.LOW, Type.BINARY) {
         public double calculate(final List<Double> operands) {
             return operands.get(0) - operands.get(1);
@@ -143,11 +142,12 @@ public enum Operations {
      *
      * @return the list of operations
      */
-    public static List<Operation> getOperationsList() {
+    public static List<Operation> getOperations(final Type type) {
         final List<Operation> listOfOperations = new ArrayList<Operation>();
         for (Operations operation : Operations.values()) {
-            listOfOperations.add(
-                    new Operation(operation.name(), operation.operator, operation.priority, operation.type));
+            if (operation.type == type) {
+                listOfOperations.add(new Operation(operation));
+            }
         }
 
         return listOfOperations;

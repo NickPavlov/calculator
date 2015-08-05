@@ -1,5 +1,7 @@
 package com.sysgears.calculator.model.parser.operations.util;
 
+import com.sysgears.calculator.model.parser.operations.Operations;
+
 /**
  * The <code>Operation</code> class provides functionality to work with operations.
  */
@@ -37,6 +39,15 @@ public class Operation {
         this.operator = operator;
         this.priority = priority;
         this.type = type;
+    }
+
+    /**
+     * Creates the <code>Operation</code> object, specified by the <code>operation</code>.
+     *
+     * @param operation the operation
+     */
+    public Operation(final Operations operation) {
+        this(operation.name(), operation.getOperator(), operation.getPriority(), operation.getType());
     }
 
     /**
@@ -82,7 +93,7 @@ public class Operation {
      */
     @Override
     public String toString() {
-        return name + " { operator='"
-                + operator + '\'' + ", priority='" + priority.name() + '\'' + ", type='" + type.name() + "\' }";
+        return name + ": operator='"
+                + operator + '\'' + ", priority='" + priority.name() + '\'' + ", type='" + type.name() + "\';";
     }
 }

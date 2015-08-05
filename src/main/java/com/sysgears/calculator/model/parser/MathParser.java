@@ -124,15 +124,6 @@ public class MathParser implements IMathParser {
         return MathConverter.removeExtraSigns(parseOperations(result));
     }
 
-
-    public static void main(String[] args) {
-        String expression = "-1-1";
-        System.out.println("Expression: " + expression);
-        System.out.println(new MathParser().parseBrackets(expression, expression.length()));
-    }
-
-
-
     /**
      * Parses all mathematical operations specified in
      * <code>com.sysgears.calculator.model.parser.operations.Operations</code>.

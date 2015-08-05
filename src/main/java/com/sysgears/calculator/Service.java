@@ -4,6 +4,7 @@ import com.sysgears.calculator.model.commands.Commands;
 import com.sysgears.calculator.model.history.IHistory;
 import com.sysgears.calculator.model.parser.IMathParser;
 import com.sysgears.calculator.model.parser.operations.Operations;
+import com.sysgears.calculator.model.parser.operations.util.Type;
 import com.sysgears.calculator.model.util.strings.StringCreator;
 import com.sysgears.calculator.view.userinteface.IUserInterface;
 
@@ -69,8 +70,6 @@ public class Service {
      * @throws IOException when an I/O error has occurred
      */
     private void execute(final Commands command, final String message) throws IOException {
-        final String beforeSign = "(*) ";
-        final String afterSign = "\n";
         switch (command) {
             case CALCULATE:
                 final String parameter = message.replaceAll(Commands.CALCULATE.getRegex(), "");
@@ -79,17 +78,15 @@ public class Service {
                 ui.sendMessage("= " + value + "\n\n");
                 break;
             case OPERATIONS:
-                ui.sendMessage("\n"
-                        + StringCreator.createFromCollection(Operations.getOperationsList(), beforeSign, afterSign)
-                        + "\n");
+                ui.sendMessage("\n" + StringCreator.createFromCollection(Operations.getOperations(Type.BINARY)) + "\n");
                 break;
             case HISTORY:
-                ui.sendMessage("\n" + StringCreator.createFromCollection(history.getHistory(), beforeSign, afterSign)
+                ui.sendMessage("\n" + StringCreator.createFromCollection(history.getHistory())
                         + "\n");
                 break;
             case HISTORY_UNIQUE:
                 ui.sendMessage("\n"
-                        + StringCreator.createFromCollection(history.getUniqueHistory(), beforeSign, afterSign)
+                        + StringCreator.createFromCollection(history.getUniqueHistory())
                         + "\n");
                 break;
             case EXIT:
@@ -97,9 +94,7 @@ public class Service {
                 break;
             case HELP:
             case UNKNOWN_COMMAND:
-                ui.sendMessage("\n"
-                        + StringCreator.createFromCollection(Commands.getUserCommands(), beforeSign, afterSign)
-                        + "\n");
+                ui.sendMessage("\n" + StringCreator.createFromCollection(Commands.getUserCommands()) + "\n");
                 break;
         }
     }
