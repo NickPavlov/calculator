@@ -65,9 +65,9 @@ public class MathParser implements IMathParser {
         if (result.isEmpty()) {
             result = "0";
         } else {
-            /* Before parsing.*/
+            /*  Before parsing.  */
             result = MathConverter.removeEmptyBrackets(MathConverter.removeExtraSigns(result));
-            /* After parsing. */
+            /*  After parsing.  */
             result = MathConverter.removeExtraSigns(parseBrackets(result, result.length()));
             result = MathConverter.removeFirstPlus(result);
         }
