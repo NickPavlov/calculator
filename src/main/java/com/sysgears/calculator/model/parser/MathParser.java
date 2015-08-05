@@ -111,10 +111,8 @@ public class MathParser implements IMathParser {
             final String beforeBrackets = result.substring(0, start);
             final String value = parseOperations(result.substring(start + 1, index++));
             final String afterBrackets = result.substring(index);
-            if ((value.charAt(0) == '-')
-                    && (beforeBrackets.isEmpty()
-                    || OPENING_PATTERN.matcher("" + beforeBrackets.charAt(beforeBrackets.length() - 1)).find())) {
 
+            if ((value.charAt(0) == '-')) {
                 result = parseBrackets(beforeBrackets + '+' + value + afterBrackets, start);
             } else {
                 result = parseBrackets(beforeBrackets + value + afterBrackets, start);
@@ -122,6 +120,12 @@ public class MathParser implements IMathParser {
         }
 
         return MathConverter.removeExtraSigns(parseOperations(result));
+    }
+
+    public static void main(String[] args) {
+        String expression = "-1+(-1)";
+        System.out.println("Original expression: " + expression);
+        System.out.println("Final result: " + new MathParser().parse(expression));
     }
 
     /**
