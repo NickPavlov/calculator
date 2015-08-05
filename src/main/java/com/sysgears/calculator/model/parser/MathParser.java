@@ -10,7 +10,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The <code>MathParser</code> class provides methods to getCommand mathematical expression in string.
@@ -23,16 +22,6 @@ public class MathParser implements IMathParser {
      * The default accuracy of calculation.
      */
     public static final String DEFAULT_ACCURACY = "#.#########";
-
-    /**
-     * The operand pattern.
-     */
-    public static final Pattern OPERAND_PATTERN = Pattern.compile(Type.OPERAND);
-
-    /**
-     * Opening brackets pattern.
-     */
-    public static final Pattern OPENING_PATTERN = Pattern.compile(Brackets.OPENING_BRACKETS);
 
     /**
      * The number formatter.
@@ -96,7 +85,7 @@ public class MathParser implements IMathParser {
      * @return the mathematical expression with parsed operations in the brackets
      */
     private String parseBrackets(final String expression, final int openingBracketBorder) {
-        final Matcher matcher = OPENING_PATTERN.matcher(expression.substring(0, openingBracketBorder));
+        final Matcher matcher = Brackets.OPENING_PATTERN.matcher(expression.substring(0, openingBracketBorder));
         String result = expression;
         if (matcher.find()) {
             int start = matcher.start();
@@ -161,7 +150,7 @@ public class MathParser implements IMathParser {
         final Matcher expressionMatcher = operation.getOperationPattern().matcher(expression);
         String result = MathConverter.removeExtraBrackets(expression);
         if (expressionMatcher.find()) {
-            Matcher operandsMatcher = OPERAND_PATTERN.matcher(expressionMatcher.group());
+            Matcher operandsMatcher = Type.OPERAND_PATTERN.matcher(expressionMatcher.group());
             List<Double> operands = new ArrayList<Double>();
             while (operandsMatcher.find()) {
                 operands.add(Double.parseDouble(operandsMatcher.group()));

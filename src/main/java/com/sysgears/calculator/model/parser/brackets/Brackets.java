@@ -1,5 +1,7 @@
 package com.sysgears.calculator.model.parser.brackets;
 
+import java.util.regex.Pattern;
+
 /**
  * The <code>Brackets</code> class provides a set of brackets.
  */
@@ -19,6 +21,16 @@ public enum Brackets {
      * Closing brackets pattern.
      */
     public static final String CLOSING_BRACKETS = generateClosingPattern();
+
+    /**
+     * Opening brackets pattern.
+     */
+    public static final Pattern OPENING_PATTERN = Pattern.compile(OPENING_BRACKETS);
+
+    /**
+     * Opening brackets pattern.
+     */
+    public static final Pattern CLOSING_PATTERN = Pattern.compile(CLOSING_BRACKETS);
 
     /**
      * The opening bracket.

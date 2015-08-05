@@ -40,7 +40,12 @@ public enum Type {
     /**
      * The regular expression for the operand.
      */
-    public static final String OPERAND = "(?<![\\d\\)" + Brackets.OPENING_BRACKETS + "])" + "[\\+-]?\\d+(\\.\\d+)?";
+    public static final String OPERAND = "(?<![\\d\\)"+ Brackets.OPENING_BRACKETS + "])" + "[\\+-]?\\d+(\\.\\d+)?";
+
+    /**
+     * The operand pattern.
+     */
+    public static final Pattern OPERAND_PATTERN = Pattern.compile(Type.OPERAND);
 
     /**
      * Should return a regex pattern to getCommand a single operation.
