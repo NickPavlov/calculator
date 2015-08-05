@@ -9,6 +9,17 @@ public enum Brackets {
     SQUARE_BRACKETS('[', ']'),
     CURLY_BRACKETS('{', '}'),
     ANGLE_BRACKETS('<', '>');
+
+    /**
+     * Opening brackets pattern.
+     */
+    public static final String OPENING_BRACKETS = generateOpeningPattern();
+
+    /**
+     * Closing brackets pattern.
+     */
+    public static final String CLOSING_BRACKETS = generateClosingPattern();
+
     /**
      * The opening bracket.
      */
@@ -43,7 +54,7 @@ public enum Brackets {
      *
      * @return the regular expression for all opening brackets
      */
-    public static String generateOpeningPattern() {
+    private static String generateOpeningPattern() {
         final StringBuilder openingBrackets = new StringBuilder().append("[");
         for (Brackets brackets : Brackets.values()) {
             openingBrackets.append("\\").append(brackets.getOpeningBracket());
@@ -57,7 +68,7 @@ public enum Brackets {
      *
      * @return the regular expression for all closing brackets
      */
-    public static String generateClosingPattern() {
+    private static String generateClosingPattern() {
         final StringBuilder closingBrackets = new StringBuilder().append("[");
         for (Brackets brackets : Brackets.values()) {
             closingBrackets.append("\\").append(brackets.getClosingBracket());

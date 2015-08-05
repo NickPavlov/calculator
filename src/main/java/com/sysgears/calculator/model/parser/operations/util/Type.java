@@ -1,6 +1,6 @@
 package com.sysgears.calculator.model.parser.operations.util;
 
-import com.sysgears.calculator.model.parser.operations.util.Operands;
+import com.sysgears.calculator.model.parser.brackets.Brackets;
 
 import java.util.regex.Pattern;
 
@@ -11,21 +11,11 @@ public enum Type {
 
     /**
      * The binary operation.
-     * If the first operand is not in brackets, the mathematical sign is ignored.
-     */
-    BINARY_FIRST_WITHOUT_SIGN {
-        public String getPattern(final String operator) {
-            return generateBinaryPattern(operator, false, true);
-        }
-    },
-
-    /**
-     * The binary operation.
      * If the operands are not in brackets, the mathematical signs are taken into account.
      */
     BINARY {
         public String getPattern(final String operator) {
-            return generateBinaryPattern(operator, true, true);
+            return OPERAND + Pattern.quote(operator) + OPERAND;
         }
     },
 
@@ -34,7 +24,7 @@ public enum Type {
      */
     UNARY {
         public String getPattern(final String operator) {
-            return operator + Operands.SECOND.getPattern(true);
+            return operator + OPERAND;
         }
     },
 
@@ -48,20 +38,9 @@ public enum Type {
     };
 
     /**
-     * Generates the pattern for a binary operation.
-     *
-     * @param operator          the operator
-     * @param firstOperandSign  if true, mathematical sign of the first operand is taken into account
-     * @param secondOperandSign if true, mathematical sign of the second operand is taken into account
-     * @return the pattern for a binary operation
+     * The regular expression for the operand.
      */
-    private static String generateBinaryPattern(final String operator,
-                                                final boolean firstOperandSign,
-                                                final boolean secondOperandSign) {
-
-        return Operands.FIRST.getPattern(firstOperandSign)
-                + Pattern.quote(operator) + Operands.SECOND.getPattern(secondOperandSign);
-    }
+    public static final String OPERAND = "(?<![\\d\\)" + Brackets.OPENING_BRACKETS + "])" + "[\\+-]?\\d+(\\.\\d+)?";
 
     /**
      * Should return a regex pattern to getCommand a single operation.

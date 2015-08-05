@@ -2,8 +2,8 @@ package com.sysgears.calculator.model.parser;
 
 import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operations.Operations;
-import com.sysgears.calculator.model.parser.operations.util.Operands;
 import com.sysgears.calculator.model.parser.operations.util.Priority;
+import com.sysgears.calculator.model.parser.operations.util.Type;
 import com.sysgears.calculator.model.parser.util.MathConverter;
 
 import java.text.DecimalFormat;
@@ -23,6 +23,16 @@ public class MathParser implements IMathParser {
      * The default accuracy of calculation.
      */
     public static final String DEFAULT_ACCURACY = "#.#########";
+
+    /**
+     * The operand pattern.
+     */
+    public static final Pattern OPERAND_PATTERN = Pattern.compile(Type.OPERAND);
+
+    /**
+     * Opening brackets pattern.
+     */
+    public static final Pattern OPENING_PATTERN = Pattern.compile(Brackets.OPENING_BRACKETS);
 
     /**
      * The number formatter.
@@ -88,41 +98,43 @@ public class MathParser implements IMathParser {
      * @return the mathematical expression with parsed operations in the brackets
      */
     private String parseBrackets(final String expression, final int openingBracketBorder) {
-        final Matcher matcher = Pattern.compile(Brackets.generateOpeningPattern())
-                .matcher(expression.substring(0, openingBracketBorder));
+        final Matcher matcher = OPENING_PATTERN.matcher(expression.substring(0, openingBracketBorder));
         String result = expression;
         if (matcher.find()) {
             int start = matcher.start();
             while (matcher.find()) {
                 start = matcher.start();
             }
-            char openingBracket = result.charAt(start);
-            char closingBracket = Brackets.getClosingPair(openingBracket);
-            int openingBracketsCount = 1;
-            int closingBracketsCount = 0;
+            char closingBracket = Brackets.getClosingPair(result.charAt(start));
             int index = start + 1;
-            while ((index < result.length()) && (openingBracketsCount != closingBracketsCount)) {
-                if (openingBracket == result.charAt(index)) {
-                    ++openingBracketsCount;
-                } else if (closingBracket == result.charAt(index)) {
-                    ++closingBracketsCount;
-                }
+            while ((index < result.length()) && (result.charAt(index) != closingBracket)) {
                 ++index;
             }
-            /*
-            String value = parseOperations(result.substring(start, index - 1));
-            if (value.charAt(0) == '-') {
-                //also should remove brackets!
-                result = parseBrackets(parseBrackets(result.substring(0, start) + value
-                    + result.substring(index - 1, result.length()), start);
+
+            String beforeBrackets = result.substring(0, start);
+            String value = parseOperations(result.substring(start + 1, index++));
+            String afterBrackets = result.substring(index);
+            if ((value.charAt(0) == '-')
+                    && (beforeBrackets.isEmpty()
+                    || OPENING_PATTERN.matcher("" + beforeBrackets.charAt(beforeBrackets.length() - 1)).find())) {
+
+                result = parseBrackets(beforeBrackets + '+' + value + afterBrackets, start);
+            } else {
+                result = parseBrackets(beforeBrackets + value + afterBrackets, start);
             }
-            */
-            result = parseBrackets(result.substring(0, start) + parseOperations(result.substring(start, index - 1))
-                    + result.substring(index - 1, result.length()), start);
         }
 
-        return parseOperations(result);
+        return MathConverter.removeExtraSigns(parseOperations(result));
     }
+
+
+    public static void main(String[] args) {
+        String expression = "sin(-1)^2";
+        System.out.println("Expression: " + expression);
+        System.out.println(new MathParser().parseBrackets(expression, expression.length()));
+    }
+
+
 
     /**
      * Parses all mathematical operations specified in
@@ -133,19 +145,21 @@ public class MathParser implements IMathParser {
      */
     private String parseOperations(final String expression) {
         String result = expression;
+        boolean inverted = false;
+        if (result.charAt(0) == '-') {
+            result = MathConverter.invertSigns(result);
+            inverted = true;
+        }
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
                 if (operation.getPriority().getIndex() == priority) {
-                    /*
-                    if (result.charAt(0) == '-') {
-                        result = (result)*-1;
-                        result = parseOperation(operation, result);
-                        result = (result)*-1
-                    }
-                    */
                     result = parseOperation(operation, result);
                 }
             }
+        }
+        System.out.println("Result: " + result);
+        if (inverted) {
+            result = MathConverter.invertSigns(MathConverter.appendPlus(result));
         }
 
         return result.equals(expression) ? result : parseOperations(result);
@@ -162,15 +176,15 @@ public class MathParser implements IMathParser {
         final Matcher expressionMatcher = Pattern.compile(operation.getOperationPattern()).matcher(expression);
         String result = MathConverter.removeExtraBrackets(expression);
         if (expressionMatcher.find()) {
-            Matcher operandsMatcher = Pattern.compile(Operands.OPERAND_PATTERN).matcher(expressionMatcher.group());
+            Matcher operandsMatcher = OPERAND_PATTERN.matcher(expressionMatcher.group());
             List<Double> operands = new ArrayList<Double>();
             while (operandsMatcher.find()) {
                 operands.add(Double.parseDouble(operandsMatcher.group()));
             }
-            final String value = formatter.format(operation.calculate(operands));
-
+            String value = formatter.format(operation.calculate(operands));
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    + value + expression.substring(expressionMatcher.end(), expression.length()));
+                    + value
+                    + expression.substring(expressionMatcher.end()));
         }
 
         return result;

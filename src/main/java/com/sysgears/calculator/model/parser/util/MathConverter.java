@@ -1,7 +1,7 @@
 package com.sysgears.calculator.model.parser.util;
 
 import com.sysgears.calculator.model.parser.brackets.Brackets;
-import com.sysgears.calculator.model.parser.operations.util.Operands;
+import com.sysgears.calculator.model.parser.operations.util.Type;
 import com.sysgears.calculator.model.util.strings.StringConverter;
 
 import java.util.regex.Matcher;
@@ -13,13 +13,27 @@ import java.util.regex.Pattern;
 public class MathConverter {
 
     /**
+     * Inverts all mathematical signs. Equivalent to multiplying by -1.
+     * The <code>expression</code> should not contain the "\u0000" character.
+     *
+     * @param expression the original expression
+     * @return the expression with inverted signs
+     */
+    public static String invertSigns(final String expression) {
+        return expression.replace('-', '\u0000').replace('+', '-').replace('\u0000', '+');
+    }
+
+    /**
      * Appends the plus sign at the start of the <code>expression</code>.
+     * In case if first sign is already present - returns original expression.
      *
      * @param expression the original expression
      * @return the expression with the plus at the start
      */
-    public static String addPlus(final String expression) {
-        return "+" + expression;
+    public static String appendPlus(final String expression) {
+        return ((expression.charAt(0) == '+') || (expression.charAt(0) == '-'))
+                ? expression
+                : '+' + expression;
     }
 
     /**
@@ -41,7 +55,7 @@ public class MathConverter {
      */
     public static String removeEmptyBrackets(final String expression) {
         final String result = expression
-                .replaceAll(Brackets.generateOpeningPattern() + Brackets.generateClosingPattern(), "");
+                .replaceAll(Brackets.OPENING_BRACKETS + Brackets.CLOSING_BRACKETS, "");
 
         return result.equals(expression) ? result : removeEmptyBrackets(result);
     }
@@ -53,15 +67,15 @@ public class MathConverter {
      * @return the expression without extra brackets
      */
     public static String removeExtraBrackets(final String expression) {
-        final String realNumber = Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN;
+        final String operand = Type.OPERAND;
         final StringBuilder pattern = new StringBuilder();
-        pattern.append("(?<=").append(Brackets.generateOpeningPattern()).append(")(");
+        pattern.append("(?<=").append(Brackets.OPENING_BRACKETS).append(")(");
         for (Brackets brackets : Brackets.values()) {
             pattern.append("\\").append(brackets.getOpeningBracket())
-                    .append(realNumber).append("\\").append(brackets.getClosingBracket())
+                    .append(operand).append("\\").append(brackets.getClosingBracket())
                     .append("|");
         }
-        pattern.append(")(?=").append(Brackets.generateClosingPattern()).append(")");
+        pattern.append(")(?=").append(Brackets.CLOSING_BRACKETS).append(")");
         final Matcher matcher = Pattern.compile(pattern.toString()).matcher(expression);
         String result = expression;
         if (matcher.find()) {
@@ -95,29 +109,6 @@ public class MathConverter {
         return (expression.charAt(0) == '+')
                 ? StringConverter.removeCharAt(expression, 0)
                 : expression;
-    }
-
-    /**
-     * Removes brackets, if between them a number.
-     *
-     * @param expression the original expression
-     * @return the expression without brackets at the beginning and the end
-     */
-    public static String removeBrackets(final String expression) {
-        final String pattern = Brackets.generateOpeningPattern()
-                + Operands.SIGN_PATTERN + Operands.NUMBER_PATTERN + Brackets.generateClosingPattern();
-        final Matcher matcher = Pattern.compile(pattern).matcher(expression);
-        String result = expression;
-        String number;
-        if (matcher.find()) {
-            number = StringConverter.removeCharAt(matcher.group(), 0);
-            number = StringConverter.removeCharAt(number, number.length() - 1);
-            result = result.substring(0, matcher.start()) + number + result.substring(matcher.end());
-        }
-
-        return result.equals(expression)
-                ? result
-                : removeBrackets(result);
     }
 
     private MathConverter() {

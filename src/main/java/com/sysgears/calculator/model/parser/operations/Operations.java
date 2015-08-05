@@ -17,7 +17,6 @@ public enum Operations {
      * Constants.
      */
     PI("PI", Priority.TOP, Type.CONSTANT) {
-        //public double calculate(final double firstOperand, final double secondOperand) {
         public double calculate(final List<Double> operands) {
             return Math.PI;
         }
@@ -84,7 +83,7 @@ public enum Operations {
     /**
      * The medium priority operations.
      */
-    POWER("^", Priority.MEDIUM, Type.BINARY_FIRST_WITHOUT_SIGN) {
+    POWER("^", Priority.MEDIUM, Type.BINARY) {
         public double calculate(final List<Double> operands) {
             return Math.pow(operands.get(0), operands.get(1));
         }
@@ -107,15 +106,15 @@ public enum Operations {
      * The low priority operations.
      */
 
-    ADD("+", Priority.LOW, Type.BINARY) {
-        public double calculate(final List<Double> operands) {
-            return operands.get(0) + operands.get(1);
-        }
-    },
-
     SUBTRACT("-", Priority.LOW, Type.BINARY) {
         public double calculate(final List<Double> operands) {
             return operands.get(0) - operands.get(1);
+        }
+    },
+
+    ADD("+", Priority.LOW, Type.BINARY) {
+        public double calculate(final List<Double> operands) {
+            return operands.get(0) + operands.get(1);
         }
     };
 
