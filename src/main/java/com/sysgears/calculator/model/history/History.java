@@ -12,23 +12,7 @@ public class History implements IHistory {
     /**
      * The history.
      */
-    private final List<String> history;
-
-    /**
-     * Creates the <code>History</code> object with the specified history storage.
-     *
-     * @param history the history storage
-     */
-    public History(final List<String> history) {
-        this.history = history;
-    }
-
-    /**
-     * Creates the <code>History</code> object with the <code>ArrayList</code> as a storage.
-     */
-    public History() {
-        this(new ArrayList<String>());
-    }
+    private final List<String> history = new ArrayList<String>();
 
     /**
      * Adds the new record into the history.
