@@ -116,7 +116,6 @@ public class MathParser implements IMathParser {
                     value = '+' + value;
                 }
             }
-            System.out.println("Value: " + value);
             result = parseBrackets(beforeBrackets + value + result.substring(index), start);
         }
 
@@ -146,7 +145,7 @@ public class MathParser implements IMathParser {
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
             for (Operations operation : Operations.values()) {
                 if (operation.getPriority().getIndex() == priority) {
-                    result = parseOperation(operation, result);
+                    result = parseOperation(operation, result, Pattern.compile(operation.getOperationPattern()));
                 }
             }
         }
@@ -164,8 +163,8 @@ public class MathParser implements IMathParser {
      * @param expression the mathematical expression
      * @return the string with performed operations of the specific type
      */
-    private String parseOperation(final Operations operation, final String expression) {
-        final Matcher expressionMatcher = Pattern.compile(operation.getOperationPattern()).matcher(expression);
+    private String parseOperation(final Operations operation, final String expression, final Pattern pattern) {
+        final Matcher expressionMatcher = pattern.matcher(expression);
         String result = MathConverter.removeExtraBrackets(expression);
         if (expressionMatcher.find()) {
             Matcher operandsMatcher = OPERAND_PATTERN.matcher(expressionMatcher.group());
@@ -173,10 +172,9 @@ public class MathParser implements IMathParser {
             while (operandsMatcher.find()) {
                 operands.add(Double.parseDouble(operandsMatcher.group()));
             }
-            String value = formatter.format(operation.calculate(operands));
             result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    + value
-                    + expression.substring(expressionMatcher.end()));
+                    + formatter.format(operation.calculate(operands))
+                    + expression.substring(expressionMatcher.end()), pattern);
         }
 
         return result;
