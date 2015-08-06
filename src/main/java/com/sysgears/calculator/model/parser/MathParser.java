@@ -169,7 +169,6 @@ public class MathParser implements IMathParser {
                 firstOperand = before.charAt(0) + firstOperand;
             }
 
-
             System.out.println("firstOperand: " + firstOperand);
 
             //second operand
@@ -229,8 +228,8 @@ public class MathParser implements IMathParser {
     }
 
     public static void main(String[] args) {
-        final String expression = "sin-1";
+        final String expression = "(-1)^2";
         System.out.println(expression);
-        System.out.println(new MathParser().parseOperation(Operations.SIN, expression));
+        System.out.println(new MathParser().parseBrackets(expression, expression.length()));
     }
 }
