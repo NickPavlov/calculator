@@ -147,7 +147,7 @@ public class MathParser implements IMathParser {
      */
     private String parseOperation(final Operations operation, final String expression) {
         final Matcher expressionMatcher = operation.getOperationPattern().matcher(expression);
-        String result = MathConverter.removeExtraBrackets(expression);
+        String result = expression;
         if (expressionMatcher.find()) {
             Matcher operandsMatcher = Type.OPERAND_PATTERN.matcher(expressionMatcher.group());
             List<Double> operands = new ArrayList<Double>();
