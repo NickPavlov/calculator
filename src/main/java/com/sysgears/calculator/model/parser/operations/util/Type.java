@@ -40,7 +40,7 @@ public enum Type {
     /**
      * The regular expression for the operand.
      */
-    public static final String OPERAND = "(?<![\\d\\)"+ Brackets.OPENING_BRACKETS + "])" + "[\\+-]?\\d+(\\.\\d+)?";
+    public static final String OPERAND = "(?<![\\d"+ Brackets.OPENING_BRACKETS + "])" + "[\\+-]?\\d+(\\.\\d+)?";
 
     /**
      * The operand pattern.
