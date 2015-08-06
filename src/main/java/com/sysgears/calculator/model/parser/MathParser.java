@@ -148,7 +148,7 @@ public class MathParser implements IMathParser {
      */
     private String parseOperation(final Operations operation, final String expression) {
         String result = expression;
-        int operatorFirstIndex = expression.lastIndexOf(operation.getOperator());
+        int operatorFirstIndex = result.lastIndexOf(operation.getOperator());
         if (operatorFirstIndex != -1) {
             int afterOperatorIndex = operatorFirstIndex + operation.getOperator().length();
             String before = result.substring(0, operatorFirstIndex);
@@ -157,14 +157,9 @@ public class MathParser implements IMathParser {
 
             switch (operation.getType()) {
                 case BINARY:
-                    if (operatorFirstIndex > 0) {
-
-                        //will be removed after testing.
+                    if ((operatorFirstIndex != 0) && (operatorFirstIndex != (result.length() - 1))) {
                         String firstOperand = findFirstOperand(before);
                         String secondOperand = findSecondOperand(after);
-                        //System.out.println("firstOperand: " + firstOperand);
-                        //System.out.println("secondOperand: " + secondOperand);
-
                         before = before.substring(0, before.length() - firstOperand.length());
                         after = after.substring(secondOperand.length());
                         operands.add(Double.valueOf(firstOperand));
@@ -175,7 +170,12 @@ public class MathParser implements IMathParser {
                     }
                     break;
                 case UNARY:
-                    System.out.println("UNARY");
+                    String secondOperand = findSecondOperand(after);
+                    after = after.substring(secondOperand.length());
+                    operands.add(Double.valueOf(secondOperand));
+
+                    result = MathConverter.removeExtraSigns(before
+                            + formatter.format(operation.calculate(operands)) + after);
                     break;
                 case CONSTANT:
                     System.out.println("CONSTANT");
