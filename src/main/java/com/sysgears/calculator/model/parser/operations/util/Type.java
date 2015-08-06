@@ -11,7 +11,6 @@ public enum Type {
 
     /**
      * The binary operation.
-     * If the operands are not in brackets, the mathematical signs are taken into account.
      */
     BINARY {
         public String getPattern(final String operator) {
