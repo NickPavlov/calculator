@@ -156,7 +156,8 @@ public class MathParser implements IMathParser {
             List<Double> operands = new ArrayList<Double>();
             switch (operation.getType()) {
                 case BINARY:
-                    if ((operatorFirstIndex != 0) && (operatorFirstIndex != (result.length() - 1))) {
+                    if ((operatorFirstIndex != 0) && (operatorFirstIndex != (result.length() - 1))
+                            && isDigit(before.charAt(before.length() - 1))) {
                         String firstOperand = findFirstOperand(before);
                         String secondOperand = findSecondOperand(after);
                         before = before.substring(0, before.length() - firstOperand.length());
@@ -170,7 +171,6 @@ public class MathParser implements IMathParser {
                     break;
                 case UNARY:
                     String secondOperand = findSecondOperand(after);
-                    System.out.println("secondOperand: " + secondOperand);
                     after = after.substring(secondOperand.length());
                     operands.add(Double.valueOf(secondOperand));
                     double value = operation.calculate(operands);
