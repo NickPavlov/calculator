@@ -3,12 +3,9 @@ package com.sysgears.calculator.model.parser;
 import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.parser.operations.Operations;
 import com.sysgears.calculator.model.parser.operations.util.Priority;
-import com.sysgears.calculator.model.parser.operations.util.Type;
 import com.sysgears.calculator.model.parser.util.MathConverter;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 
 /**
@@ -146,7 +143,20 @@ public class MathParser implements IMathParser {
      * @return the string with performed operations of the specific type
      */
     private String parseOperation(final Operations operation, final String expression) {
-        final Matcher expressionMatcher = operation.getOperationPattern().matcher(expression);
+        //final Matcher expressionMatcher = operation.getOperationPattern().matcher(expression);
+        switch (operation.getType()) {
+            case BINARY:
+
+                break;
+            case UNARY:
+
+                break;
+            case CONSTANT:
+
+                break;
+        }
+
+        /*
         String result = expression;
         if (expressionMatcher.find()) {
             Matcher operandsMatcher = Type.OPERAND_PATTERN.matcher(expressionMatcher.group());
@@ -160,5 +170,7 @@ public class MathParser implements IMathParser {
         }
 
         return result;
+        */
+        return  "";
     }
 }
