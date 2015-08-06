@@ -246,10 +246,4 @@ public class MathParser implements IMathParser {
     private boolean isPlus(final char character) {
         return character == '+';
     }
-
-    public static void main(String[] args) {
-        final String expression = "-1-1*-1-1";
-        System.out.println("Original expression: " + expression);
-        System.out.println(new MathParser().parseOperations(expression));
-    }
 }
