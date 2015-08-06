@@ -14,13 +14,28 @@ public class MathConverter {
 
     /**
      * Inverts all mathematical signs. Equivalent to multiplying by -1.
-     * The <code>expression</code> should not contain the "\u0000" character.
      *
      * @param expression the original expression
      * @return the expression with inverted signs
      */
     public static String invertSigns(final String expression) {
-        return expression.replace('-', '\u0000').replace('+', '-').replace('\u0000', '+');
+        char[] chars = expression.toCharArray();
+        if (chars[0] == '-' ) {
+            chars[0] = '+';
+        } else if (chars[0] == '+' ) {
+            chars[0] = '-';
+        }
+        for (int i = 1; i < chars.length - 1; ++i) {
+            if (Character.isDigit(chars[i - 1]) && Character.isDigit(chars[i + 1])) {
+                if (chars[i] == '-') {
+                    chars[i] = '+';
+                } else if (chars[i] == '+') {
+                    chars[i] = '-';
+                }
+            }
+        }
+
+        return new String(chars);
     }
 
     /**
