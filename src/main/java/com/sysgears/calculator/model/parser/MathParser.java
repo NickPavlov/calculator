@@ -143,34 +143,33 @@ public class MathParser implements IMathParser {
      * @return the string with performed operations of the specific type
      */
     private String parseOperation(final Operations operation, final String expression) {
-        //final Matcher expressionMatcher = operation.getOperationPattern().matcher(expression);
-        switch (operation.getType()) {
-            case BINARY:
+        int operatorFirstIndex = expression.indexOf(operation.getOperator());
+        if (operatorFirstIndex != -1) {
+            int afterOperatorIndex = operatorFirstIndex + operation.getOperator().length();
+            String beforeOperator = expression.substring(0, operatorFirstIndex);
+            String afterOperator = expression.substring(afterOperatorIndex);
 
-                break;
-            case UNARY:
+            System.out.println(beforeOperator);
+            System.out.println(afterOperator);
 
-                break;
-            case CONSTANT:
+            switch (operation.getType()) {
+                case BINARY:
 
-                break;
-        }
+                    break;
+                case UNARY:
 
-        /*
-        String result = expression;
-        if (expressionMatcher.find()) {
-            Matcher operandsMatcher = Type.OPERAND_PATTERN.matcher(expressionMatcher.group());
-            List<Double> operands = new ArrayList<Double>();
-            while (operandsMatcher.find()) {
-                operands.add(Double.parseDouble(operandsMatcher.group()));
+                    break;
+                case CONSTANT:
+
+                    break;
             }
-            result = parseOperation(operation, expression.substring(0, expressionMatcher.start())
-                    + formatter.format(operation.calculate(operands))
-                    + expression.substring(expressionMatcher.end()));
+
         }
 
-        return result;
-        */
         return  "";
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new MathParser().parseOperation(Operations.MULTIPLY, "-1-2*-3-4"));
     }
 }
