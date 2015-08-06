@@ -171,14 +171,17 @@ public class MathParser implements IMathParser {
                     break;
                 case UNARY:
                     String secondOperand = findSecondOperand(after);
+                    System.out.println("secondOperand: " + secondOperand);
                     after = after.substring(secondOperand.length());
                     operands.add(Double.valueOf(secondOperand));
-
-                    result = MathConverter.removeExtraSigns(before
-                            + formatter.format(operation.calculate(operands)) + after);
+                    double value = operation.calculate(operands);
+                    String formatted = formatter.format(value);
+                    String finalValue = (value < 0) ? '-' + formatted : formatted;
+                    result = MathConverter.removeExtraSigns(before + finalValue + after);
                     break;
                 case CONSTANT:
-                    System.out.println("CONSTANT");
+                    result = MathConverter.removeExtraSigns(before
+                            + formatter.format(operation.calculate(operands)) + after);
                     break;
             }
 
