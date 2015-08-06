@@ -6,7 +6,7 @@ package com.sysgears.calculator.model.parser;
 public interface IMathParser {
 
     /**
-     * Returns the result of the mathematical expressions in <code>expression</code>.
+     * Returns the result of the mathematical expression in the <code>expression</code>.
      *
      * @param expression the mathematical expression to getCommand
      * @return parsed mathematical expression
