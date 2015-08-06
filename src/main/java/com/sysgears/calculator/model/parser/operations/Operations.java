@@ -15,6 +15,7 @@ public enum Operations {
      * The top priority operations.
      * Constants.
      */
+    /*
     PI("PI", Priority.TOP, Type.CONSTANT) {
         public double calculate(final List<Double> operands) {
             return Math.PI;
@@ -32,10 +33,12 @@ public enum Operations {
             return 1.618033988;
         }
     },
+    */
 
     /**
      * The high priority operations.
      */
+    /*
     SIN("sin", Priority.HIGH, Type.UNARY) {
         public double calculate(final List<Double> operands) {
             return Math.sin(operands.get(0) * Math.PI / 180);
@@ -77,7 +80,7 @@ public enum Operations {
             return Math.abs(operands.get(0));
         }
     },
-
+*/
 
     /**
      * The medium priority operations.
