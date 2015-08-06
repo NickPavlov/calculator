@@ -8,6 +8,8 @@ import com.sysgears.calculator.model.parser.util.MathConverter;
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 
+import static java.lang.Character.isDigit;
+
 /**
  * The <code>MathParser</code> class provides methods to getCommand mathematical expression in string.
  * Operations that are calculated in the MathParser are described in
@@ -143,32 +145,47 @@ public class MathParser implements IMathParser {
      * @return the string with performed operations of the specific type
      */
     private String parseOperation(final Operations operation, final String expression) {
+        System.out.println("expression: "+expression);
         int operatorFirstIndex = expression.indexOf(operation.getOperator());
         if (operatorFirstIndex != -1) {
             int afterOperatorIndex = operatorFirstIndex + operation.getOperator().length();
             String before = expression.substring(0, operatorFirstIndex);
             String after = expression.substring(afterOperatorIndex);
 
-            System.out.println(before);
-            System.out.println(after);
+            //System.out.println(before);
+            //System.out.println(after);
 
+            //first operand
             String firstOperand = "";
             int index = before.length() - 1;
             if (index == 0) {
                 firstOperand = before.charAt(0) + "";
             } else {
                 while ((index > 0)
-                        && ((before.charAt(index) == '-' && !Character.isDigit(before.charAt(index - 1)))  ||
-                        Character.isDigit(before.charAt(index)) || before.charAt(index) == '.') ) {
-
+                        && ((before.charAt(index) == '-' && !isDigit(before.charAt(index - 1))) ||
+                        isDigit(before.charAt(index)) || isDot(before.charAt(index)))) {
                     firstOperand = before.charAt(index) + firstOperand;
                     --index;
                 }
             }
 
-
             System.out.println(firstOperand);
 
+
+            //second operand
+            String secondOperand = after.charAt(0) + "";
+
+            index = 1;
+            while ((index < after.length() - 1)
+                    && (isDigit(after.charAt(index)) || isDot(after.charAt(index)))) {
+                secondOperand = secondOperand + after.charAt(index);
+                index++;
+            }
+
+            System.out.println(secondOperand);
+
+
+/*
             switch (operation.getType()) {
                 case BINARY:
 
@@ -180,13 +197,33 @@ public class MathParser implements IMathParser {
 
                     break;
             }
-
+*/
         }
 
-        return  "";
+        return "";
+    }
+
+    /**
+     * Returns true is <code>character</code> is a dot.
+     *
+     * @param character the character to check
+     * @return true if <code>character</code> is a dot
+     */
+    private boolean isDot(final char character) {
+        return character == '.';
+    }
+
+    /**
+     * Returns true is <code>character</code> is a minus.
+     *
+     * @param character the character to check
+     * @return true if <code>character</code> is a dot
+     */
+    private boolean isMinus(final char character) {
+        return character == '-';
     }
 
     public static void main(String[] args) {
-        System.out.println(new MathParser().parseOperation(Operations.MULTIPLY, "1+-2*-3-4"));
+        System.out.println(new MathParser().parseOperation(Operations.MULTIPLY, "1-2-2.0*-3.0-4"));
     }
 }
