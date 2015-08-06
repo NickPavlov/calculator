@@ -3,9 +3,6 @@ package com.sysgears.calculator.model.parser.util;
 import com.sysgears.calculator.model.parser.brackets.Brackets;
 import com.sysgears.calculator.model.util.strings.StringConverter;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * The <code>MathConverter</code> class provides functionality to convert mathematical expressions.
  */
@@ -61,32 +58,6 @@ public class MathConverter {
                 .replaceAll(Brackets.OPENING_BRACKETS + Brackets.CLOSING_BRACKETS, "");
 
         return result.equals(expression) ? result : removeEmptyBrackets(result);
-    }
-
-    /**
-     * Removes extra brackets in the <code>expression</code>.
-     *
-     * @param expression the original expression
-     * @return the expression without extra brackets
-     */
-    public static String removeExtraBrackets(final String expression) {
-        final String operand = "(?<![\\d"+ Brackets.OPENING_BRACKETS + "])" + "[\\+-]?\\d+(\\.\\d+)?";
-        final StringBuilder pattern = new StringBuilder();
-        pattern.append("(?<=").append(Brackets.OPENING_BRACKETS).append(")(");
-        for (Brackets brackets : Brackets.values()) {
-            pattern.append("\\").append(brackets.getOpeningBracket())
-                    .append(operand).append("\\").append(brackets.getClosingBracket())
-                    .append("|");
-        }
-        pattern.append(")(?=").append(Brackets.CLOSING_BRACKETS).append(")");
-        final Matcher matcher = Pattern.compile(pattern.toString()).matcher(expression);
-        String result = expression;
-        if (matcher.find()) {
-            result = result.substring(0, matcher.start() - 1) + result.substring(matcher.start(), matcher.end())
-                    + result.substring(matcher.end() + 1, result.length());
-        }
-
-        return result.equals(expression) ? result : removeExtraBrackets(result);
     }
 
     /**
