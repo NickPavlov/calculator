@@ -154,7 +154,6 @@ public class MathParser implements IMathParser {
             String before = result.substring(0, operatorFirstIndex);
             String after = result.substring(afterOperatorIndex);
             List<Double> operands = new ArrayList<Double>();
-
             switch (operation.getType()) {
                 case BINARY:
                     if ((operatorFirstIndex != 0) && (operatorFirstIndex != (result.length() - 1))) {
@@ -184,8 +183,6 @@ public class MathParser implements IMathParser {
                             + formatter.format(operation.calculate(operands)) + after);
                     break;
             }
-
-
         }
 
         return result;
