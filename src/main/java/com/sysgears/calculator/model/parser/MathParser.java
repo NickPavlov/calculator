@@ -6,6 +6,8 @@ import com.sysgears.calculator.model.parser.operations.util.Priority;
 import com.sysgears.calculator.model.parser.util.MathConverter;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 import static java.lang.Character.isDigit;
@@ -121,6 +123,7 @@ public class MathParser implements IMathParser {
         boolean inverted = false;
         if (result.charAt(0) == '-') {
             result = MathConverter.invertSigns(result);
+            System.out.println("inverted: " + result);
             inverted = true;
         }
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
@@ -145,62 +148,64 @@ public class MathParser implements IMathParser {
      * @return the string with performed operations of the specific type
      */
     private String parseOperation(final Operations operation, final String expression) {
-        System.out.println("expression: "+expression);
-        int operatorFirstIndex = expression.indexOf(operation.getOperator());
-        if (operatorFirstIndex != -1) {
+        int operatorFirstIndex = expression.lastIndexOf(operation.getOperator());
+        String result = expression;
+        if (operatorFirstIndex > 0) {
             int afterOperatorIndex = operatorFirstIndex + operation.getOperator().length();
-            String before = expression.substring(0, operatorFirstIndex);
-            String after = expression.substring(afterOperatorIndex);
-
-            //System.out.println(before);
-            //System.out.println(after);
+            String before = result.substring(0, operatorFirstIndex);
+            String after = result.substring(afterOperatorIndex);
 
             //first operand
             String firstOperand = "";
             int index = before.length() - 1;
-            if (index == 0) {
-                firstOperand = before.charAt(0) + "";
-            } else {
-                while ((index > 0)
-                        && ((before.charAt(index) == '-' && !isDigit(before.charAt(index - 1))) ||
-                        isDigit(before.charAt(index)) || isDot(before.charAt(index)))) {
-                    firstOperand = before.charAt(index) + firstOperand;
-                    --index;
-                }
+            while ((index >= 0)
+                    && !isMinus(before.charAt(index))
+                    && (isDigit(before.charAt(index)) || isDot(before.charAt(index)))) {
+
+                firstOperand = before.charAt(index) + firstOperand;
+                --index;
+            }
+            if (index == 0 && isMinus(before.charAt(0))) {
+                firstOperand = before.charAt(0) + firstOperand;
             }
 
-            System.out.println(firstOperand);
 
+            System.out.println("firstOperand: " + firstOperand);
 
             //second operand
             String secondOperand = after.charAt(0) + "";
-
             index = 1;
-            while ((index < after.length() - 1)
+            while ((index < after.length())
                     && (isDigit(after.charAt(index)) || isDot(after.charAt(index)))) {
                 secondOperand = secondOperand + after.charAt(index);
                 index++;
             }
+            System.out.println("secondOperand: " + secondOperand);
 
-            System.out.println(secondOperand);
+            before = before.substring(0, before.length() - firstOperand.length());
+            after = after.substring(secondOperand.length());
 
+            List<Double> operands = new ArrayList<Double>();
 
-/*
             switch (operation.getType()) {
                 case BINARY:
-
+                    operands.add(Double.valueOf(firstOperand));
+                    operands.add(Double.valueOf(secondOperand));
+                    result = parseOperation(operation, before + operation.calculate(operands) + after);
                     break;
                 case UNARY:
-
+                    operands.add(Double.valueOf(secondOperand));
+                    result = parseOperation(operation, before + operation.calculate(operands) + after);
                     break;
                 case CONSTANT:
-
+                    result = parseOperation(operation, before + operation.calculate(operands) + after);
                     break;
             }
-*/
+            result = MathConverter.removeExtraSigns(result);
+
         }
 
-        return "";
+        return result;
     }
 
     /**
@@ -224,6 +229,8 @@ public class MathParser implements IMathParser {
     }
 
     public static void main(String[] args) {
-        System.out.println(new MathParser().parseOperation(Operations.MULTIPLY, "1-2-2.0*-3.0-4"));
+        final String expression = "sin-1";
+        System.out.println(expression);
+        System.out.println(new MathParser().parseOperation(Operations.SIN, expression));
     }
 }
