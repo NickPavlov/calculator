@@ -123,7 +123,6 @@ public class MathParser implements IMathParser {
         boolean inverted = false;
         if (result.charAt(0) == '-') {
             result = MathConverter.invertSigns(result);
-            System.out.println("inverted: " + result);
             inverted = true;
         }
         for (int priority = 0; priority <= lowestPriorityIndex; ++priority) {
@@ -163,25 +162,27 @@ public class MathParser implements IMathParser {
                         //will be removed after testing.
                         String firstOperand = findFirstOperand(before);
                         String secondOperand = findSecondOperand(after);
-                        System.out.println("firstOperand: " + firstOperand);
-                        System.out.println("secondOperand: " + secondOperand);
+                        //System.out.println("firstOperand: " + firstOperand);
+                        //System.out.println("secondOperand: " + secondOperand);
 
                         before = before.substring(0, before.length() - firstOperand.length());
                         after = after.substring(secondOperand.length());
                         operands.add(Double.valueOf(firstOperand));
                         operands.add(Double.valueOf(secondOperand));
+
+                        result = MathConverter.removeExtraSigns(before
+                                + formatter.format(operation.calculate(operands)) + after);
                     }
                     break;
                 case UNARY:
-
+                    System.out.println("UNARY");
                     break;
                 case CONSTANT:
-
+                    System.out.println("CONSTANT");
                     break;
             }
 
-            result = MathConverter.removeExtraSigns(before
-                    + formatter.format(operation.calculate(operands)) + after);
+
         }
 
         return result;
@@ -249,6 +250,6 @@ public class MathParser implements IMathParser {
     public static void main(String[] args) {
         final String expression = "-1-1*-1-1";
         System.out.println("Original expression: " + expression);
-        System.out.println(new MathParser().parseOperation(Operations.MULTIPLY, expression));
+        System.out.println(new MathParser().parseOperations(expression));
     }
 }

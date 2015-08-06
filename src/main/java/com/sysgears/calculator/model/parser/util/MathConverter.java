@@ -1,7 +1,6 @@
 package com.sysgears.calculator.model.parser.util;
 
 import com.sysgears.calculator.model.parser.brackets.Brackets;
-import com.sysgears.calculator.model.parser.operations.util.Type;
 import com.sysgears.calculator.model.util.strings.StringConverter;
 
 import java.util.regex.Matcher;
@@ -71,7 +70,7 @@ public class MathConverter {
      * @return the expression without extra brackets
      */
     public static String removeExtraBrackets(final String expression) {
-        final String operand = Type.OPERAND;
+        final String operand = "(?<![\\d"+ Brackets.OPENING_BRACKETS + "])" + "[\\+-]?\\d+(\\.\\d+)?";
         final StringBuilder pattern = new StringBuilder();
         pattern.append("(?<=").append(Brackets.OPENING_BRACKETS).append(")(");
         for (Brackets brackets : Brackets.values()) {
