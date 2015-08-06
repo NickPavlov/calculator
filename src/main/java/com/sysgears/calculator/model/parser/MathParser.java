@@ -146,11 +146,28 @@ public class MathParser implements IMathParser {
         int operatorFirstIndex = expression.indexOf(operation.getOperator());
         if (operatorFirstIndex != -1) {
             int afterOperatorIndex = operatorFirstIndex + operation.getOperator().length();
-            String beforeOperator = expression.substring(0, operatorFirstIndex);
-            String afterOperator = expression.substring(afterOperatorIndex);
+            String before = expression.substring(0, operatorFirstIndex);
+            String after = expression.substring(afterOperatorIndex);
 
-            System.out.println(beforeOperator);
-            System.out.println(afterOperator);
+            System.out.println(before);
+            System.out.println(after);
+
+            String firstOperand = "";
+            int index = before.length() - 1;
+            if (index == 0) {
+                firstOperand = before.charAt(0) + "";
+            } else {
+                while ((index > 0)
+                        && ((before.charAt(index) == '-' && !Character.isDigit(before.charAt(index - 1)))  ||
+                        Character.isDigit(before.charAt(index)) || before.charAt(index) == '.') ) {
+
+                    firstOperand = before.charAt(index) + firstOperand;
+                    --index;
+                }
+            }
+
+
+            System.out.println(firstOperand);
 
             switch (operation.getType()) {
                 case BINARY:
@@ -170,6 +187,6 @@ public class MathParser implements IMathParser {
     }
 
     public static void main(String[] args) {
-        System.out.println(new MathParser().parseOperation(Operations.MULTIPLY, "-1-2*-3-4"));
+        System.out.println(new MathParser().parseOperation(Operations.MULTIPLY, "1+-2*-3-4"));
     }
 }
