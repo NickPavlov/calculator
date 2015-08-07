@@ -52,8 +52,8 @@ public class Service {
         Commands command = null;
         try {
             while (command != Commands.EXIT) {
+                ui.sendMessage("> ");
                 message = ui.receiveMessage();
-                ui.sendMessage("\n");
                 command = Commands.getCommand(message);
                 execute(command, message);
             }
