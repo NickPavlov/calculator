@@ -15,7 +15,7 @@ public class Main {
     /**
      * Launches service to manage calculator.
      *
-     * @param args a command line arguments
+     * @param args command line arguments
      */
     public static void main(final String[] args) {
         try {
